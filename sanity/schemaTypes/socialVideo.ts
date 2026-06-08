@@ -7,7 +7,7 @@ export const socialVideo = {
       name: "title",
       title: "Title",
       type: "string",
-      validation: (Rule) => Rule.required(),
+      validation: (Rule: any) => Rule.required(),
     },
     {
       name: "platform",
@@ -19,13 +19,13 @@ export const socialVideo = {
           { title: "TikTok", value: "tiktok" },
         ],
       },
-      validation: (Rule) => Rule.required(),
+      validation: (Rule: any) => Rule.required(),
     },
     {
       name: "videoUrl",
       title: "Video URL",
       type: "url",
-      validation: (Rule) => Rule.required(),
+      validation: (Rule: any) => Rule.required(),
       description: "Paste the full YouTube or TikTok video URL.",
     },
     {

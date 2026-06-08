@@ -7,7 +7,7 @@ export const service = {
       name: "title",
       title: "Service Name",
       type: "string",
-      validation: (Rule) => Rule.required(),
+      validation: (Rule: any) => Rule.required(),
     },
     {
       name: "slug",
@@ -17,19 +17,19 @@ export const service = {
         source: "title",
         maxLength: 96,
       },
-      validation: (Rule) => Rule.required(),
+      validation: (Rule: any) => Rule.required(),
     },
     {
       name: "shortDescription",
       title: "Short Description",
       type: "text",
-      validation: (Rule) => Rule.required(),
+      validation: (Rule: any) => Rule.required(),
     },
     {
       name: "fullDescription",
       title: "Full Description",
       type: "text",
-      validation: (Rule) => Rule.required(),
+      validation: (Rule: any) => Rule.required(),
     },
     {
       name: "featuredImage",
