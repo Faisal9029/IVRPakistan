@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Menu, Phone, X } from "lucide-react";
-import { FaFacebook, FaTiktok, FaWhatsapp, FaSnapchat } from "react-icons/fa";
+import { FaFacebook, FaTiktok, FaWhatsapp, FaSnapchat, FaYoutube } from "react-icons/fa";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -17,8 +17,9 @@ const navLinks = [
 ];
 
 const socialLinks = [
-  { href: "https://www.facebook.com/share/18uF1Bhcbf/", label: "Facebook", icon: FaFacebook },
-  { href: "https://www.tiktok.com/@ivrpakistankarachi?_r=1&_t=ZN-96W721lZOnW", label: "TikTok", icon: FaTiktok },
+  { href: "https://www.facebook.com/share/1HECzu9krf/", label: "Facebook", icon: FaFacebook },
+  { href: "https://vt.tiktok.com/ZSC9haJxW/", label: "TikTok", icon: FaTiktok },
+  { href: "https://www.youtube.com/", label: "YouTube", icon: FaYoutube },
   { href: "https://whatsapp.com/channel/0029VbBN0Yq2v1Iq8uvsbT1Z", label: "WhatsApp", icon: FaWhatsapp },
   { href: "https://www.snapchat.com/add/ivr-pakistan?share_id=d_kM3i3iuNQ&locale=en-US", label: "Snapchat", icon: FaSnapchat },
 ];
@@ -71,7 +72,10 @@ export default function Navbar() {
           ))}
         </nav>
 
-        <div className="hidden items-center gap-3 md:flex">
+        <div className="hidden items-center gap-2 md:flex">
+          <span className="mr-1 text-[11px] font-semibold uppercase tracking-[0.3em] text-slate-500">
+            Follow
+          </span>
           {socialLinks.map((social) => {
             const Icon = social.icon;
             return (
@@ -81,6 +85,7 @@ export default function Navbar() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={social.label}
+                title={social.label}
                 className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-700 transition hover:bg-slate-100"
               >
                 <Icon size={18} />
@@ -133,6 +138,9 @@ export default function Navbar() {
           </div>
 
           <div className="mt-5 flex flex-wrap items-center gap-3 border-t border-slate-200 pt-5">
+            <span className="w-full text-[11px] font-semibold uppercase tracking-[0.3em] text-slate-500">
+              Follow us
+            </span>
             {socialLinks.map((social) => {
               const Icon = social.icon;
               return (
@@ -142,6 +150,7 @@ export default function Navbar() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={social.label}
+                  title={social.label}
                   className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-700 transition hover:bg-slate-100"
                 >
                   <Icon size={18} />

@@ -182,6 +182,9 @@ Message: ${formData.message}
             <option>Cardiology</option>
             <option>Dermatology</option>
             <option>Dental Care</option>
+            <option>Penile Doppler Ultrasound (with injection)</option>
+            <option>OPD Visit</option>
+            <option>Procedure Appointment</option>
           </select>
         </label>
 

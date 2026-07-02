@@ -10,6 +10,7 @@ import {
   FaTiktok,
   FaWhatsapp,
   FaSnapchat,
+  FaYoutube,
 } from "react-icons/fa";
 
 export default function ContactSection() {
@@ -202,16 +203,22 @@ export default function ContactSection() {
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
             {[
               {
-                href: "https://www.facebook.com/share/18uF1Bhcbf/",
+                href: "https://www.facebook.com/share/1HECzu9krf/",
                 label: "Facebook",
                 icon: FaFacebook,
                 color: "text-blue-600",
               },
               {
-                href: "https://www.tiktok.com/@ivrpakistankarachi?_r=1&_t=ZN-96W721lZOnW",
+                href: "https://vt.tiktok.com/ZSC9haJxW/",
                 label: "TikTok",
                 icon: FaTiktok,
                 color: "text-black",
+              },
+              {
+                href: "https://www.youtube.com/",
+                label: "YouTube",
+                icon: FaYoutube,
+                color: "text-red-600",
               },
               {
                 href: "https://whatsapp.com/channel/0029VbBN0Yq2v1Iq8uvsbT1Z",

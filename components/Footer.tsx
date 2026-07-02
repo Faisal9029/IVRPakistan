@@ -17,7 +17,16 @@ export default function Footer() {
               Contact
             </h3>
             <ul className="mt-6 space-y-3 text-sm text-slate-300">
-              <li>Phone: +92 346 2236220</li>
+              <li>
+                <a
+                  href="https://api.whatsapp.com/send?phone=923442587864"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition hover:text-cyan-300"
+                >
+                  WhatsApp
+                </a>
+              </li>
               <li>Email: cathlabintervention@gmail.com</li>
               <li>Address: Lucky Star Saddar Karachi</li>
             </ul>
@@ -48,7 +57,7 @@ export default function Footer() {
 
         <div className="mt-12 border-t border-slate-800 pt-8 text-sm text-slate-500 sm:flex sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} IVR Pakistan Karachi. All rights reserved.</p>
-          <p className="mt-4 sm:mt-0">Designed for modern medical care.</p>
+          <p className="mt-4 sm:mt-0">Design by Faisal</p>
         </div>
       </div>
     </footer>
