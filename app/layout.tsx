@@ -38,7 +38,7 @@ export default function RootLayout({
         <WhatsAppFloatingButton />
       </body>
      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6462611446094651"
-     crossorigin="anonymous"></script>
+     crossOrigin="anonymous"></script>
     </html>
   );
 }
