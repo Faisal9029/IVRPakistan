@@ -1,4 +1,5 @@
 ﻿import type { Metadata } from "next";
+import Script from "next/script";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import WhatsAppFloatingButton from "../components/WhatsAppFloatingButton";
@@ -35,6 +36,13 @@ export default function RootLayout({
       >
         {children}
         <WhatsAppFloatingButton />
+           <Script
+        id="adsense-script"
+        async
+        strategy="afterInteractive"
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6462611446094651"
+        crossOrigin="anonymous"
+      />
       </body>
     </html>
   );
