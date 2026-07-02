@@ -37,13 +37,8 @@ export default function RootLayout({
         {children}
         <WhatsAppFloatingButton />
       </body>
-      <Script
-        id="adsense-script"
-        async
-        strategy="afterInteractive"
-        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6462611446094651"
-        crossOrigin="anonymous"
-      />
+     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6462611446094651"
+     crossorigin="anonymous"></script>
     </html>
   );
 }
