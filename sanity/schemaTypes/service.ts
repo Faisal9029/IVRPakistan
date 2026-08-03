@@ -1,3 +1,7 @@
+type ValidationRule = {
+  required: () => ValidationRule;
+};
+
 export const service = {
   name: "service",
   title: "Service",
@@ -7,7 +11,7 @@ export const service = {
       name: "title",
       title: "Service Name",
       type: "string",
-      validation: (Rule: any) => Rule.required(),
+      validation: (Rule: ValidationRule) => Rule.required(),
     },
     {
       name: "slug",
@@ -17,19 +21,19 @@ export const service = {
         source: "title",
         maxLength: 96,
       },
-      validation: (Rule: any) => Rule.required(),
+      validation: (Rule: ValidationRule) => Rule.required(),
     },
     {
       name: "shortDescription",
       title: "Short Description",
       type: "text",
-      validation: (Rule: any) => Rule.required(),
+      validation: (Rule: ValidationRule) => Rule.required(),
     },
     {
       name: "fullDescription",
       title: "Full Description",
       type: "text",
-      validation: (Rule: any) => Rule.required(),
+      validation: (Rule: ValidationRule) => Rule.required(),
     },
     {
       name: "featuredImage",

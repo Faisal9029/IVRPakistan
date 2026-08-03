@@ -1,52 +1,71 @@
-﻿"use client";
+"use client";
 
-import { CheckCircle, Loader2 } from "lucide-react";
+import { AlertCircle, CheckCircle, Loader2 } from "lucide-react";
 import { useState, type ChangeEvent, type FormEvent } from "react";
+import { phone as clinicPhone } from "../lib/siteInfo";
 
 const initialForm = {
   fullName: "",
-  email: "",
   phone: "",
-  preferredDate: "",
-  service: "General Consultation",
   message: "",
+  website: "", // honeypot — real users never see or fill this
 };
 
+type FormErrors = Partial<Record<"fullName" | "phone", string>>;
+
+function validate(data: typeof initialForm): FormErrors {
+  const errors: FormErrors = {};
+
+  if (!data.fullName.trim()) {
+    errors.fullName = "Please enter your full name.";
+  } else if (data.fullName.trim().length < 2) {
+    errors.fullName = "Name must be at least 2 characters.";
+  }
+
+  const phoneDigits = data.phone.replace(/[^\d]/g, "");
+  if (!data.phone.trim()) {
+    errors.phone = "Please enter your phone number.";
+  } else if (phoneDigits.length < 7) {
+    errors.phone = "Enter a valid phone number, e.g. +92 300 1234567.";
+  }
+
+  return errors;
+}
+
 const inputClass =
-  "mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition focus:border-[#1677ff] focus:ring-2 focus:ring-blue-100";
+  "mt-2 w-full rounded-card border border-slate-200 bg-slate-50 px-4 py-3 text-navy outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/15 dark:border-slate-700 dark:bg-slate-800 dark:text-white";
+const inputErrorClass = "border-red-300 focus:border-red-400 focus:ring-red-100";
 
 export default function AppointmentForm() {
   const [formData, setFormData] = useState(initialForm);
-  const [status, setStatus] = useState<
-    "idle" | "loading" | "success" | "error"
-  >("idle");
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [feedback, setFeedback] = useState("");
 
   const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    if (name in errors) {
+      setErrors((prev) => ({ ...prev, [name]: undefined }));
+    }
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // validation
-    if (
-      !formData.fullName.trim() ||
-      !formData.email.trim() ||
-      !formData.phone.trim() ||
-      !formData.preferredDate.trim() ||
-      !formData.service.trim()
-    ) {
-      setFeedback("Please complete all required fields.");
+    const validationErrors = validate(formData);
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
       setStatus("error");
+      setFeedback("Please fix the highlighted fields below and try again.");
       return;
     }
 
     setStatus("loading");
     setFeedback("");
+    setErrors({});
 
     try {
       const response = await fetch("/api/appointments", {
@@ -58,37 +77,23 @@ export default function AppointmentForm() {
       if (!response.ok) {
         const err = await response.json().catch(() => null);
         throw new Error(
-          err?.message || "Unable to submit appointment request."
+          err?.message || "Unable to submit your request — please try again in a moment."
         );
       }
 
       const result = await response.json();
 
       setFeedback(
-        result.message ?? "Appointment request submitted successfully."
+        result.message ??
+          "Request received. We'll confirm your appointment on WhatsApp shortly."
       );
       setStatus("success");
 
-      // reset form
+      const message = `New Appointment Request:\n\nName: ${formData.fullName}\nPhone: ${formData.phone}\nMessage: ${formData.message || "(none provided)"}`;
+
+      const whatsappURL = `https://wa.me/${clinicPhone.whatsapp}?text=${encodeURIComponent(message)}`;
+
       setFormData(initialForm);
-
-      // WhatsApp auto redirect
-      const whatsappNumber = "923462236220";
-
-      const message = `
-New Appointment Request:
-
-Name: ${formData.fullName}
-Phone: ${formData.phone}
-Email: ${formData.email}
-Date: ${formData.preferredDate}
-Service: ${formData.service}
-Message: ${formData.message}
-`;
-
-      const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-        message
-      )}`;
 
       setTimeout(() => {
         window.open(whatsappURL, "_blank");
@@ -98,116 +103,106 @@ Message: ${formData.message}
       setFeedback(
         error instanceof Error
           ? error.message
-          : "Something went wrong — please try again."
+          : "Something went wrong — please try again, or WhatsApp us directly."
       );
     }
   };
 
   return (
-    <section className="mx-auto max-w-4xl rounded-[32px] border border-slate-200 bg-white p-8 shadow-2xl shadow-slate-200/30 sm:p-12">
+    <section className="mx-auto max-w-4xl rounded-card border border-slate-200 bg-white p-8 shadow-hover dark:border-slate-700 dark:bg-slate-900 sm:p-12">
       <div className="mb-10 text-center">
-        <span className="text-xs font-semibold uppercase tracking-[0.32em] text-[#1677ff]">
+        <span className="text-small font-semibold uppercase tracking-[0.32em] text-primary">
           Online Appointment
         </span>
 
-        <h2 className="mt-4 text-3xl font-bold text-slate-950 sm:text-4xl">
+        <h2 className="mt-4 text-h2 font-bold text-navy dark:text-white">
           Book your visit in minutes
         </h2>
 
-        <p className="mt-3 text-sm text-slate-500 sm:text-base">
-          Fill out the form and our team will confirm your appointment shortly.
+        <p className="mt-3 text-body text-muted dark:text-slate-400">
+          Share your details and our team will confirm your appointment on WhatsApp shortly.
         </p>
       </div>
 
-      <form className="grid gap-6" onSubmit={handleSubmit}>
-        <div className="grid gap-6 sm:grid-cols-2">
-          <label className="flex flex-col text-sm font-medium text-slate-700">
-            Full Name *
-            <input
-              name="fullName"
-              value={formData.fullName}
-              onChange={handleChange}
-              className={inputClass}
-              placeholder="Enter your full name"
-            />
-          </label>
-
-          <label className="flex flex-col text-sm font-medium text-slate-700">
-            Phone Number *
-            <input
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-              className={inputClass}
-              placeholder="+92 300 1234567"
-            />
-          </label>
-        </div>
-
-        <div className="grid gap-6 sm:grid-cols-2">
-          <label className="flex flex-col text-sm font-medium text-slate-700">
-            Email Address *
-            <input
-              name="email"
-              type="email"
-              value={formData.email}
-              onChange={handleChange}
-              className={inputClass}
-              placeholder="name@example.com"
-            />
-          </label>
-
-          <label className="flex flex-col text-sm font-medium text-slate-700">
-            Preferred Date *
-            <input
-              name="preferredDate"
-              type="date"
-              value={formData.preferredDate}
-              onChange={handleChange}
-              className={inputClass}
-            />
-          </label>
-        </div>
-
-        <label className="flex flex-col text-sm font-medium text-slate-700">
-          Service / Department *
-          <select
-            name="service"
-            value={formData.service}
+      <form className="grid gap-6" onSubmit={handleSubmit} noValidate>
+        <div
+          aria-hidden="true"
+          className="absolute left-[-9999px] top-auto h-px w-px overflow-hidden"
+        >
+          <label htmlFor="website">Leave this field empty</label>
+          <input
+            id="website"
+            name="website"
+            type="text"
+            tabIndex={-1}
+            autoComplete="off"
+            value={formData.website}
             onChange={handleChange}
-            className={inputClass}
-          >
-            <option>General Consultation</option>
-            <option>Pediatrics</option>
-            <option>Cardiology</option>
-            <option>Dermatology</option>
-            <option>Dental Care</option>
-            <option>Penile Doppler Ultrasound (with injection)</option>
-            <option>OPD Visit</option>
-            <option>Procedure Appointment</option>
-          </select>
+          />
+        </div>
+
+        <label className="flex flex-col text-small font-medium text-navy dark:text-slate-300">
+          Full Name *
+          <input
+            name="fullName"
+            value={formData.fullName}
+            onChange={handleChange}
+            className={`${inputClass} ${errors.fullName ? inputErrorClass : ""}`}
+            placeholder="Enter your full name"
+            aria-invalid={!!errors.fullName}
+            aria-describedby={errors.fullName ? "fullName-error" : undefined}
+          />
+          {errors.fullName && (
+            <span id="fullName-error" className="mt-1.5 flex items-center gap-1.5 text-small text-red-600">
+              <AlertCircle size={14} /> {errors.fullName}
+            </span>
+          )}
         </label>
 
-        <label className="flex flex-col text-sm font-medium text-slate-700">
-          Additional Notes
+        <label className="flex flex-col text-small font-medium text-navy dark:text-slate-300">
+          Phone Number *
+          <input
+            name="phone"
+            value={formData.phone}
+            onChange={handleChange}
+            className={`${inputClass} ${errors.phone ? inputErrorClass : ""}`}
+            placeholder="+92 300 1234567"
+            aria-invalid={!!errors.phone}
+            aria-describedby={errors.phone ? "phone-error" : undefined}
+          />
+          {errors.phone && (
+            <span id="phone-error" className="mt-1.5 flex items-center gap-1.5 text-small text-red-600">
+              <AlertCircle size={14} /> {errors.phone}
+            </span>
+          )}
+        </label>
+
+        <label className="flex flex-col text-small font-medium text-navy dark:text-slate-300">
+          Message
           <textarea
             name="message"
             value={formData.message}
             onChange={handleChange}
             rows={4}
             className={inputClass}
-            placeholder="Tell us about your symptoms or concerns..."
+            placeholder="Tell us about your symptoms, concerns, or preferred visit time..."
           />
         </label>
 
         {feedback && (
           <div
-            className={`rounded-2xl px-5 py-4 text-sm font-medium ${
+            role={status === "error" ? "alert" : "status"}
+            className={`flex items-start gap-2 rounded-card px-5 py-4 text-small font-medium ${
               status === "success"
-                ? "bg-emerald-50 text-emerald-700"
-                : "bg-rose-50 text-rose-700"
+                ? "bg-success/10 text-emerald-700 dark:text-emerald-400"
+                : "bg-red-50 text-red-700 dark:bg-red-950/40 dark:text-red-400"
             }`}
           >
+            {status === "success" ? (
+              <CheckCircle size={18} className="mt-0.5 shrink-0" />
+            ) : (
+              <AlertCircle size={18} className="mt-0.5 shrink-0" />
+            )}
             {feedback}
           </div>
         )}
@@ -215,7 +210,7 @@ Message: ${formData.message}
         <button
           type="submit"
           disabled={status === "loading" || status === "success"}
-          className="inline-flex items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-[#1677ff] to-[#06b6d4] px-6 py-4 text-sm font-semibold text-white shadow-lg shadow-[#1677ff]/25 transition hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-60"
+          className="inline-flex items-center justify-center gap-3 rounded-button bg-gradient-to-r from-primary to-cyan px-6 py-4 text-sm font-semibold text-white shadow-hover transition hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-60"
         >
           {status === "loading" ? (
             <Loader2 className="h-5 w-5 animate-spin" />
@@ -223,9 +218,7 @@ Message: ${formData.message}
             <CheckCircle className="h-5 w-5" />
           )}
 
-          {status === "loading"
-            ? "Submitting..."
-            : "Request Appointment"}
+          {status === "loading" ? "Submitting..." : "Request Appointment"}
         </button>
       </form>
     </section>

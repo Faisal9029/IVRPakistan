@@ -1,3 +1,9 @@
+type ValidationRule = {
+  required: () => ValidationRule;
+  min: (min: number) => ValidationRule;
+  max: (max: number) => ValidationRule;
+};
+
 export const patientReview = {
   name: "patientReview",
   title: "Patient Review",
@@ -7,7 +13,7 @@ export const patientReview = {
       name: "name",
       title: "Patient Name",
       type: "string",
-      validation: (Rule: any) => Rule.required(),
+      validation: (Rule: ValidationRule) => Rule.required(),
     },
     {
       name: "patientImage",
@@ -25,13 +31,13 @@ export const patientReview = {
       name: "text",
       title: "Review Text",
       type: "text",
-      validation: (Rule: any) => Rule.required(),
+      validation: (Rule: ValidationRule) => Rule.required(),
     },
     {
       name: "rating",
       title: "Rating",
       type: "number",
-      validation: (Rule: any) => Rule.required().min(1).max(5),
+      validation: (Rule: ValidationRule) => Rule.required().min(1).max(5),
       description: "Enter a number between 1 and 5.",
     },
     {

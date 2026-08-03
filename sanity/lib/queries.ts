@@ -134,3 +134,35 @@ export const serviceBySlugQuery = `*[_type == "service" && slug.current == $slug
 }`;
 
 export const allServiceSlugsQuery = `*[_type == "service" && defined(slug.current)]{ 'slug': slug.current }`;
+
+export type Post = {
+  _id: string;
+  title: string;
+  slug: { _type: "slug"; current: string };
+  excerpt: string;
+  body: string;
+  featuredImage?: { _type: "image"; asset: { _ref: string } };
+  publishedDate: string;
+};
+
+export const allPostsQuery = `*[_type == "post"] | order(publishedDate desc){
+  _id,
+  title,
+  slug,
+  excerpt,
+  body,
+  featuredImage,
+  publishedDate
+}`;
+
+export const postBySlugQuery = `*[_type == "post" && slug.current == $slug][0]{
+  _id,
+  title,
+  slug,
+  excerpt,
+  body,
+  featuredImage,
+  publishedDate
+}`;
+
+export const allPostSlugsQuery = `*[_type == "post" && defined(slug.current)]{ 'slug': slug.current }`;

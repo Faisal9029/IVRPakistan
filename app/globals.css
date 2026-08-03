@@ -1,15 +1,46 @@
-﻿@import "tailwindcss";
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* Colour — blue-cyan clinical identity. Every colour in the app must reference one of these. */
+  --color-navy: #0f172a;
+  --color-primary: #1677ff;
+  --color-cyan: #06b6d4;
+  --color-surface: #f5fbff;
+  --color-muted: #475569;
+  --color-success: #22c55e;
+
+  /* Type — Geist (already loaded via next/font in app/layout.tsx) for both heading and body roles. */
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+
+  --text-small: 0.875rem;
+  --text-small--line-height: 1.5;
+  --text-body: 1.0625rem;
+  --text-body--line-height: 1.75;
+  --text-lead: 1.25rem;
+  --text-lead--line-height: 1.6;
+  --text-h3: 1.5rem;
+  --text-h3--line-height: 1.3;
+  --text-h2: 2.25rem;
+  --text-h2--line-height: 1.15;
+  --text-h1: clamp(2.75rem, 6vw, 4.5rem);
+  --text-h1--line-height: 1.05;
+
+  /* Spacing & radius — one scale, used everywhere. */
+  --radius-card: 1.5rem;
+  --radius-button: 9999px;
+
+  --shadow-rest: 0 20px 45px -20px rgba(15, 23, 42, 0.14);
+  --shadow-hover: 0 30px 60px -20px rgba(22, 119, 255, 0.3);
+}
 
 :root {
   color-scheme: light;
-  --background: #f0f8ff;
-  --foreground: #0f172a;
-  --primary: #1677ff;
-  --secondary: #06b6d4;
-  --success: #22c55e;
-  --surface: rgba(255, 255, 255, 0.88);
-  --surface-strong: rgba(255, 255, 255, 1);
-  --border: rgba(148, 163, 184, 0.2);
+}
+
+.dark {
+  color-scheme: dark;
 }
 
 html {
@@ -19,10 +50,16 @@ html {
 body {
   min-height: 100vh;
   margin: 0;
-  background: var(--background);
-  color: var(--foreground);
-  font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+  background: linear-gradient(135deg, #f5fbff 0%, #eef8ff 45%, #f8fbff 100%);
+  color: var(--color-navy);
+  font-family: var(--font-sans);
   overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dark body {
+  background: linear-gradient(135deg, #0b1220 0%, #0f172a 45%, #0b1220 100%);
+  color: #e2e8f0;
 }
 
 * {
@@ -31,7 +68,7 @@ body {
 
 ::selection {
   background: rgba(22, 119, 255, 0.18);
-  color: var(--foreground);
+  color: var(--color-navy);
 }
 
 .grid-bg {
@@ -41,11 +78,22 @@ body {
   background-size: 56px 56px;
 }
 
+.dark .grid-bg {
+  background-image:
+    linear-gradient(rgba(59, 130, 246, 0.14) 1px, transparent 1px),
+    linear-gradient(to right, rgba(59, 130, 246, 0.14) 1px, transparent 1px);
+}
+
 .glass {
-  background: var(--surface);
+  background: rgba(255, 255, 255, 0.88);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
-  border: 1px solid var(--border);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.dark .glass {
+  background: rgba(15, 23, 42, 0.72);
+  border: 1px solid rgba(148, 163, 184, 0.16);
 }
 
 .btn-glow {
@@ -54,7 +102,7 @@ body {
 
 .btn-glow:hover {
   transform: translateY(-2px) scale(1.03);
-  box-shadow: 0 20px 40px rgba(22, 119, 255, 0.22);
+  box-shadow: var(--shadow-hover);
 }
 
 .btn-glow-green:hover {
@@ -63,7 +111,8 @@ body {
 }
 
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px);
   }
   50% {
@@ -80,12 +129,33 @@ body {
 }
 
 .hero-title {
-  font-size: clamp(2.75rem, 6vw, 4.5rem);
-  line-height: 0.95;
+  font-size: var(--text-h1);
+  line-height: var(--text-h1--line-height);
 }
 
 @media (max-width: 768px) {
   .hero-title {
     font-size: 2.75rem;
   }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .float-card,
+  .float-card-delay {
+    animation: none;
+  }
+
+  .btn-glow,
+  .btn-glow:hover,
+  .btn-glow-green:hover {
+    transition: none;
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+*:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: 4px;
 }

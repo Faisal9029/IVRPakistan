@@ -1,253 +1,115 @@
-﻿import {
-  Mail,
-  Phone,
-  Clock3,
-  Building2,
-} from "lucide-react";
+"use client";
 
-import {
-  FaFacebook,
-  FaTiktok,
-  FaWhatsapp,
-  FaSnapchat,
-  FaYoutube,
-} from "react-icons/fa";
+import { motion } from "framer-motion";
+import { Building2, CalendarCheck, Clock3, Mail, Phone } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa";
+import { clinics, phone as clinicPhone, socialLinks } from "../lib/siteInfo";
+import Button from "./ui/Button";
 
 export default function ContactSection() {
   return (
-    <section
-      id="contact"
-      className="relative bg-[#f0f8ff] py-20 lg:py-24"
-    >
+    <section id="contact" className="relative bg-[linear-gradient(135deg,#f8fcff_0%,#eef8ff_100%)] py-20 dark:bg-navy dark:bg-none lg:py-24">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-
-        {/* Heading */}
         <div className="mx-auto max-w-2xl text-center">
-          <span className="text-xs font-semibold uppercase tracking-[0.32em] text-[#1677ff]">
-            Get In Touch
-          </span>
-
-          <h2 className="mt-4 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">
-            Contact Us
-          </h2>
-
-          <p className="mt-6 text-base leading-8 text-slate-600">
-            Book appointments and connect with IVR Pakistan Karachi.
+          <span className="text-xs font-semibold uppercase tracking-[0.32em] text-primary">Get In Touch</span>
+          <h2 className="mt-4 text-3xl font-bold tracking-tight text-navy dark:text-white sm:text-4xl">Contact Us</h2>
+          <p className="mt-6 text-base leading-8 text-muted dark:text-slate-300">
+            Book a consultation with Dr. Vicky Kumar or reach out for clinic details, procedure guidance, and scheduling support.
           </p>
         </div>
 
-        {/* Contact Cards */}
-        <div className="mx-auto mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          {[
-            {
-              icon: Phone,
-              label: "Phone",
-              value: "+92 346 2236220",
-              href: "tel:+923462236220",
-            },
-            {
-              icon: Mail,
-              label: "Email",
-              value: "cathlabintervention@gmail.com",
-              href: "mailto:cathlabintervention@gmail.com",
-            }
-          ].map((contact) => {
-            const Icon = contact.icon;
+        <div className="mx-auto mt-16 grid gap-8 lg:grid-cols-[1.05fr_0.95fr]">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.25 }} className="rounded-[32px] border border-white/70 bg-white p-8 shadow-[0_30px_80px_-34px_rgba(15,98,255,0.35)] dark:border-slate-700 dark:bg-slate-900">
+            <div className="flex items-center gap-3">
+              <div className="rounded-2xl bg-primary/10 p-3 text-primary">
+                <Phone size={20} />
+              </div>
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-[0.3em] text-primary">Appointment Request</p>
+                <p className="text-lg font-semibold text-navy dark:text-white">Book your visit</p>
+              </div>
+            </div>
 
-            return (
+            <p className="mt-6 text-body text-muted dark:text-slate-400">
+              Fill out our appointment form with your name, phone, and a short note
+              about your concern — our team confirms every request on WhatsApp.
+            </p>
+
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Button href="/appointment" variant="primary" className="gap-2">
+                <CalendarCheck size={18} />
+                Book Appointment
+              </Button>
               <a
-                key={contact.label}
-                href={contact.href}
+                href={`https://wa.me/${clinicPhone.whatsapp}?text=Hello%20Dr.%20Vicky%20Kumar,%20I%20would%20like%20to%20schedule%20an%20interventional%20radiology%20consultation.`}
                 target="_blank"
-                rel="noopener noreferrer"
-                className="rounded-3xl border border-white bg-white p-8 text-center shadow-lg shadow-slate-200/30 transition duration-300 hover:-translate-y-1 hover:shadow-xl"
+                rel="noreferrer"
+                className="inline-flex items-center justify-center gap-2 rounded-button border border-slate-200 bg-white px-6 py-3 text-sm font-semibold text-navy transition hover:border-primary/30 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
               >
-                <div className="inline-flex h-14 w-14 items-center justify-center rounded-3xl bg-[#eff6ff] text-[#1677ff]">
-                  <Icon size={28} />
-                </div>
-
-                <h3 className="mt-6 text-lg font-semibold text-slate-950">
-                  {contact.label}
-                </h3>
-
-                <p className="mt-3 break-all text-sm text-slate-600">
-                  {contact.value}
-                </p>
+                <FaWhatsapp size={18} className="text-[#25D366]" />
+                WhatsApp Us
               </a>
-            );
-          })}
-        </div>
-
-        {/* Clinic Locations */}
-        <div className="mt-16 grid gap-8 lg:grid-cols-2">
-
-          {/* IDC */}
-          <div className="rounded-3xl bg-white p-8 shadow-lg">
-            <div className="flex items-center gap-3">
-              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-100 text-[#1677ff]">
-                <Building2 size={28} />
-              </div>
-
-              <div>
-                <h3 className="text-2xl font-bold text-slate-900">
-                  IDC Lab Saddar Karachi
-                </h3>
-
-                <p className="text-sm text-slate-600">
-                  Lucky Star Saddar Karachi, opposite Shell Petrol Pump
-                </p>
-              </div>
             </div>
+          </motion.div>
 
-            <div className="mt-6 flex items-start gap-3 text-slate-700">
-              <Clock3 className="mt-1 text-[#1677ff]" size={20} />
-
-              <div>
-                <p className="font-semibold">
-                  OPD Days & Timings
-                </p>
-
-                <p className="mt-1 text-sm text-slate-600">
-                  Monday, Tuesday, Friday & Saturday
-                </p>
-
-                <p className="text-sm text-slate-600">
-                  7:00 PM – 8:00 PM
-                </p>
-              </div>
-            </div>
-
-            <a
-              href="https://maps.app.goo.gl/vn1kpJQeugRFbAKr5"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-8 inline-flex items-center justify-center rounded-2xl bg-[#1677ff] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#125ee8]"
-            >
-              Open Google Map
-            </a>
-          </div>
-
-          {/* NMC */}
-          <div className="rounded-3xl bg-white p-8 shadow-lg">
-            <div className="flex items-center gap-3">
-              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-cyan-100 text-cyan-600">
-                <Building2 size={28} />
-              </div>
-
-              <div>
-                <h3 className="text-2xl font-bold text-slate-900">
-                  National Medical Centre (NMC)
-                </h3>
-
-                <p className="text-sm text-slate-600">
-                  DHA Karachi
-                </p>
-              </div>
-            </div>
-
-            <div className="mt-6 flex items-start gap-3 text-slate-700">
-              <Clock3 className="mt-1 text-cyan-600" size={20} />
-
-              <div>
-                <p className="font-semibold">
-                  OPD Days & Timings
-                </p>
-
-                <p className="mt-1 text-sm text-slate-600">
-                  Wednesday & Thursday
-                </p>
-
-                <p className="text-sm text-slate-600">
-                  5:00 PM – 6:00 PM
-                </p>
-              </div>
-            </div>
-
-            <a
-              href="https://share.google/qhLuVj34ZAdKAo37X"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-8 inline-flex items-center justify-center rounded-2xl bg-cyan-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-cyan-600"
-            >
-              Open Google Map
-            </a>
-          </div>
-        </div>
-
-        {/* Subscribe */}
-        <div className="mt-16 rounded-3xl bg-white p-8 shadow-lg">
-          <div className="mx-auto max-w-2xl rounded-3xl border border-slate-200 bg-[#f8fbff] p-6 text-center">
-            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#1677ff]">
-              Subscribe
-            </p>
-
-            <p className="mt-3 text-base text-slate-700">
-              Join our WhatsApp channel for updates, appointment notices, and clinic announcements.
-            </p>
-
-            <a
-              href="https://whatsapp.com/channel/0029VbBN0Yq2v1Iq8uvsbT1Z"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-5 inline-flex items-center justify-center rounded-2xl bg-[#22c55e] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#16a34a]"
-            >
-              Subscribe on WhatsApp
-            </a>
-          </div>
-
-          {/* Social Media */}
-          <h3 className="mt-12 text-center text-2xl font-bold text-slate-900">
-            Follow Us On Social Media
-          </h3>
-
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            {[
-              {
-                href: "https://www.facebook.com/share/1HECzu9krf/",
-                label: "Facebook",
-                icon: FaFacebook,
-                color: "text-blue-600",
-              },
-              {
-                href: "https://vt.tiktok.com/ZSC9haJxW/",
-                label: "TikTok",
-                icon: FaTiktok,
-                color: "text-black",
-              },
-              {
-                href: "https://www.youtube.com/",
-                label: "YouTube",
-                icon: FaYoutube,
-                color: "text-red-600",
-              },
-              {
-                href: "https://whatsapp.com/channel/0029VbBN0Yq2v1Iq8uvsbT1Z",
-                label: "WhatsApp",
-                icon: FaWhatsapp,
-                color: "text-green-600",
-              },
-              {
-                href: "https://www.snapchat.com/add/ivr-pakistan?share_id=d_kM3i3iuNQ&locale=en-US",
-                label: "Snapchat",
-                icon: FaSnapchat,
-                color: "text-yellow-500",
-              },
-            ].map((social) => {
-              const Icon = social.icon;
-              return (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={social.label}
-                  className="inline-flex h-14 w-14 items-center justify-center rounded-3xl border border-slate-200 bg-white text-slate-700 transition hover:bg-blue-50"
-                >
-                  <Icon size={24} className={social.color} />
-                  <span className="sr-only">{social.label}</span>
+          <div className="space-y-6">
+            <div className="rounded-[32px] border border-white/70 bg-white p-8 shadow-[0_30px_80px_-34px_rgba(15,98,255,0.25)] dark:border-slate-700 dark:bg-slate-900">
+              <div className="flex flex-wrap gap-3">
+                <a href="tel:+923462236220" className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-semibold text-primary">
+                  <Phone size={16} /> +92 346 2236220
                 </a>
-              );
-            })}
+                <a href="mailto:cathlabintervention@gmail.com" className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-semibold text-primary">
+                  <Mail size={16} /> cathlabintervention@gmail.com
+                </a>
+              </div>
+
+              <div className="mt-8 space-y-4">
+                {clinics.map((clinic) => (
+                  <div key={clinic.title} className="rounded-[24px] border border-slate-200 bg-slate-50 p-5 dark:border-slate-700 dark:bg-slate-800">
+                    <div className={`h-1.5 rounded-full bg-gradient-to-r ${clinic.accent}`} />
+                    <h3 className="mt-4 text-lg font-semibold text-navy dark:text-white">{clinic.title}</h3>
+                    <p className="mt-2 text-sm leading-7 text-muted dark:text-slate-400">{clinic.detail}</p>
+                    <div className="mt-3 flex items-start gap-2 text-sm text-muted dark:text-slate-400">
+                      <Clock3 size={16} className="mt-0.5 text-primary" />
+                      <span>{clinic.hours}</span>
+                    </div>
+                    <a href={clinic.mapLink} target="_blank" rel="noreferrer" className="mt-4 inline-flex text-sm font-semibold text-primary hover:underline">
+                      Open Google Map &rarr;
+                    </a>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="rounded-[32px] border border-white/70 bg-white p-8 shadow-[0_30px_80px_-34px_rgba(15,98,255,0.25)] dark:border-slate-700 dark:bg-slate-900">
+              <div className="flex items-center gap-3">
+                <div className="rounded-2xl bg-primary/10 p-3 text-primary">
+                  <Building2 size={20} />
+                </div>
+                <div>
+                  <p className="text-sm font-semibold uppercase tracking-[0.3em] text-primary">Follow us</p>
+                  <p className="text-lg font-semibold text-navy dark:text-white">Join our community</p>
+                </div>
+              </div>
+              <div className="mt-6 flex flex-wrap gap-3">
+                {socialLinks.map((social) => {
+                  const Icon = social.icon;
+                  return (
+                    <a key={social.label} href={social.href} target="_blank" rel="noreferrer" aria-label={social.label} className="inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-slate-200 bg-slate-50 text-slate-700 transition hover:bg-white dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700">
+                      <Icon size={20} className={social.color} />
+                    </a>
+                  );
+                })}
+              </div>
+              <a
+                href={`https://wa.me/${clinicPhone.whatsapp}?text=Hello%20Dr.%20Vicky%20Kumar,%20I%20would%20like%20to%20schedule%20an%20interventional%20radiology%20consultation.`}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-6 inline-flex items-center justify-center rounded-button bg-success px-5 py-3 text-sm font-semibold text-white transition hover:brightness-95"
+              >
+                WhatsApp Consultation
+              </a>
+            </div>
           </div>
         </div>
       </div>
