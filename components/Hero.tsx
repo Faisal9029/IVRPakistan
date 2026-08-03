@@ -89,10 +89,10 @@ export default function Hero() {
               </div>
             </motion.div>
 
-            <div className="hidden lg:flex lg:items-start lg:gap-4">
+            <div className="lg:flex lg:items-start lg:gap-4">
               <motion.div
                 variants={fadeInUp}
-                className="flex flex-col gap-3 rounded-card border border-white/80 bg-white/80 p-3 shadow-rest backdrop-blur-xl dark:border-slate-700 dark:bg-slate-900/80"
+                className="hidden flex-col gap-3 rounded-card border border-white/80 bg-white/80 p-3 shadow-rest backdrop-blur-xl dark:border-slate-700 dark:bg-slate-900/80 lg:flex"
               >
                 {socialLinks.map((social) => {
                   const Icon = social.icon;
@@ -202,7 +202,7 @@ export default function Hero() {
               </div>
             </div>
 
-            <div className="float-card absolute left-0 top-10 hidden w-full px-4 sm:block sm:px-0">
+            <div className="float-card absolute left-0 top-10 w-full px-4 sm:px-0">
               <div className="max-w-sm rounded-card border border-white/80 bg-white/90 p-4 shadow-hover backdrop-blur-xl dark:border-slate-700 dark:bg-slate-900/90">
                 <div className="flex items-center gap-2">
                   <span className="h-9 w-9 rounded-full border-2 border-white bg-primary" />
@@ -215,7 +215,7 @@ export default function Hero() {
               </div>
             </div>
 
-            <div className="float-card float-card-delay absolute bottom-10 right-0 hidden w-full px-4 sm:block sm:px-0">
+            <div className="float-card float-card-delay absolute bottom-10 right-0 w-full px-4 sm:px-0">
               <div className="ml-auto max-w-xs rounded-card border border-white/80 bg-white/90 p-4 shadow-hover backdrop-blur-xl dark:border-slate-700 dark:bg-slate-900/90">
                 <div className="flex items-center gap-1">
                   {Array.from({ length: 5 }).map((_, index) => (
