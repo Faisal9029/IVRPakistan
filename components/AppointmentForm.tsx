@@ -7,11 +7,19 @@ import { phone as clinicPhone } from "../lib/siteInfo";
 const initialForm = {
   fullName: "",
   phone: "",
+  reasonForVisit: "",
   message: "",
   website: "", // honeypot — real users never see or fill this
 };
 
-type FormErrors = Partial<Record<"fullName" | "phone", string>>;
+const reasonOptions = [
+  "OPD Consultation",
+  "Penile Doppler Ultrasound",
+  "Interventional Radiology Procedure",
+  "Other Services",
+];
+
+type FormErrors = Partial<Record<"fullName" | "phone" | "reasonForVisit", string>>;
 
 function validate(data: typeof initialForm): FormErrors {
   const errors: FormErrors = {};
@@ -29,6 +37,10 @@ function validate(data: typeof initialForm): FormErrors {
     errors.phone = "Enter a valid phone number, e.g. +92 300 1234567.";
   }
 
+  if (!data.reasonForVisit) {
+    errors.reasonForVisit = "Please select what your appointment is for.";
+  }
+
   return errors;
 }
 
@@ -43,7 +55,7 @@ export default function AppointmentForm() {
   const [feedback, setFeedback] = useState("");
 
   const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -89,7 +101,7 @@ export default function AppointmentForm() {
       );
       setStatus("success");
 
-      const message = `New Appointment Request:\n\nName: ${formData.fullName}\nPhone: ${formData.phone}\nMessage: ${formData.message || "(none provided)"}`;
+      const message = `New Appointment Request:\n\nName: ${formData.fullName}\nPhone: ${formData.phone}\nAppointment For: ${formData.reasonForVisit}\nMessage: ${formData.message || "(none provided)"}`;
 
       const whatsappURL = `https://wa.me/${clinicPhone.whatsapp}?text=${encodeURIComponent(message)}`;
 
@@ -173,6 +185,32 @@ export default function AppointmentForm() {
           {errors.phone && (
             <span id="phone-error" className="mt-1.5 flex items-center gap-1.5 text-small text-red-600">
               <AlertCircle size={14} /> {errors.phone}
+            </span>
+          )}
+        </label>
+
+        <label className="flex flex-col text-small font-medium text-navy dark:text-slate-300">
+          Appointment For *
+          <select
+            name="reasonForVisit"
+            value={formData.reasonForVisit}
+            onChange={handleChange}
+            className={`${inputClass} ${errors.reasonForVisit ? inputErrorClass : ""}`}
+            aria-invalid={!!errors.reasonForVisit}
+            aria-describedby={errors.reasonForVisit ? "reasonForVisit-error" : undefined}
+          >
+            <option value="" disabled>
+              Select a reason for your visit
+            </option>
+            {reasonOptions.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+          {errors.reasonForVisit && (
+            <span id="reasonForVisit-error" className="mt-1.5 flex items-center gap-1.5 text-small text-red-600">
+              <AlertCircle size={14} /> {errors.reasonForVisit}
             </span>
           )}
         </label>

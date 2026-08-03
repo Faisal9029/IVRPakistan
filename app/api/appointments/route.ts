@@ -10,7 +10,7 @@ export async function POST(request: Request) {
     )
   }
 
-  const { fullName, phone, message, website } = body
+  const { fullName, phone, reasonForVisit, message, website } = body
 
   // Honeypot: real users never see or fill this field. If it has a value,
   // the submission is almost certainly a bot — pretend success so the bot
@@ -22,9 +22,9 @@ export async function POST(request: Request) {
     )
   }
 
-  if (!fullName || !phone) {
+  if (!fullName || !phone || !reasonForVisit) {
     return NextResponse.json(
-      { message: "Please provide your name and phone number." },
+      { message: "Please provide your name, phone number, and reason for the appointment." },
       { status: 400 }
     )
   }
@@ -33,7 +33,7 @@ export async function POST(request: Request) {
     {
       message:
         "Your appointment request has been received. We will contact you shortly to confirm the details.",
-      data: { fullName, phone, message },
+      data: { fullName, phone, reasonForVisit, message },
     },
     { status: 200 }
   )
