@@ -7,10 +7,13 @@ import { phone as clinicPhone } from "../lib/siteInfo";
 const initialForm = {
   fullName: "",
   phone: "",
+  city: "",
   reasonForVisit: "",
   message: "",
   website: "", // honeypot — real users never see or fill this
 };
+
+const cityOptions = ["Karachi", "Lahore", "Peshawar"];
 
 const reasonOptions = [
   "OPD Consultation",
@@ -19,7 +22,7 @@ const reasonOptions = [
   "Other Services",
 ];
 
-type FormErrors = Partial<Record<"fullName" | "phone" | "reasonForVisit", string>>;
+type FormErrors = Partial<Record<"fullName" | "phone" | "city" | "reasonForVisit", string>>;
 
 function validate(data: typeof initialForm): FormErrors {
   const errors: FormErrors = {};
@@ -35,6 +38,10 @@ function validate(data: typeof initialForm): FormErrors {
     errors.phone = "Please enter your phone number.";
   } else if (phoneDigits.length < 7) {
     errors.phone = "Enter a valid phone number, e.g. +92 300 1234567.";
+  }
+
+  if (!data.city) {
+    errors.city = "Please select which city you need the appointment in.";
   }
 
   if (!data.reasonForVisit) {
@@ -101,7 +108,7 @@ export default function AppointmentForm() {
       );
       setStatus("success");
 
-      const message = `New Appointment Request:\n\nName: ${formData.fullName}\nPhone: ${formData.phone}\nAppointment For: ${formData.reasonForVisit}\nMessage: ${formData.message || "(none provided)"}`;
+      const message = `New Appointment Request:\n\nName: ${formData.fullName}\nPhone: ${formData.phone}\nCity: ${formData.city}\nAppointment For: ${formData.reasonForVisit}\nMessage: ${formData.message || "(none provided)"}`;
 
       const whatsappURL = `https://wa.me/${clinicPhone.whatsapp}?text=${encodeURIComponent(message)}`;
 
@@ -185,6 +192,32 @@ export default function AppointmentForm() {
           {errors.phone && (
             <span id="phone-error" className="mt-1.5 flex items-center gap-1.5 text-small text-red-600">
               <AlertCircle size={14} /> {errors.phone}
+            </span>
+          )}
+        </label>
+
+        <label className="flex flex-col text-small font-medium text-navy dark:text-slate-300">
+          City *
+          <select
+            name="city"
+            value={formData.city}
+            onChange={handleChange}
+            className={`${inputClass} ${errors.city ? inputErrorClass : ""}`}
+            aria-invalid={!!errors.city}
+            aria-describedby={errors.city ? "city-error" : undefined}
+          >
+            <option value="" disabled>
+              Select the city for your appointment
+            </option>
+            {cityOptions.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+          {errors.city && (
+            <span id="city-error" className="mt-1.5 flex items-center gap-1.5 text-small text-red-600">
+              <AlertCircle size={14} /> {errors.city}
             </span>
           )}
         </label>
