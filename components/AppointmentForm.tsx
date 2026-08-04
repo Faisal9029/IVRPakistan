@@ -13,7 +13,7 @@ const initialForm = {
   website: "", // honeypot — real users never see or fill this
 };
 
-const cityOptions = ["Karachi", "Lahore", "Peshawar"];
+const cityOptions = ["Karachi", "Lahore", "Peshawar (Coming Soon)"];
 
 const reasonOptions = [
   "OPD Consultation",
