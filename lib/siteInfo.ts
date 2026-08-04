@@ -33,10 +33,10 @@ export const clinics: Clinic[] = [
     accent: "from-cyan-500 to-sky-400",
   },
   {
-    title: "Farooq Hospital, Lahore",
+    title: "Farooq Hospital",
     detail: "DHA Lahore",
     hours: "Every Sunday",
-    mapLink: "https://maps.app.goo.gl/j5gyBG1KbwFoq6T19?g_st=ac",
+    mapLink: "https://maps.app.goo.gl/i32TURUc8CVx2hq87?g_st=ac",
     accent: "from-sky-500 to-blue-600",
   },
 ];
