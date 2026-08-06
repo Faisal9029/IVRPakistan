@@ -8,10 +8,17 @@ const initialForm = {
   fullName: "",
   phone: "",
   city: "",
+  preferredDate: "",
   reasonForVisit: "",
   message: "",
   website: "", // honeypot — real users never see or fill this
 };
+
+function todayISODate() {
+  const now = new Date();
+  const offset = now.getTimezoneOffset();
+  return new Date(now.getTime() - offset * 60000).toISOString().slice(0, 10);
+}
 
 const cityOptions = ["Karachi", "Lahore", "Peshawar (Coming Soon)"];
 
@@ -22,7 +29,9 @@ const reasonOptions = [
   "Other Services",
 ];
 
-type FormErrors = Partial<Record<"fullName" | "phone" | "city" | "reasonForVisit", string>>;
+type FormErrors = Partial<
+  Record<"fullName" | "phone" | "city" | "preferredDate" | "reasonForVisit", string>
+>;
 
 function validate(data: typeof initialForm): FormErrors {
   const errors: FormErrors = {};
@@ -42,6 +51,12 @@ function validate(data: typeof initialForm): FormErrors {
 
   if (!data.city) {
     errors.city = "Please select which city you need the appointment in.";
+  }
+
+  if (!data.preferredDate) {
+    errors.preferredDate = "Please select your preferred appointment date.";
+  } else if (data.preferredDate < todayISODate()) {
+    errors.preferredDate = "Please choose today or a future date.";
   }
 
   if (!data.reasonForVisit) {
@@ -108,7 +123,7 @@ export default function AppointmentForm() {
       );
       setStatus("success");
 
-      const message = `New Appointment Request:\n\nName: ${formData.fullName}\nPhone: ${formData.phone}\nCity: ${formData.city}\nAppointment For: ${formData.reasonForVisit}\nMessage: ${formData.message || "(none provided)"}`;
+      const message = `New Appointment Request:\n\nName: ${formData.fullName}\nPhone: ${formData.phone}\nCity: ${formData.city}\nPreferred Date: ${formData.preferredDate}\nAppointment For: ${formData.reasonForVisit}\nMessage: ${formData.message || "(none provided)"}`;
 
       const whatsappURL = `https://wa.me/${clinicPhone.whatsapp}?text=${encodeURIComponent(message)}`;
 
@@ -218,6 +233,25 @@ export default function AppointmentForm() {
           {errors.city && (
             <span id="city-error" className="mt-1.5 flex items-center gap-1.5 text-small text-red-600">
               <AlertCircle size={14} /> {errors.city}
+            </span>
+          )}
+        </label>
+
+        <label className="flex flex-col text-small font-medium text-navy dark:text-slate-300">
+          Preferred Date *
+          <input
+            type="date"
+            name="preferredDate"
+            value={formData.preferredDate}
+            onChange={handleChange}
+            min={todayISODate()}
+            className={`${inputClass} ${errors.preferredDate ? inputErrorClass : ""}`}
+            aria-invalid={!!errors.preferredDate}
+            aria-describedby={errors.preferredDate ? "preferredDate-error" : undefined}
+          />
+          {errors.preferredDate && (
+            <span id="preferredDate-error" className="mt-1.5 flex items-center gap-1.5 text-small text-red-600">
+              <AlertCircle size={14} /> {errors.preferredDate}
             </span>
           )}
         </label>
