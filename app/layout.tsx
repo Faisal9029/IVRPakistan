@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import WhatsAppFloatingButton from "../components/WhatsAppFloatingButton";
+import ChatbotWidget from "../components/ChatbotWidget";
 import MotionProvider from "../components/MotionProvider";
 import { buildMetadata, SITE_NAME, SITE_URL } from "../lib/seo";
 import { clinics, email, phone } from "../lib/siteInfo";
@@ -76,6 +77,7 @@ export default function RootLayout({
         <MotionProvider>
           {children}
           <WhatsAppFloatingButton />
+          <ChatbotWidget />
         </MotionProvider>
         <Script
           async
