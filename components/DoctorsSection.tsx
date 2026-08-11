@@ -1,28 +1,38 @@
 ﻿import Image from "next/image";
+import { getTranslations } from "next-intl/server";
 import { BriefcaseMedical, MapPin, Star } from "lucide-react";
 
-const doctors = [
-  {
-    name: "Dr. Vicky Kumar",
-    specialty: "Interventional Radiologist",
-    credentials: "MBBS, FCPS, Fellowship in Interventional Radiology",
-    description: "Penile Doppler ultrasound specialist with expert care and clear scheduling for patients in Karachi.",
-    expertise: ["Penile Doppler Ultrasound", "Vascular Interventions", "Pelvic & Urological Procedures", "Oncologic Treatments"],
-    location: "IDC Lab Lucky Star Saddar Karachi, near Shell petrol pump",
-    address: "Lucky Star Saddar Karachi, opposite Shell petrol pump",
-    rating: 4.9,
-    avatar: "/doctors.png",
-    mapLink: "https://maps.app.goo.gl/vn1kpJQeugRFbAKr5",
-  },
-];
+export default async function DoctorsSection() {
+  const t = await getTranslations("Doctors");
+  const tHero = await getTranslations("Hero");
+  const tCommon = await getTranslations("Common");
 
-export default function DoctorsSection() {
+  const doctors = [
+    {
+      name: "Dr. Vicky Kumar",
+      specialty: t("specialty"),
+      credentials: tHero("credentials"),
+      description: "Penile Doppler ultrasound specialist with expert care and clear scheduling for patients in Karachi.",
+      expertise: [
+        t("expertiseDoppler"),
+        t("expertiseVascular"),
+        t("expertisePelvic"),
+        t("expertiseOncologic"),
+      ],
+      location: "IDC Lab Lucky Star Saddar Karachi, near Shell petrol pump",
+      address: "Lucky Star Saddar Karachi, opposite Shell petrol pump",
+      rating: 4.9,
+      avatar: "/doctors.png",
+      mapLink: "https://maps.app.goo.gl/vn1kpJQeugRFbAKr5",
+    },
+  ];
+
   return (
     <section id="clinics" className="relative bg-white py-20 dark:bg-navy lg:py-24">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <span className="text-xs font-semibold uppercase tracking-[0.32em] text-primary">
-            Our Specialist
+            {t("eyebrow")}
           </span>
           <h2 className="mt-4 text-3xl font-bold tracking-tight text-navy dark:text-white sm:text-4xl">
             Dr. Vicky Kumar
@@ -49,7 +59,7 @@ export default function DoctorsSection() {
                     ))}
                   </div>
                   <p className="mt-2 text-lg font-semibold text-navy dark:text-white">{doctor.rating.toFixed(1)} / 5.0</p>
-                  <p className="text-sm text-muted dark:text-slate-400">Trusted by patients</p>
+                  <p className="text-sm text-muted dark:text-slate-400">{t("trustedByPatients")}</p>
                 </div>
 
                 <div>
@@ -62,7 +72,7 @@ export default function DoctorsSection() {
                     <div className="rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-800">
                       <div className="flex items-center gap-2 text-primary">
                         <BriefcaseMedical size={18} />
-                        <p className="text-sm font-semibold text-navy dark:text-white">Areas of Expertise</p>
+                        <p className="text-sm font-semibold text-navy dark:text-white">{t("expertiseHeading")}</p>
                       </div>
                       <div className="mt-3 flex flex-wrap gap-2">
                         {doctor.expertise.map((item) => (
@@ -78,7 +88,7 @@ export default function DoctorsSection() {
                     <div className="rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-800">
                       <div className="flex items-center gap-2 text-primary">
                         <MapPin size={18} />
-                        <p className="text-sm font-semibold text-navy dark:text-white">Location</p>
+                        <p className="text-sm font-semibold text-navy dark:text-white">{t("locationHeading")}</p>
                       </div>
                       <p className="mt-3 text-sm leading-7 text-muted dark:text-slate-400">{doctor.address}</p>
                     </div>
@@ -91,7 +101,7 @@ export default function DoctorsSection() {
                       rel="noreferrer"
                       className="inline-flex items-center justify-center rounded-2xl bg-primary px-5 py-3 text-sm font-semibold text-white transition hover:brightness-95"
                     >
-                      View Location
+                      {tCommon("viewLocation")}
                     </a>
                     <p className="text-sm text-muted dark:text-slate-400">{doctor.location}</p>
                   </div>

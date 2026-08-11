@@ -1,46 +1,49 @@
 import Image from "next/image";
+import { getTranslations } from "next-intl/server";
 import { Activity, HeartHandshake, ScanLine, Target, Zap } from "lucide-react";
 import Section from "./ui/Section";
 import Container from "./ui/Container";
 import Card from "./ui/Card";
 
-const expertise = [
-  {
-    icon: ScanLine,
-    title: "Image-Guided Precision",
-    desc: "Advanced interventions using CT, ultrasound, and fluoroscopy guidance.",
-  },
-  {
-    icon: Activity,
-    title: "Minimally Invasive Care",
-    desc: "Faster recovery and less discomfort than traditional surgery.",
-  },
-  {
-    icon: Target,
-    title: "Specialized Procedures",
-    desc: "From embolization to angioplasty and cancer-directed treatments.",
-  },
-];
+export default async function AboutSection() {
+  const t = await getTranslations("About");
 
-const whyChooseUs = [
-  {
-    icon: ScanLine,
-    title: "Advanced image-guided procedures",
-    desc: "Every intervention is planned and performed under real-time CT, ultrasound, or fluoroscopy guidance for precision and safety.",
-  },
-  {
-    icon: Zap,
-    title: "Fast recovery pathways",
-    desc: "Minimally invasive access means shorter procedures, outpatient options, and quicker return to daily life.",
-  },
-  {
-    icon: HeartHandshake,
-    title: "Personalized care",
-    desc: "Treatment plans are built around each patient's specific condition, with clear guidance from consultation through follow-up.",
-  },
-];
+  const expertise = [
+    {
+      icon: ScanLine,
+      title: t("expertise1Title"),
+      desc: "Advanced interventions using CT, ultrasound, and fluoroscopy guidance.",
+    },
+    {
+      icon: Activity,
+      title: t("expertise2Title"),
+      desc: "Faster recovery and less discomfort than traditional surgery.",
+    },
+    {
+      icon: Target,
+      title: t("expertise3Title"),
+      desc: "From embolization to angioplasty and cancer-directed treatments.",
+    },
+  ];
 
-export default function AboutSection() {
+  const whyChooseUs = [
+    {
+      icon: ScanLine,
+      title: t("why1Title"),
+      desc: "Every intervention is planned and performed under real-time CT, ultrasound, or fluoroscopy guidance for precision and safety.",
+    },
+    {
+      icon: Zap,
+      title: t("why2Title"),
+      desc: "Minimally invasive access means shorter procedures, outpatient options, and quicker return to daily life.",
+    },
+    {
+      icon: HeartHandshake,
+      title: t("why3Title"),
+      desc: "Treatment plans are built around each patient's specific condition, with clear guidance from consultation through follow-up.",
+    },
+  ];
+
   return (
     <Section id="about" className="bg-white dark:bg-navy">
       <Container>
@@ -60,10 +63,10 @@ export default function AboutSection() {
 
           <div>
             <span className="text-small font-semibold uppercase tracking-[0.32em] text-primary">
-              About Dr. Vicky Kumar
+              {t("eyebrow")}
             </span>
             <h2 className="mt-4 text-h2 font-bold tracking-tight text-navy dark:text-white">
-              Interventional Radiology Expertise in Karachi
+              {t("heading")}
             </h2>
             <p className="mt-3 text-small font-semibold uppercase tracking-[0.2em] text-muted dark:text-slate-400">
               MBBS, FCPS, Fellowship in Interventional Radiology
@@ -97,10 +100,10 @@ export default function AboutSection() {
         <div className="mt-16">
           <div className="mx-auto max-w-2xl text-center">
             <span className="text-small font-semibold uppercase tracking-[0.32em] text-primary">
-              Why Patients Choose IVR Pakistan
+              {t("whyEyebrow")}
             </span>
             <h3 className="mt-4 text-h3 font-semibold tracking-tight text-navy dark:text-white">
-              Modern treatment planning with comfort, clarity, and confidence.
+              {t("whyHeading")}
             </h3>
           </div>
 

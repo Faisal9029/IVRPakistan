@@ -2,6 +2,7 @@
 
 import { useId, useState } from "react";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { ArrowRight, ChevronDown, HelpCircle, type LucideIcon } from "lucide-react";
 import * as LucideIcons from "lucide-react";
 import Image from "next/image";
@@ -30,6 +31,7 @@ function resolveIcon(name?: string): LucideIcon {
 }
 
 function ServiceCard({ service }: { service: Service }) {
+  const tCommon = useTranslations("Common");
   const Icon = resolveIcon(service.icon);
 
   return (
@@ -67,7 +69,7 @@ function ServiceCard({ service }: { service: Service }) {
           href={`/services/${service.slug.current}`}
           className="mt-4 inline-flex items-center gap-1 text-small font-semibold text-primary hover:underline"
         >
-          Know More <ArrowRight size={14} />
+          {tCommon("knowMore")} <ArrowRight size={14} />
         </Link>
       </div>
     </Card>
@@ -75,6 +77,7 @@ function ServiceCard({ service }: { service: Service }) {
 }
 
 export default function ServicesSectionClient({ categories }: ServicesSectionClientProps) {
+  const t = useTranslations("Services");
   const [openCategory, setOpenCategory] = useState(categories[0]?.name ?? "");
   const baseId = useId();
 
@@ -83,10 +86,10 @@ export default function ServicesSectionClient({ categories }: ServicesSectionCli
       <Container>
         <div className="mx-auto max-w-3xl text-center">
           <span className="text-small font-semibold uppercase tracking-[0.32em] text-primary">
-            Tap a category to reveal its procedures
+            {t("eyebrow")}
           </span>
           <h2 className="mt-4 text-h2 font-bold tracking-tight text-navy dark:text-white">
-            Advanced image-guided care organized by specialty
+            {t("heading")}
           </h2>
           <p className="mt-5 text-body text-muted dark:text-slate-300">
             Choose a category below to see the minimally invasive procedures available under it.

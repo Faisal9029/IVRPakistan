@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import { useTranslations } from "next-intl";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { SocialVideo } from "../sanity/lib/queries";
 import { socialLinks } from "../lib/siteInfo";
@@ -39,6 +40,7 @@ function getEmbedUrl(videoUrl: string, platform: SocialVideo["platform"]) {
 const youtubeLink = socialLinks.find((social) => social.label === "YouTube")?.href ?? "#";
 
 export default function VideoSectionClient({ videos }: VideoSectionClientProps) {
+  const t = useTranslations("Video");
   const scrollerRef = useRef<HTMLDivElement>(null);
 
   function scrollByCard(direction: 1 | -1) {
@@ -54,10 +56,10 @@ export default function VideoSectionClient({ videos }: VideoSectionClientProps) 
       <Container>
         <div className="mx-auto max-w-2xl text-center">
           <span className="text-small font-semibold uppercase tracking-[0.32em] text-primary">
-            Watch Our Channel
+            {t("eyebrow")}
           </span>
           <h2 className="mt-4 text-h2 font-bold tracking-tight text-navy dark:text-white">
-            IVR procedure videos that showcase modern image-guided treatment workflows
+            {t("heading")}
           </h2>
           <p className="mt-6 text-body text-muted dark:text-slate-300">
             Explore clear, professional procedure videos that guide patients through each stage of advanced interventional radiology care.
@@ -118,7 +120,7 @@ export default function VideoSectionClient({ videos }: VideoSectionClientProps) 
                 <button
                   type="button"
                   onClick={() => scrollByCard(-1)}
-                  aria-label="Scroll videos left"
+                  aria-label={t("scrollLeft")}
                   className="inline-flex h-10 w-10 items-center justify-center rounded-button border border-slate-200 bg-white text-navy transition hover:border-primary/30 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
                 >
                   <ChevronLeft size={18} />
@@ -126,7 +128,7 @@ export default function VideoSectionClient({ videos }: VideoSectionClientProps) 
                 <button
                   type="button"
                   onClick={() => scrollByCard(1)}
-                  aria-label="Scroll videos right"
+                  aria-label={t("scrollRight")}
                   className="inline-flex h-10 w-10 items-center justify-center rounded-button border border-slate-200 bg-white text-navy transition hover:border-primary/30 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
                 >
                   <ChevronRight size={18} />
@@ -136,7 +138,7 @@ export default function VideoSectionClient({ videos }: VideoSectionClientProps) 
 
             <div className="mt-3 flex items-center justify-center gap-2 text-small text-muted dark:text-slate-400 sm:hidden">
               <ChevronRight size={14} className="animate-pulse" />
-              Swipe to see more videos
+              {t("swipeHint")}
             </div>
           </div>
         )}
@@ -148,7 +150,7 @@ export default function VideoSectionClient({ videos }: VideoSectionClientProps) 
             rel="noreferrer"
             className="inline-flex items-center justify-center rounded-button border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-primary shadow-rest transition hover:border-primary dark:border-slate-700 dark:bg-slate-900"
           >
-            Watch more videos on our channel
+            {t("watchMore")}
           </a>
         </div>
       </Container>

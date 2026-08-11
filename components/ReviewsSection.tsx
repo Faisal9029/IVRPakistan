@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import Section from "./ui/Section";
 import Container from "./ui/Container";
 import ReviewsSectionClient from "./ReviewsSectionClient";
@@ -37,16 +38,17 @@ async function getReviews() {
 
 export default async function ReviewsSection() {
   const reviews = await getReviews();
+  const t = await getTranslations("Reviews");
 
   return (
     <Section id="reviews" className="bg-surface dark:bg-navy">
       <Container>
         <div className="mx-auto max-w-2xl text-center">
           <span className="text-small font-semibold uppercase tracking-[0.32em] text-primary">
-            Patient Testimonials
+            {t("eyebrow")}
           </span>
           <h2 className="mt-4 text-h2 font-bold tracking-tight text-navy dark:text-white">
-            What Our Patients Say
+            {t("heading")}
           </h2>
           <p className="mt-6 text-body text-muted dark:text-slate-300">
             Reviews from real patients, supported by Sanity content for text, image, audio, and video stories.

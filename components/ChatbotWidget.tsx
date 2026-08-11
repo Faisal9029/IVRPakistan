@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import {
   Bot,
   CalendarCheck,
@@ -33,85 +34,8 @@ const whatsappHref = `https://wa.me/${phone.whatsapp}?text=${encodeURIComponent(
   "Hello IVR Pakistan, I have a question."
 )}`;
 
-const quickOptions: QuickOption[] = [
-  {
-    id: "timings",
-    label: "Clinic timings",
-    icon: Clock3,
-    reply: (
-      <ul className="space-y-2">
-        {clinics.map((clinic) => (
-          <li key={clinic.title}>
-            <span className="font-semibold text-navy dark:text-white">{clinic.title}:</span>{" "}
-            {clinic.hours}
-          </li>
-        ))}
-      </ul>
-    ),
-  },
-  {
-    id: "locations",
-    label: "Clinic locations",
-    icon: MapPin,
-    reply: (
-      <ul className="space-y-3">
-        {clinics.map((clinic) => (
-          <li key={clinic.title}>
-            <p className="font-semibold text-navy dark:text-white">{clinic.title}</p>
-            <p>{clinic.detail}</p>
-            <a
-              href={clinic.mapLink}
-              target="_blank"
-              rel="noreferrer"
-              className="font-semibold text-primary hover:underline"
-            >
-              Open in Google Maps
-            </a>
-          </li>
-        ))}
-      </ul>
-    ),
-  },
-  {
-    id: "services",
-    label: "Services we offer",
-    icon: Stethoscope,
-    reply: (
-      <div className="space-y-2">
-        <p>
-          We offer image-guided, minimally invasive interventional radiology
-          procedures across vascular, pelvic, urological, and oncologic care —
-          including Penile Doppler Ultrasound.
-        </p>
-        <Link href="/#procedures" className="font-semibold text-primary hover:underline">
-          Browse all services →
-        </Link>
-      </div>
-    ),
-  },
-  {
-    id: "appointment",
-    label: "How do I book an appointment?",
-    icon: CalendarCheck,
-    reply: (
-      <div className="space-y-2">
-        <p>
-          Fill out our online appointment form with your name, phone, city,
-          preferred date, and reason for visit — our team will confirm on
-          WhatsApp shortly after.
-        </p>
-        <Link href="/appointment" className="font-semibold text-primary hover:underline">
-          Go to appointment form →
-        </Link>
-      </div>
-    ),
-  },
-];
-
-const greeting =
-  "Hi! I'm the IVR Pakistan assistant. Pick a question below, or chat with our team directly on WhatsApp.";
-
 export default function ChatbotWidget() {
+  const t = useTranslations("Chatbot");
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -120,6 +44,73 @@ export default function ChatbotWidget() {
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
   }, [messages]);
+
+  const quickOptions: QuickOption[] = [
+    {
+      id: "timings",
+      label: t("optionTimings"),
+      icon: Clock3,
+      reply: (
+        <ul className="space-y-2">
+          {clinics.map((clinic) => (
+            <li key={clinic.title}>
+              <span className="font-semibold text-navy dark:text-white">{clinic.title}:</span>{" "}
+              {clinic.hours}
+            </li>
+          ))}
+        </ul>
+      ),
+    },
+    {
+      id: "locations",
+      label: t("optionLocations"),
+      icon: MapPin,
+      reply: (
+        <ul className="space-y-3">
+          {clinics.map((clinic) => (
+            <li key={clinic.title}>
+              <p className="font-semibold text-navy dark:text-white">{clinic.title}</p>
+              <p>{clinic.detail}</p>
+              <a
+                href={clinic.mapLink}
+                target="_blank"
+                rel="noreferrer"
+                className="font-semibold text-primary hover:underline"
+              >
+                {t("openInMaps")}
+              </a>
+            </li>
+          ))}
+        </ul>
+      ),
+    },
+    {
+      id: "services",
+      label: t("optionServices"),
+      icon: Stethoscope,
+      reply: (
+        <div className="space-y-2">
+          <p>{t("servicesReply")}</p>
+          <Link href="/#procedures" className="font-semibold text-primary hover:underline">
+            {t("servicesLink")}
+          </Link>
+        </div>
+      ),
+    },
+    {
+      id: "appointment",
+      label: t("optionAppointment"),
+      icon: CalendarCheck,
+      reply: (
+        <div className="space-y-2">
+          <p>{t("appointmentReply")}</p>
+          <Link href="/appointment" className="font-semibold text-primary hover:underline">
+            {t("appointmentLink")}
+          </Link>
+        </div>
+      ),
+    },
+  ];
 
   const handleOptionClick = (option: QuickOption) => {
     setMessages((prev) => [
@@ -150,15 +141,15 @@ export default function ChatbotWidget() {
                 </span>
                 <div>
                   <p id={`${baseId}-title`} className="text-sm font-semibold">
-                    IVR Pakistan Assistant
+                    {t("title")}
                   </p>
-                  <p className="text-xs text-white/80">Usually replies instantly</p>
+                  <p className="text-xs text-white/80">{t("subtitle")}</p>
                 </div>
               </div>
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                aria-label="Close chat"
+                aria-label={t("closeLabel")}
                 className="inline-flex h-8 w-8 items-center justify-center rounded-full text-white/90 transition hover:bg-white/20"
               >
                 <X size={18} />
@@ -168,7 +159,7 @@ export default function ChatbotWidget() {
             <div ref={scrollRef} className="flex-1 space-y-4 overflow-y-auto px-5 py-4">
               <div className="flex justify-start">
                 <div className="max-w-[85%] rounded-2xl rounded-tl-sm bg-slate-100 px-4 py-3 text-small leading-6 text-navy dark:bg-slate-800 dark:text-slate-200">
-                  {greeting}
+                  {t("greeting")}
                 </div>
               </div>
 
@@ -215,7 +206,7 @@ export default function ChatbotWidget() {
                 className="mt-3 flex items-center justify-center gap-2 rounded-button bg-[#25D366] px-4 py-2.5 text-sm font-semibold text-white transition hover:brightness-95"
               >
                 <FaWhatsapp size={16} />
-                Chat with our team on WhatsApp
+                {t("whatsappCta")}
               </a>
             </div>
           </motion.div>
@@ -225,7 +216,7 @@ export default function ChatbotWidget() {
       <button
         type="button"
         onClick={() => setOpen((prev) => !prev)}
-        aria-label={open ? "Close chat assistant" : "Open chat assistant"}
+        aria-label={open ? t("closeAssistantLabel") : t("openLabel")}
         aria-expanded={open}
         className="fixed bottom-24 right-6 z-50 inline-flex h-14 w-14 items-center justify-center rounded-full bg-primary text-white shadow-xl shadow-slate-950/15 transition duration-200 hover:scale-105 hover:ring-4 hover:ring-primary/30"
       >

@@ -1,18 +1,22 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { Building2, CalendarCheck, Clock3, Mail, Phone } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
 import { clinics, phone as clinicPhone, socialLinks } from "../lib/siteInfo";
 import Button from "./ui/Button";
 
 export default function ContactSection() {
+  const t = useTranslations("Contact");
+  const tCommon = useTranslations("Common");
+
   return (
     <section id="contact" className="relative bg-[linear-gradient(135deg,#f8fcff_0%,#eef8ff_100%)] py-20 dark:bg-navy dark:bg-none lg:py-24">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
-          <span className="text-xs font-semibold uppercase tracking-[0.32em] text-primary">Get In Touch</span>
-          <h2 className="mt-4 text-3xl font-bold tracking-tight text-navy dark:text-white sm:text-4xl">Contact Us</h2>
+          <span className="text-xs font-semibold uppercase tracking-[0.32em] text-primary">{t("eyebrow")}</span>
+          <h2 className="mt-4 text-3xl font-bold tracking-tight text-navy dark:text-white sm:text-4xl">{t("heading")}</h2>
           <p className="mt-6 text-base leading-8 text-muted dark:text-slate-300">
             Book a consultation with Dr. Vicky Kumar or reach out for clinic details, procedure guidance, and scheduling support.
           </p>
@@ -25,8 +29,8 @@ export default function ContactSection() {
                 <Phone size={20} />
               </div>
               <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.3em] text-primary">Appointment Request</p>
-                <p className="text-lg font-semibold text-navy dark:text-white">Book your visit</p>
+                <p className="text-sm font-semibold uppercase tracking-[0.3em] text-primary">{t("appointmentRequestLabel")}</p>
+                <p className="text-lg font-semibold text-navy dark:text-white">{t("bookYourVisit")}</p>
               </div>
             </div>
 
@@ -38,7 +42,7 @@ export default function ContactSection() {
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Button href="/appointment" variant="primary" className="gap-2">
                 <CalendarCheck size={18} />
-                Book Appointment
+                {tCommon("bookAppointment")}
               </Button>
               <a
                 href={`https://wa.me/${clinicPhone.whatsapp}?text=Hello%20Dr.%20Vicky%20Kumar,%20I%20would%20like%20to%20schedule%20an%20interventional%20radiology%20consultation.`}
@@ -47,7 +51,7 @@ export default function ContactSection() {
                 className="inline-flex items-center justify-center gap-2 rounded-button border border-slate-200 bg-white px-6 py-3 text-sm font-semibold text-navy transition hover:border-primary/30 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
               >
                 <FaWhatsapp size={18} className="text-[#25D366]" />
-                WhatsApp Us
+                {t("whatsappUs")}
               </a>
             </div>
           </motion.div>
@@ -74,7 +78,7 @@ export default function ContactSection() {
                       <span>{clinic.hours}</span>
                     </div>
                     <a href={clinic.mapLink} target="_blank" rel="noreferrer" className="mt-4 inline-flex text-sm font-semibold text-primary hover:underline">
-                      Open Google Map &rarr;
+                      {tCommon("openGoogleMap")} &rarr;
                     </a>
                   </div>
                 ))}
@@ -87,8 +91,8 @@ export default function ContactSection() {
                   <Building2 size={20} />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold uppercase tracking-[0.3em] text-primary">Follow us</p>
-                  <p className="text-lg font-semibold text-navy dark:text-white">Join our community</p>
+                  <p className="text-sm font-semibold uppercase tracking-[0.3em] text-primary">{t("followUsLabel")}</p>
+                  <p className="text-lg font-semibold text-navy dark:text-white">{t("joinCommunity")}</p>
                 </div>
               </div>
               <div className="mt-6 flex flex-wrap gap-3">
@@ -107,7 +111,7 @@ export default function ContactSection() {
                 rel="noreferrer"
                 className="mt-6 inline-flex items-center justify-center rounded-button bg-success px-5 py-3 text-sm font-semibold text-white transition hover:brightness-95"
               >
-                WhatsApp Consultation
+                {tCommon("whatsappConsultation")}
               </a>
             </div>
           </div>

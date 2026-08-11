@@ -2,6 +2,7 @@
 
 import { useId, useState } from "react";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { ChevronDown } from "lucide-react";
 import Section from "./ui/Section";
 import Container from "./ui/Container";
@@ -48,6 +49,7 @@ const faqJsonLd = {
 };
 
 export default function FAQSection() {
+  const t = useTranslations("FAQ");
   const [openIndex, setOpenIndex] = useState<number | null>(0);
   const baseId = useId();
 
@@ -62,8 +64,8 @@ export default function FAQSection() {
       <Container className="max-w-5xl">
         <div className="rounded-card border border-white/70 bg-white/90 p-8 shadow-hover dark:border-slate-700 dark:bg-slate-900/90 sm:p-10 lg:p-12">
           <div className="text-center">
-            <p className="text-small font-semibold uppercase tracking-[0.32em] text-primary">Help Center</p>
-            <h2 className="mt-3 text-h2 font-bold text-navy dark:text-white">Frequently Asked Questions</h2>
+            <p className="text-small font-semibold uppercase tracking-[0.32em] text-primary">{t("eyebrow")}</p>
+            <h2 className="mt-3 text-h2 font-bold text-navy dark:text-white">{t("heading")}</h2>
             <p className="mx-auto mt-5 max-w-2xl text-body text-muted dark:text-slate-300">
               Quick answers regarding procedures, clinic visits, hours, and treatment planning.
             </p>

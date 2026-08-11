@@ -3,18 +3,11 @@
 import { useEffect, useRef } from "react";
 import { BadgeCheck, ChevronDown, ShieldCheck, Users } from "lucide-react";
 import { animate, motion, useInView, useMotionValue, useTransform } from "framer-motion";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Button from "./ui/Button";
 import { fadeInUp, stagger, viewportOnce } from "../lib/motion";
 import { phone, socialLinks } from "../lib/siteInfo";
-
-const highlights = ["Specialist-led care", "Minimally invasive procedures", "Karachi clinic access"];
-
-const stats: { label: string; target: number; icon: typeof BadgeCheck; format: (n: number) => string }[] = [
-  { label: "Years Experience", target: 10, icon: BadgeCheck, format: (n) => `${n}+` },
-  { label: "Procedures Completed", target: 5000, icon: Users, format: (n) => `${n.toLocaleString()}+` },
-  { label: "Karachi Clinics", target: 2, icon: ShieldCheck, format: (n) => `${n}` },
-];
 
 function StatCounter({
   target,
@@ -54,6 +47,17 @@ function StatCounter({
 }
 
 export default function Hero() {
+  const t = useTranslations("Hero");
+  const tCommon = useTranslations("Common");
+
+  const highlights = [t("highlight1"), t("highlight2"), t("highlight3")];
+
+  const stats: { label: string; target: number; icon: typeof BadgeCheck; format: (n: number) => string }[] = [
+    { label: t("statYears"), target: 10, icon: BadgeCheck, format: (n) => `${n}+` },
+    { label: t("statProcedures"), target: 5000, icon: Users, format: (n) => `${n.toLocaleString()}+` },
+    { label: t("statClinics"), target: 2, icon: ShieldCheck, format: (n) => `${n}` },
+  ];
+
   return (
     <section className="relative overflow-hidden bg-surface px-6 py-16 dark:bg-navy sm:px-8 lg:px-10 lg:py-24">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(14,165,233,0.15),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(14,165,233,0.12),transparent_25%)]" />
@@ -116,21 +120,21 @@ export default function Hero() {
                   variants={fadeInUp}
                   className="inline-flex rounded-button bg-white/95 px-4 py-2 text-xs font-bold uppercase tracking-[0.35em] text-primary shadow-rest dark:bg-slate-900/90"
                 >
-                  Trusted Interventional Radiology Center
+                  {t("eyebrow")}
                 </motion.span>
 
                 <motion.h1
                   variants={fadeInUp}
                   className="mt-6 text-h1 font-black tracking-tight text-navy dark:text-white"
                 >
-                  Dr. Vicky Kumar — Advanced Interventional Radiology Care in Karachi
+                  {t("headline")}
                 </motion.h1>
 
                 <motion.p
                   variants={fadeInUp}
                   className="mt-3 text-small font-semibold uppercase tracking-[0.2em] text-muted dark:text-slate-400"
                 >
-                  MBBS, FCPS, Fellowship in Interventional Radiology
+                  {t("credentials")}
                 </motion.p>
               </div>
             </div>
@@ -154,7 +158,7 @@ export default function Hero() {
 
             <motion.div variants={fadeInUp} className="mt-10 flex flex-col gap-4 sm:flex-row">
               <Button href="/appointment" variant="primary" className="px-6 py-4">
-                Book Appointment
+                {tCommon("bookAppointment")}
               </Button>
 
               <a
@@ -163,7 +167,7 @@ export default function Hero() {
                 rel="noreferrer"
                 className="inline-flex items-center justify-center rounded-button border border-slate-200 bg-white px-6 py-4 text-sm font-semibold text-navy shadow-rest transition duration-300 hover:border-primary hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
               >
-                WhatsApp Consultation
+                {tCommon("whatsappConsultation")}
               </a>
             </motion.div>
 
@@ -210,7 +214,7 @@ export default function Hero() {
                   <span className="-ml-3 h-9 w-9 rounded-full border-2 border-white bg-primary/70" />
                 </div>
 
-                <p className="mt-4 text-small font-semibold text-navy dark:text-white">Live Consultations</p>
+                <p className="mt-4 text-small font-semibold text-navy dark:text-white">{t("liveConsultations")}</p>
                 <p className="mt-1 text-small text-muted dark:text-slate-400">Dr. Vicky Kumar</p>
               </div>
             </div>
@@ -232,7 +236,7 @@ export default function Hero() {
                 </div>
 
                 <p className="mt-4 text-lead font-semibold text-navy dark:text-white">4.9 / 5.0</p>
-                <p className="mt-1 text-small text-muted dark:text-slate-400">Trusted by Patients</p>
+                <p className="mt-1 text-small text-muted dark:text-slate-400">{t("trustedByPatients")}</p>
               </div>
             </div>
           </motion.div>
@@ -249,7 +253,7 @@ export default function Hero() {
             href="#about"
             className="inline-flex flex-col items-center gap-1.5 rounded-button border border-slate-200 bg-white/80 px-5 py-2.5 text-small font-medium text-navy shadow-rest backdrop-blur transition hover:border-primary/30 dark:border-slate-700 dark:bg-slate-900/80 dark:text-white"
           >
-            Scroll down to explore more
+            {t("scrollDown")}
             <ChevronDown size={16} className="text-primary motion-safe:animate-bounce" aria-hidden="true" />
           </a>
         </motion.div>

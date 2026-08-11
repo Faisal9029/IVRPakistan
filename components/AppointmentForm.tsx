@@ -1,6 +1,7 @@
 "use client";
 
 import { AlertCircle, CheckCircle, Loader2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import { phone as clinicPhone } from "../lib/siteInfo";
 
@@ -20,47 +21,51 @@ function todayISODate() {
   return new Date(now.getTime() - offset * 60000).toISOString().slice(0, 10);
 }
 
-const cityOptions = ["Karachi", "Lahore", "Peshawar (Coming Soon)"];
+const cityOptions = [
+  { value: "Karachi", labelKey: "cityKarachi" },
+  { value: "Lahore", labelKey: "cityLahore" },
+  { value: "Peshawar (Coming Soon)", labelKey: "cityPeshawar" },
+] as const;
 
 const reasonOptions = [
-  "OPD Consultation",
-  "Penile Doppler Ultrasound",
-  "Interventional Radiology Procedure",
-  "Other Services",
-];
+  { value: "OPD Consultation", labelKey: "reasonOpd" },
+  { value: "Penile Doppler Ultrasound", labelKey: "reasonDoppler" },
+  { value: "Interventional Radiology Procedure", labelKey: "reasonProcedure" },
+  { value: "Other Services", labelKey: "reasonOther" },
+] as const;
 
 type FormErrors = Partial<
   Record<"fullName" | "phone" | "city" | "preferredDate" | "reasonForVisit", string>
 >;
 
-function validate(data: typeof initialForm): FormErrors {
+function validate(data: typeof initialForm, t: (key: string) => string): FormErrors {
   const errors: FormErrors = {};
 
   if (!data.fullName.trim()) {
-    errors.fullName = "Please enter your full name.";
+    errors.fullName = t("fullNameRequired");
   } else if (data.fullName.trim().length < 2) {
-    errors.fullName = "Name must be at least 2 characters.";
+    errors.fullName = t("fullNameTooShort");
   }
 
   const phoneDigits = data.phone.replace(/[^\d]/g, "");
   if (!data.phone.trim()) {
-    errors.phone = "Please enter your phone number.";
+    errors.phone = t("phoneRequired");
   } else if (phoneDigits.length < 7) {
-    errors.phone = "Enter a valid phone number, e.g. +92 300 1234567.";
+    errors.phone = t("phoneInvalid");
   }
 
   if (!data.city) {
-    errors.city = "Please select which city you need the appointment in.";
+    errors.city = t("cityRequired");
   }
 
   if (!data.preferredDate) {
-    errors.preferredDate = "Please select your preferred appointment date.";
+    errors.preferredDate = t("dateRequired");
   } else if (data.preferredDate < todayISODate()) {
-    errors.preferredDate = "Please choose today or a future date.";
+    errors.preferredDate = t("datePast");
   }
 
   if (!data.reasonForVisit) {
-    errors.reasonForVisit = "Please select what your appointment is for.";
+    errors.reasonForVisit = t("reasonRequired");
   }
 
   return errors;
@@ -71,6 +76,8 @@ const inputClass =
 const inputErrorClass = "border-red-300 focus:border-red-400 focus:ring-red-100";
 
 export default function AppointmentForm() {
+  const t = useTranslations("AppointmentForm");
+  const tCommon = useTranslations("Common");
   const [formData, setFormData] = useState(initialForm);
   const [errors, setErrors] = useState<FormErrors>({});
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
@@ -89,11 +96,11 @@ export default function AppointmentForm() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const validationErrors = validate(formData);
+    const validationErrors = validate(formData, t);
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       setStatus("error");
-      setFeedback("Please fix the highlighted fields below and try again.");
+      setFeedback(t("fixErrors"));
       return;
     }
 
@@ -110,17 +117,12 @@ export default function AppointmentForm() {
 
       if (!response.ok) {
         const err = await response.json().catch(() => null);
-        throw new Error(
-          err?.message || "Unable to submit your request — please try again in a moment."
-        );
+        throw new Error(err?.message || t("genericError"));
       }
 
       const result = await response.json();
 
-      setFeedback(
-        result.message ??
-          "Request received. We'll confirm your appointment on WhatsApp shortly."
-      );
+      setFeedback(result.message ?? t("defaultSuccess"));
       setStatus("success");
 
       const message = `New Appointment Request:\n\nName: ${formData.fullName}\nPhone: ${formData.phone}\nCity: ${formData.city}\nPreferred Date: ${formData.preferredDate}\nAppointment For: ${formData.reasonForVisit}\nMessage: ${formData.message || "(none provided)"}`;
@@ -134,11 +136,7 @@ export default function AppointmentForm() {
       }, 800);
     } catch (error) {
       setStatus("error");
-      setFeedback(
-        error instanceof Error
-          ? error.message
-          : "Something went wrong — please try again, or WhatsApp us directly."
-      );
+      setFeedback(error instanceof Error ? error.message : t("genericErrorFallback"));
     }
   };
 
@@ -146,16 +144,12 @@ export default function AppointmentForm() {
     <section className="mx-auto max-w-4xl rounded-card border border-slate-200 bg-white p-8 shadow-hover dark:border-slate-700 dark:bg-slate-900 sm:p-12">
       <div className="mb-10 text-center">
         <span className="text-small font-semibold uppercase tracking-[0.32em] text-primary">
-          Online Appointment
+          {t("eyebrow")}
         </span>
 
-        <h2 className="mt-4 text-h2 font-bold text-navy dark:text-white">
-          Book your visit in minutes
-        </h2>
+        <h2 className="mt-4 text-h2 font-bold text-navy dark:text-white">{t("heading")}</h2>
 
-        <p className="mt-3 text-body text-muted dark:text-slate-400">
-          Share your details and our team will confirm your appointment on WhatsApp shortly.
-        </p>
+        <p className="mt-3 text-body text-muted dark:text-slate-400">{t("subheading")}</p>
       </div>
 
       <form className="grid gap-6" onSubmit={handleSubmit} noValidate>
@@ -176,13 +170,13 @@ export default function AppointmentForm() {
         </div>
 
         <label className="flex flex-col text-small font-medium text-navy dark:text-slate-300">
-          Full Name *
+          {t("fullNameLabel")}
           <input
             name="fullName"
             value={formData.fullName}
             onChange={handleChange}
             className={`${inputClass} ${errors.fullName ? inputErrorClass : ""}`}
-            placeholder="Enter your full name"
+            placeholder={t("fullNamePlaceholder")}
             aria-invalid={!!errors.fullName}
             aria-describedby={errors.fullName ? "fullName-error" : undefined}
           />
@@ -194,13 +188,13 @@ export default function AppointmentForm() {
         </label>
 
         <label className="flex flex-col text-small font-medium text-navy dark:text-slate-300">
-          Phone Number *
+          {t("phoneLabel")}
           <input
             name="phone"
             value={formData.phone}
             onChange={handleChange}
             className={`${inputClass} ${errors.phone ? inputErrorClass : ""}`}
-            placeholder="+92 300 1234567"
+            placeholder={t("phonePlaceholder")}
             aria-invalid={!!errors.phone}
             aria-describedby={errors.phone ? "phone-error" : undefined}
           />
@@ -212,7 +206,7 @@ export default function AppointmentForm() {
         </label>
 
         <label className="flex flex-col text-small font-medium text-navy dark:text-slate-300">
-          City *
+          {t("cityLabel")}
           <select
             name="city"
             value={formData.city}
@@ -222,11 +216,11 @@ export default function AppointmentForm() {
             aria-describedby={errors.city ? "city-error" : undefined}
           >
             <option value="" disabled>
-              Select the city for your appointment
+              {t("cityPlaceholder")}
             </option>
             {cityOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
+              <option key={option.value} value={option.value}>
+                {t(option.labelKey)}
               </option>
             ))}
           </select>
@@ -238,7 +232,7 @@ export default function AppointmentForm() {
         </label>
 
         <label className="flex flex-col text-small font-medium text-navy dark:text-slate-300">
-          Preferred Date *
+          {t("dateLabel")}
           <input
             type="date"
             name="preferredDate"
@@ -257,7 +251,7 @@ export default function AppointmentForm() {
         </label>
 
         <label className="flex flex-col text-small font-medium text-navy dark:text-slate-300">
-          Appointment For *
+          {t("reasonLabel")}
           <select
             name="reasonForVisit"
             value={formData.reasonForVisit}
@@ -267,11 +261,11 @@ export default function AppointmentForm() {
             aria-describedby={errors.reasonForVisit ? "reasonForVisit-error" : undefined}
           >
             <option value="" disabled>
-              Select a reason for your visit
+              {t("reasonPlaceholder")}
             </option>
             {reasonOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
+              <option key={option.value} value={option.value}>
+                {t(option.labelKey)}
               </option>
             ))}
           </select>
@@ -283,14 +277,14 @@ export default function AppointmentForm() {
         </label>
 
         <label className="flex flex-col text-small font-medium text-navy dark:text-slate-300">
-          Message
+          {t("messageLabel")}
           <textarea
             name="message"
             value={formData.message}
             onChange={handleChange}
             rows={4}
             className={inputClass}
-            placeholder="Tell us about your symptoms, concerns, or preferred visit time..."
+            placeholder={t("messagePlaceholder")}
           />
         </label>
 
@@ -323,7 +317,7 @@ export default function AppointmentForm() {
             <CheckCircle className="h-5 w-5" />
           )}
 
-          {status === "loading" ? "Submitting..." : "Request Appointment"}
+          {status === "loading" ? tCommon("submitting") : tCommon("requestAppointment")}
         </button>
       </form>
     </section>

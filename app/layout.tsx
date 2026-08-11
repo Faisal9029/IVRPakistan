@@ -1,6 +1,8 @@
 ﻿import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getMessages } from "next-intl/server";
 import "./globals.css";
 import WhatsAppFloatingButton from "../components/WhatsAppFloatingButton";
 import ChatbotWidget from "../components/ChatbotWidget";
@@ -48,14 +50,19 @@ const medicalClinicJsonLd = {
   })),
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getLocale();
+  const messages = await getMessages();
+  const dir = locale === "ur" ? "rtl" : "ltr";
+
   return (
     <html
-      lang="en"
+      lang={locale}
+      dir={dir}
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
@@ -74,11 +81,13 @@ export default function RootLayout({
               "(function(){try{var s=localStorage.getItem('ivrp-theme');var d=s?s==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;if(d)document.documentElement.classList.add('dark');}catch(e){}})();",
           }}
         />
-        <MotionProvider>
-          {children}
-          <WhatsAppFloatingButton />
-          <ChatbotWidget />
-        </MotionProvider>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <MotionProvider>
+            {children}
+            <WhatsAppFloatingButton />
+            <ChatbotWidget />
+          </MotionProvider>
+        </NextIntlClientProvider>
         <Script
           async
           strategy="afterInteractive"

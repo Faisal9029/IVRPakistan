@@ -2,14 +2,17 @@
 
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import Image from "next/image";
 import { Menu, Phone, X } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
 import Button from "./ui/Button";
+import LanguageToggle from "./LanguageToggle";
 import { phone } from "../lib/siteInfo";
 
 export default function Navbar() {
+  const t = useTranslations("Navbar");
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -69,26 +72,28 @@ export default function Navbar() {
 
         <nav className="hidden items-center gap-6 text-sm font-medium text-navy dark:text-slate-200 lg:flex">
           <Link href="/" className="transition-colors duration-200 hover:text-primary">
-            Home
+            {t("home")}
           </Link>
           <Link href="/#about" className="transition-colors duration-200 hover:text-primary">
-            About
+            {t("about")}
           </Link>
           <Link href="/#procedures" className="transition-colors duration-200 hover:text-primary">
-            Services
+            {t("services")}
           </Link>
           <Link href="/blog" className="transition-colors duration-200 hover:text-primary">
-            Blogs
+            {t("blogs")}
           </Link>
           <Link href="/#clinics" className="transition-colors duration-200 hover:text-primary">
-            Clinics
+            {t("clinics")}
           </Link>
           <Link href="/#contact" className="transition-colors duration-200 hover:text-primary">
-            Contact
+            {t("contact")}
           </Link>
         </nav>
 
         <div className="hidden items-center gap-3 md:flex">
+          <LanguageToggle />
+
           <a
             href={`tel:${phone.tel}`}
             className="inline-flex items-center gap-2 rounded-button border border-slate-200 bg-white/90 px-4 py-2 text-sm font-semibold text-primary transition hover:bg-primary/5 dark:border-slate-700 dark:bg-slate-900"
@@ -101,21 +106,21 @@ export default function Navbar() {
             href={`https://wa.me/${phone.whatsapp}`}
             target="_blank"
             rel="noreferrer"
-            aria-label="Chat on WhatsApp"
+            aria-label={t("chatWhatsapp")}
             className="inline-flex h-10 w-10 items-center justify-center rounded-button bg-[#25D366] text-white transition hover:brightness-95"
           >
             <FaWhatsapp size={18} />
           </a>
 
           <Button href="/appointment" variant="primary" className="px-5 py-3">
-            Book Appointment
+            {t("bookAppointment")}
           </Button>
         </div>
 
         <button
           type="button"
           onClick={() => setMenuOpen((prev) => !prev)}
-          aria-label="Toggle navigation"
+          aria-label={t("toggleNav")}
           aria-expanded={menuOpen}
           className="inline-flex h-10 w-10 items-center justify-center rounded-button border border-slate-200 bg-white text-navy shadow-rest transition hover:border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-white lg:hidden"
         >
@@ -141,7 +146,7 @@ export default function Navbar() {
             <button
               type="button"
               onClick={() => setMenuOpen(false)}
-              aria-label="Close navigation"
+              aria-label={t("closeNav")}
               className="inline-flex h-10 w-10 items-center justify-center rounded-button border border-slate-200 text-navy dark:border-slate-700 dark:text-white"
             >
               <X size={20} />
@@ -154,46 +159,48 @@ export default function Navbar() {
               onClick={() => setMenuOpen(false)}
               className="rounded-card px-4 py-3 text-lg font-medium text-navy transition hover:bg-primary/5 dark:text-white"
             >
-              Home
+              {t("home")}
             </Link>
             <Link
               href="/#about"
               onClick={() => setMenuOpen(false)}
               className="rounded-card px-4 py-3 text-lg font-medium text-navy transition hover:bg-primary/5 dark:text-white"
             >
-              About
+              {t("about")}
             </Link>
             <Link
               href="/#procedures"
               onClick={() => setMenuOpen(false)}
               className="rounded-card px-4 py-3 text-lg font-medium text-navy transition hover:bg-primary/5 dark:text-white"
             >
-              Services
+              {t("services")}
             </Link>
             <Link
               href="/blog"
               onClick={() => setMenuOpen(false)}
               className="rounded-card px-4 py-3 text-lg font-medium text-navy transition hover:bg-primary/5 dark:text-white"
             >
-              Blogs
+              {t("blogs")}
             </Link>
             <Link
               href="/#clinics"
               onClick={() => setMenuOpen(false)}
               className="rounded-card px-4 py-3 text-lg font-medium text-navy transition hover:bg-primary/5 dark:text-white"
             >
-              Clinics
+              {t("clinics")}
             </Link>
             <Link
               href="/#contact"
               onClick={() => setMenuOpen(false)}
               className="rounded-card px-4 py-3 text-lg font-medium text-navy transition hover:bg-primary/5 dark:text-white"
             >
-              Contact
+              {t("contact")}
             </Link>
           </div>
 
           <div className="flex flex-col gap-3 border-t border-slate-200 px-6 py-6 dark:border-slate-800">
+            <LanguageToggle />
+
             <a
               href={`tel:${phone.tel}`}
               className="inline-flex items-center justify-center gap-2 rounded-button border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-primary dark:border-slate-700 dark:bg-slate-900"
@@ -208,10 +215,10 @@ export default function Navbar() {
               className="inline-flex items-center justify-center gap-2 rounded-button bg-[#25D366] px-4 py-3 text-sm font-semibold text-white"
             >
               <FaWhatsapp size={16} />
-              WhatsApp
+              {t("whatsapp")}
             </a>
             <Button href="/appointment" variant="primary">
-              Book Appointment
+              {t("bookAppointment")}
             </Button>
           </div>
         </div>
