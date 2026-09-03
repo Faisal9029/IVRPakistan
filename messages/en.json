@@ -103,6 +103,12 @@
     "appointmentReply": "Fill out our online appointment form with your name, phone, city, preferred date, and reason for visit — our team will confirm on WhatsApp shortly after.",
     "appointmentLink": "Go to appointment form →"
   },
+  "LatestBlogPopup": {
+    "eyebrow": "New Blog Post",
+    "readMore": "Read More",
+    "cancel": "Cancel",
+    "closeLabel": "Close"
+  },
   "Hero": {
     "eyebrow": "Trusted Interventional Radiology Center",
     "headline": "Dr. Vicky Kumar — Advanced Interventional Radiology Care in Karachi",

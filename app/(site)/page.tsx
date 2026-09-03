@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo";
+import { getPosts } from "@/lib/sanity";
+import LatestBlogPopup from "@/components/LatestBlogPopup";
 import Hero from "@/components/Hero";
 import VideoSection from "@/components/VideoSection";
 import AboutSection from "@/components/AboutSection";
@@ -19,9 +21,13 @@ export const metadata: Metadata = buildMetadata({
   path: "/",
 });
 
-export default function Home() {
+export default async function Home() {
+  const posts = await getPosts();
+  const latestPost = posts[0] ?? null;
+
   return (
     <main className="min-h-screen bg-[linear-gradient(180deg,#f6fbff_0%,#eef8ff_100%)] text-slate-950">
+      <LatestBlogPopup post={latestPost} />
       <Hero />
       <VideoSection />
       <AboutSection />

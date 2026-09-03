@@ -4,6 +4,7 @@ import Link from "next/link";
 import { CalendarDays } from "lucide-react";
 import { sanityFetch } from "@/lib/sanity";
 import { allPostSlugsQuery, postBySlugQuery, Post } from "@/sanity/lib/queries";
+import { formatDate, getPostDisplayDate } from "@/lib/blog";
 import { getImageDimensions, urlFor } from "@/sanity/lib/client";
 import { buildMetadata, SITE_NAME, SITE_URL } from "@/lib/seo";
 import Section from "@/components/ui/Section";
@@ -12,14 +13,6 @@ import Container from "@/components/ui/Container";
 type PageProps = {
   params: Promise<{ slug: string }>;
 };
-
-function formatDate(dateString: string) {
-  return new Date(dateString).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-}
 
 export async function generateStaticParams() {
   const slugs = await sanityFetch<{ slug: string }[]>(allPostSlugsQuery);
@@ -77,7 +70,7 @@ export default async function BlogPostPage({ params }: PageProps) {
     "@type": "BlogPosting",
     headline: post.title,
     description: post.excerpt,
-    datePublished: post.publishedDate,
+    datePublished: getPostDisplayDate(post),
     url: `${SITE_URL}/blog/${post.slug.current}`,
     image: post.featuredImage ? urlFor(post.featuredImage).width(1200).height(630).url() : undefined,
     publisher: { "@type": "Organization", name: SITE_NAME },
@@ -95,7 +88,7 @@ export default async function BlogPostPage({ params }: PageProps) {
         <Container className="max-w-3xl">
           <p className="flex items-center justify-center gap-1.5 text-small text-muted dark:text-slate-400">
             <CalendarDays size={14} />
-            {formatDate(post.publishedDate)}
+            {formatDate(getPostDisplayDate(post))}
           </p>
           <h1 className="mt-3 text-center text-h1 font-bold tracking-tight text-navy dark:text-white">
             {post.title}

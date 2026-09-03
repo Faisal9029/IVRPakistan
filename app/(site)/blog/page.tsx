@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, CalendarDays } from "lucide-react";
 import { getPosts } from "@/lib/sanity";
+import { formatDate, getPostDisplayDate } from "@/lib/blog";
 import { urlFor } from "@/sanity/lib/client";
 import { buildMetadata } from "@/lib/seo";
 import Section from "@/components/ui/Section";
@@ -14,14 +15,6 @@ export const metadata: Metadata = buildMetadata({
   description: "Patient education and procedure guides from IVR Pakistan Karachi.",
   path: "/blog",
 });
-
-function formatDate(dateString: string) {
-  return new Date(dateString).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-}
 
 export default async function BlogPage() {
   const posts = await getPosts();
@@ -66,7 +59,7 @@ export default async function BlogPage() {
                   <div className="flex flex-1 flex-col p-5">
                     <div className="flex items-center gap-1.5 text-small text-muted dark:text-slate-400">
                       <CalendarDays size={14} />
-                      {formatDate(post.publishedDate)}
+                      {formatDate(getPostDisplayDate(post))}
                     </div>
                     <h2 className="mt-2 text-lg font-semibold text-navy dark:text-white">
                       {post.title}

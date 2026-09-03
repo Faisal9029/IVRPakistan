@@ -143,6 +143,7 @@ export type Post = {
   body: string;
   featuredImage?: { _type: "image"; asset: { _ref: string } };
   publishedDate: string;
+  displayDate?: string;
 };
 
 export const allPostsQuery = `*[_type == "post"] | order(publishedDate desc){
@@ -152,7 +153,8 @@ export const allPostsQuery = `*[_type == "post"] | order(publishedDate desc){
   excerpt,
   body,
   featuredImage,
-  publishedDate
+  publishedDate,
+  displayDate
 }`;
 
 export const postBySlugQuery = `*[_type == "post" && slug.current == $slug][0]{
@@ -162,7 +164,8 @@ export const postBySlugQuery = `*[_type == "post" && slug.current == $slug][0]{
   excerpt,
   body,
   featuredImage,
-  publishedDate
+  publishedDate,
+  displayDate
 }`;
 
 export const allPostSlugsQuery = `*[_type == "post" && defined(slug.current)]{ 'slug': slug.current }`;

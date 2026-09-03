@@ -47,7 +47,14 @@ export const post = {
       name: "publishedDate",
       title: "Published Date",
       type: "datetime",
+      description: "Internal record of when this post was actually published. Not shown on the site — used for sorting only.",
       validation: (Rule: ValidationRule) => Rule.required(),
+    },
+    {
+      name: "displayDate",
+      title: "Display Date",
+      type: "date",
+      description: "The date shown publicly on the site for this post. Set this to whatever date you want visitors to see — it can be different from the actual publish date above.",
     },
   ],
   preview: {
