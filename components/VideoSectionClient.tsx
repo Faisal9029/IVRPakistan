@@ -56,6 +56,7 @@ export default function VideoSectionClient({ videos }: VideoSectionClientProps) 
             >
               {videos.map((video) => {
                 const isTikTok = video.platform === "tiktok";
+                const isFacebook = video.platform === "facebook";
                 const embedUrl = getVideoEmbedUrl(video.videoUrl, video.platform);
 
                 return (
@@ -65,7 +66,7 @@ export default function VideoSectionClient({ videos }: VideoSectionClientProps) 
                     className="w-72 shrink-0 snap-start overflow-hidden rounded-card border border-slate-200 bg-white shadow-rest transition duration-300 hover:-translate-y-1 hover:shadow-hover dark:border-slate-700 dark:bg-slate-900 sm:w-80"
                   >
                     <div
-                      className={`relative overflow-hidden bg-navy ${isTikTok ? "aspect-[9/16]" : "aspect-video"}`}
+                      className={`relative overflow-hidden bg-navy ${isTikTok || isFacebook ? "aspect-[9/16]" : "aspect-video"}`}
                     >
                       {embedUrl ? (
                         <iframe

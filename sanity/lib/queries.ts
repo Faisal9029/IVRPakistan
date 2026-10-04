@@ -14,7 +14,7 @@ export type PatientReview = {
 export type SocialVideo = {
   _id: string;
   title: string;
-  platform: "youtube" | "tiktok";
+  platform: "youtube" | "tiktok" | "facebook";
   videoUrl: string;
   thumbnail?: { _type: "image"; asset: { _ref: string } };
   description?: string;

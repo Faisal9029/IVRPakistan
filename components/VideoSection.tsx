@@ -1,5 +1,5 @@
 import { sanityFetch } from "../lib/sanity";
-import { resolveTikTokVideoUrls } from "../lib/video";
+import { resolveSocialVideoUrls } from "../lib/video";
 import { allVideosQuery, SocialVideo } from "../sanity/lib/queries";
 import VideoSectionClient from "./VideoSectionClient";
 
@@ -37,7 +37,7 @@ async function getVideos() {
 }
 
 export default async function VideoSection() {
-  const videos = await resolveTikTokVideoUrls(await getVideos());
+  const videos = await resolveSocialVideoUrls(await getVideos());
   const resolvedVideos = videos.length > 0 ? videos : fallbackVideos;
 
   return <VideoSectionClient videos={resolvedVideos} />;

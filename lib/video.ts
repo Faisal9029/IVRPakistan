@@ -1,4 +1,4 @@
-export type VideoPlatform = "youtube" | "tiktok";
+export type VideoPlatform = "youtube" | "tiktok" | "facebook";
 
 function isHost(hostname: string, domain: string) {
   return hostname === domain || hostname.endsWith(`.${domain}`);
@@ -6,6 +6,20 @@ function isHost(hostname: string, domain: string) {
 
 function isTikTokHost(hostname: string) {
   return isHost(hostname, "tiktok.com");
+}
+
+function isFacebookHost(hostname: string) {
+  return (
+    isHost(hostname, "facebook.com") ||
+    isHost(hostname, "fb.com") ||
+    isHost(hostname, "fb.watch")
+  );
+}
+
+function isPlatformHost(hostname: string, platform: VideoPlatform) {
+  if (platform === "tiktok") return isTikTokHost(hostname);
+  if (platform === "facebook") return isFacebookHost(hostname);
+  return isHost(hostname, "youtube.com") || hostname === "youtu.be";
 }
 
 export function getVideoEmbedUrl(videoUrl: string, platform?: VideoPlatform) {
@@ -20,7 +34,9 @@ export function getVideoEmbedUrl(videoUrl: string, platform?: VideoPlatform) {
         ? "tiktok"
         : isHost(hostname, "youtube.com") || hostname === "youtu.be"
           ? "youtube"
-          : undefined);
+          : isFacebookHost(hostname)
+            ? "facebook"
+            : undefined);
 
     if (resolvedPlatform === "tiktok") {
       const videoId =
@@ -41,19 +57,29 @@ export function getVideoEmbedUrl(videoUrl: string, platform?: VideoPlatform) {
       return videoId ? `https://www.youtube.com/embed/${videoId}` : null;
     }
 
+    if (resolvedPlatform === "facebook") {
+      if (!isFacebookHost(hostname)) return null;
+
+      const embedUrl = new URL("https://www.facebook.com/plugins/video.php");
+      embedUrl.searchParams.set("href", url.toString());
+      embedUrl.searchParams.set("show_text", "false");
+      embedUrl.searchParams.set("width", "500");
+      return embedUrl.toString();
+    }
+
     return videoUrl;
   } catch {
     return null;
   }
 }
 
-async function resolveTikTokShortUrl(videoUrl: string) {
+async function resolveShortUrl(videoUrl: string, platform: VideoPlatform) {
   let currentUrl: URL;
 
   try {
     currentUrl = new URL(videoUrl);
     if (
-      !isTikTokHost(currentUrl.hostname.toLowerCase()) ||
+      !isPlatformHost(currentUrl.hostname.toLowerCase(), platform) ||
       (currentUrl.protocol !== "https:" && currentUrl.protocol !== "http:")
     ) {
       return videoUrl;
@@ -81,7 +107,7 @@ async function resolveTikTokShortUrl(videoUrl: string) {
 
           const nextUrl = new URL(location, currentUrl);
           if (
-            !isTikTokHost(nextUrl.hostname.toLowerCase()) ||
+            !isPlatformHost(nextUrl.hostname.toLowerCase(), platform) ||
             (nextUrl.protocol !== "https:" && nextUrl.protocol !== "http:")
           ) {
             break;
@@ -92,20 +118,20 @@ async function resolveTikTokShortUrl(videoUrl: string) {
         }
 
         await response.body?.cancel();
-        if (response.ok && getVideoEmbedUrl(currentUrl.toString(), "tiktok")) {
+        if (response.ok && getVideoEmbedUrl(currentUrl.toString(), platform)) {
           return currentUrl.toString();
         }
         break;
       }
     } catch (error) {
-      console.warn(`Unable to resolve TikTok ${method} short link.`, error);
+      console.warn(`Unable to resolve ${platform} ${method} short link.`, error);
     }
   }
 
   return videoUrl;
 }
 
-export async function resolveTikTokVideoUrls<
+export async function resolveSocialVideoUrls<
   T extends { videoUrl?: string; platform?: VideoPlatform },
 >(videos: T[]): Promise<T[]> {
   const resolvedUrls = new Map<string, Promise<string>>();
@@ -114,20 +140,23 @@ export async function resolveTikTokVideoUrls<
     videos.map(async (video) => {
       if (!video.videoUrl) return video;
 
-      let isTikTok = video.platform === "tiktok";
-      if (!isTikTok && !video.platform) {
+      let platform = video.platform;
+      if (!platform) {
         try {
-          isTikTok = isTikTokHost(new URL(video.videoUrl).hostname.toLowerCase());
+          const hostname = new URL(video.videoUrl).hostname.toLowerCase();
+          if (isTikTokHost(hostname)) platform = "tiktok";
+          else if (isFacebookHost(hostname)) platform = "facebook";
         } catch {
-          isTikTok = false;
+          platform = undefined;
         }
       }
-      if (!isTikTok || getVideoEmbedUrl(video.videoUrl, "tiktok")) return video;
+      if (!platform || getVideoEmbedUrl(video.videoUrl, platform)) return video;
 
-      let resolvedUrl = resolvedUrls.get(video.videoUrl);
+      const cacheKey = `${platform}:${video.videoUrl}`;
+      let resolvedUrl = resolvedUrls.get(cacheKey);
       if (!resolvedUrl) {
-        resolvedUrl = resolveTikTokShortUrl(video.videoUrl);
-        resolvedUrls.set(video.videoUrl, resolvedUrl);
+        resolvedUrl = resolveShortUrl(video.videoUrl, platform);
+        resolvedUrls.set(cacheKey, resolvedUrl);
       }
 
       return { ...video, videoUrl: await resolvedUrl };

@@ -64,7 +64,7 @@ export const patientReview = {
       name: "videoUrl",
       title: "Video URL",
       type: "url",
-      description: "Optional YouTube or TikTok URL.",
+      description: "Optional YouTube, TikTok, or public Facebook video URL.",
     },
   ],
   preview: {

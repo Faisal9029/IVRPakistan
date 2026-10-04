@@ -21,6 +21,7 @@ export const socialVideo = {
         list: [
           { title: "YouTube", value: "youtube" },
           { title: "TikTok", value: "tiktok" },
+          { title: "Facebook", value: "facebook" },
         ],
       },
       validation: (Rule: ValidationRule) => Rule.required(),
@@ -30,7 +31,7 @@ export const socialVideo = {
       title: "Video URL",
       type: "url",
       validation: (Rule: ValidationRule) => Rule.required(),
-      description: "Paste the full YouTube or TikTok video URL.",
+      description: "Paste the public YouTube, TikTok, or Facebook Reel URL.",
     },
     {
       name: "thumbnail",
