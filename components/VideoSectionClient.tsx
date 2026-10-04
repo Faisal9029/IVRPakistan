@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { SocialVideo } from "../sanity/lib/queries";
 import { socialLinks } from "../lib/siteInfo";
+import { getVideoEmbedUrl } from "../lib/video";
 import Section from "./ui/Section";
 import Container from "./ui/Container";
 import Card from "./ui/Card";
@@ -12,30 +13,6 @@ import Card from "./ui/Card";
 type VideoSectionClientProps = {
   videos: SocialVideo[];
 };
-
-function getEmbedUrl(videoUrl: string, platform: SocialVideo["platform"]) {
-  try {
-    const url = new URL(videoUrl);
-    if (platform === "youtube") {
-      if (url.hostname.includes("youtu.be")) {
-        return `https://www.youtube.com/embed/${url.pathname.slice(1)}`;
-      }
-      if (url.hostname.includes("youtube.com") || url.hostname.includes("www.youtube.com")) {
-        return `https://www.youtube.com/embed/${url.searchParams.get("v") ?? url.pathname.split("/").filter(Boolean).pop() ?? ""}`;
-      }
-    }
-
-    if (platform === "tiktok") {
-      const match = videoUrl.match(/video\/(\d+)/);
-      const videoId = match?.[1] ?? url.pathname.split("/").filter(Boolean).pop();
-      return videoId ? `https://www.tiktok.com/embed/v2/${videoId}` : videoUrl;
-    }
-  } catch {
-    return videoUrl;
-  }
-
-  return videoUrl;
-}
 
 const youtubeLink = socialLinks.find((social) => social.label === "YouTube")?.href ?? "#";
 
@@ -79,7 +56,7 @@ export default function VideoSectionClient({ videos }: VideoSectionClientProps) 
             >
               {videos.map((video) => {
                 const isTikTok = video.platform === "tiktok";
-                const embedUrl = getEmbedUrl(video.videoUrl, video.platform);
+                const embedUrl = getVideoEmbedUrl(video.videoUrl, video.platform);
 
                 return (
                   <Card
@@ -90,14 +67,25 @@ export default function VideoSectionClient({ videos }: VideoSectionClientProps) 
                     <div
                       className={`relative overflow-hidden bg-navy ${isTikTok ? "aspect-[9/16]" : "aspect-video"}`}
                     >
-                      <iframe
-                        title={video.title}
-                        src={embedUrl}
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                        loading="lazy"
-                        className="h-full w-full"
-                      />
+                      {embedUrl ? (
+                        <iframe
+                          title={video.title}
+                          src={embedUrl}
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                          allowFullScreen
+                          loading="lazy"
+                          className="h-full w-full"
+                        />
+                      ) : (
+                        <a
+                          href={video.videoUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="absolute inset-0 flex items-center justify-center text-center font-semibold text-white underline"
+                        >
+                          Open video on {video.platform}
+                        </a>
+                      )}
                       <span className="absolute left-4 top-4 rounded-button bg-navy/80 px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-white">
                         {video.platform}
                       </span>

@@ -7,28 +7,9 @@ import { ChevronLeft, ChevronRight, Star } from "lucide-react";
 import Card from "./ui/Card";
 import { urlFor } from "../sanity/lib/client";
 import type { PatientReview } from "../sanity/lib/queries";
+import { getVideoEmbedUrl } from "../lib/video";
 
 const AUTO_ADVANCE_MS = 6000;
-
-function getEmbedUrl(url: string) {
-  try {
-    const parsed = new URL(url);
-    if (parsed.hostname.includes("youtube.com")) {
-      return `https://www.youtube.com/embed/${parsed.searchParams.get("v")}`;
-    }
-    if (parsed.hostname.includes("youtu.be")) {
-      return `https://www.youtube.com/embed/${parsed.pathname.slice(1)}`;
-    }
-    if (parsed.hostname.includes("tiktok.com")) {
-      const match = url.match(/video\/(\d+)/);
-      const videoId = match?.[1] ?? parsed.pathname.split("/").pop();
-      return `https://www.tiktok.com/embed/v2/${videoId}`;
-    }
-  } catch {
-    return url;
-  }
-  return url;
-}
 
 export default function ReviewsSectionClient({ reviews }: { reviews: PatientReview[] }) {
   const [index, setIndex] = useState(0);
@@ -59,6 +40,9 @@ export default function ReviewsSectionClient({ reviews }: { reviews: PatientRevi
 
   const review = reviews[index];
   if (!review) return null;
+  const reviewVideoEmbedUrl = review.videoUrl
+    ? getVideoEmbedUrl(review.videoUrl)
+    : null;
 
   return (
     <div
@@ -116,13 +100,24 @@ export default function ReviewsSectionClient({ reviews }: { reviews: PatientRevi
 
             {review.videoUrl ? (
               <div className="mt-4 overflow-hidden rounded-card border border-slate-200 dark:border-slate-700">
-                <iframe
-                  src={getEmbedUrl(review.videoUrl)}
-                  title={review.name}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                  className="h-56 w-full"
-                />
+                {reviewVideoEmbedUrl ? (
+                  <iframe
+                    src={reviewVideoEmbedUrl}
+                    title={review.name}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                    className="h-56 w-full"
+                  />
+                ) : (
+                  <a
+                    href={review.videoUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex h-56 items-center justify-center font-semibold text-primary underline"
+                  >
+                    Open video
+                  </a>
+                )}
               </div>
             ) : null}
           </Card>
