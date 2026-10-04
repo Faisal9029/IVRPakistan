@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import { resolveTikTokVideoUrls } from "../lib/video";
 import Section from "./ui/Section";
 import Container from "./ui/Container";
 import ReviewsSectionClient from "./ReviewsSectionClient";
@@ -37,7 +38,7 @@ async function getReviews() {
 }
 
 export default async function ReviewsSection() {
-  const reviews = await getReviews();
+  const reviews = await resolveTikTokVideoUrls(await getReviews());
   const t = await getTranslations("Reviews");
 
   return (
