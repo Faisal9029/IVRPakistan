@@ -16,6 +16,13 @@ function isFacebookHost(hostname: string) {
   );
 }
 
+function isFacebookShortLink(url: URL) {
+  return (
+    isHost(url.hostname.toLowerCase(), "fb.watch") ||
+    /^\/share\//i.test(url.pathname)
+  );
+}
+
 function isPlatformHost(hostname: string, platform: VideoPlatform) {
   if (platform === "tiktok") return isTikTokHost(hostname);
   if (platform === "facebook") return isFacebookHost(hostname);
@@ -59,6 +66,7 @@ export function getVideoEmbedUrl(videoUrl: string, platform?: VideoPlatform) {
 
     if (resolvedPlatform === "facebook") {
       if (!isFacebookHost(hostname)) return null;
+      if (isFacebookShortLink(url)) return null;
 
       const embedUrl = new URL("https://www.facebook.com/plugins/video.php");
       embedUrl.searchParams.set("href", url.toString());
@@ -141,16 +149,33 @@ export async function resolveSocialVideoUrls<
       if (!video.videoUrl) return video;
 
       let platform = video.platform;
+      let sourceUrl: URL | undefined;
       if (!platform) {
         try {
-          const hostname = new URL(video.videoUrl).hostname.toLowerCase();
+          sourceUrl = new URL(video.videoUrl);
+          const hostname = sourceUrl.hostname.toLowerCase();
           if (isTikTokHost(hostname)) platform = "tiktok";
           else if (isFacebookHost(hostname)) platform = "facebook";
         } catch {
           platform = undefined;
         }
+      } else {
+        try {
+          sourceUrl = new URL(video.videoUrl);
+        } catch {
+          sourceUrl = undefined;
+        }
       }
-      if (!platform || getVideoEmbedUrl(video.videoUrl, platform)) return video;
+      const needsFacebookResolution =
+        platform === "facebook" &&
+        sourceUrl !== undefined &&
+        isFacebookShortLink(sourceUrl);
+      if (
+        !platform ||
+        (!needsFacebookResolution && getVideoEmbedUrl(video.videoUrl, platform))
+      ) {
+        return video;
+      }
 
       const cacheKey = `${platform}:${video.videoUrl}`;
       let resolvedUrl = resolvedUrls.get(cacheKey);
