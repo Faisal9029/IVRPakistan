@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-export const SITE_NAME = "IVR Pakistan Karachi";
+export const SITE_NAME = "IVR PAKISTAN";
 export const SITE_URL = "https://ivr-pakistan.vercel.app";
 export const DEFAULT_OG_IMAGE = "/doctors.png";
 

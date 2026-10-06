@@ -7,7 +7,7 @@ import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Button from "./ui/Button";
 import { fadeInUp, stagger, viewportOnce } from "../lib/motion";
-import { phone, socialLinks } from "../lib/siteInfo";
+import { clinics, phone, socialLinks } from "../lib/siteInfo";
 
 function StatCounter({
   target,
@@ -55,7 +55,7 @@ export default function Hero() {
   const stats: { label: string; target: number; icon: typeof BadgeCheck; format: (n: number) => string }[] = [
     { label: t("statYears"), target: 10, icon: BadgeCheck, format: (n) => `${n}+` },
     { label: t("statProcedures"), target: 5000, icon: Users, format: (n) => `${n.toLocaleString()}+` },
-    { label: t("statClinics"), target: 2, icon: ShieldCheck, format: (n) => `${n}` },
+    { label: t("statClinics"), target: clinics.length, icon: ShieldCheck, format: (n) => `${n}` },
   ];
 
   return (

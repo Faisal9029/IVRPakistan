@@ -27,7 +27,7 @@ const faqs = [
   },
   {
     q: "What are your clinic hours?",
-    a: "IDC Lab Saddar Karachi: Mon, Tue, Fri & Sat, 7PM–8PM. National Medical Centre (NMC) DHA Karachi: Wed & Thu, 5PM–6PM.",
+    a: "Karachi clinics remain on their regular schedule: IDC Lab Saddar Karachi, Monday, Tuesday, Friday and Saturday, 7PM–8PM; National Medical Centre (NMC), DHA Karachi, Wednesday and Thursday, 5PM–6PM. Lahore and Islamabad visits are occasional and may change, so please confirm availability by phone or WhatsApp before visiting. The listed schedule is Farooq Hospital DHA Lahore on Sunday, 11AM–2PM, and Farooq Hospital Bahria Enclave Islamabad on Monday, 2PM–6PM. Islamabad walk-in is first come, first served when the clinic is running.",
   },
   {
     q: "Do you offer online consultations?",

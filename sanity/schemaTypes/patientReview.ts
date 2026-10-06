@@ -41,6 +41,35 @@ export const patientReview = {
       description: "Enter a number between 1 and 5.",
     },
     {
+      name: "status",
+      title: "Moderation Status",
+      type: "string",
+      options: {
+        list: [
+          { title: "Pending", value: "pending" },
+          { title: "Approved", value: "approved" },
+          { title: "Rejected", value: "rejected" },
+        ],
+        layout: "radio",
+      },
+      initialValue: "pending",
+      validation: (Rule: ValidationRule) => Rule.required(),
+      description: "Only Approved reviews appear on the public website.",
+    },
+    {
+      name: "consentGiven",
+      title: "Publication Consent",
+      type: "boolean",
+      description: "Patient agreed that this review may be displayed publicly.",
+      initialValue: false,
+    },
+    {
+      name: "submittedAt",
+      title: "Submitted At",
+      type: "datetime",
+      readOnly: true,
+    },
+    {
       name: "featured",
       title: "Featured",
       type: "boolean",

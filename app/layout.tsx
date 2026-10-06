@@ -23,7 +23,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   ...buildMetadata({
-    title: "IVR Pakistan Karachi | Interventional Radiology",
+    title: "IVR PAKISTAN | Interventional Radiology",
     description:
       "Dr. Vicky Kumar delivers advanced image-guided interventional radiology treatments in Karachi with minimally invasive care.",
     path: "/",

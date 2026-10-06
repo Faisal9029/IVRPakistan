@@ -24,6 +24,7 @@ function todayISODate() {
 const cityOptions = [
   { value: "Karachi", labelKey: "cityKarachi" },
   { value: "Lahore", labelKey: "cityLahore" },
+  { value: "Islamabad", labelKey: "cityIslamabad" },
   { value: "Peshawar (Coming Soon)", labelKey: "cityPeshawar" },
 ] as const;
 

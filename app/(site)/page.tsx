@@ -15,7 +15,7 @@ import ContactSection from "@/components/ContactSection";
 import WhatsAppNewsletterSection from "@/components/WhatsAppNewsletterSection";
 
 export const metadata: Metadata = buildMetadata({
-  title: "IVR Pakistan Karachi | Interventional Radiology",
+  title: "IVR PAKISTAN | Interventional Radiology",
   description:
     "Dr. Vicky Kumar delivers advanced image-guided interventional radiology treatments in Karachi with minimally invasive care.",
   path: "/",

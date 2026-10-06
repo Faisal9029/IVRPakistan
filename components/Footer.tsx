@@ -26,7 +26,7 @@ export default async function Footer() {
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div>
             <p className="text-small font-semibold uppercase tracking-[0.28em] text-cyan">
-              IVR Pakistan Karachi
+              IVR PAKISTAN
             </p>
             <p className="mt-4 max-w-xs text-small leading-7 text-slate-300">
               {t("tagline")}
@@ -94,14 +94,15 @@ export default async function Footer() {
               {clinics.map((clinic) => (
                 <li key={clinic.title}>
                   <p className="font-semibold text-slate-100">{clinic.title}</p>
-                  <p className="mt-1">{clinic.hours}</p>
-                  <a
+                   <p className="mt-1">{clinic.hours}</p>
+                   {clinic.notes ? <p className="mt-1 text-cyan/80">{clinic.notes}</p> : null}
+                   <a
                     href={clinic.mapLink}
                     target="_blank"
                     rel="noreferrer"
                     className="mt-1 inline-flex items-center gap-1 text-cyan transition hover:text-cyan/80"
                   >
-                    <MapPin size={13} /> {t("openMap")}
+                     <MapPin size={13} /> {clinic.linkLabel ?? t("openMap")}
                   </a>
                 </li>
               ))}

@@ -1,6 +1,7 @@
 ﻿import Image from "next/image";
 import { getTranslations } from "next-intl/server";
-import { BriefcaseMedical, MapPin, Star } from "lucide-react";
+import { BriefcaseMedical, Clock3, MapPin, Star } from "lucide-react";
+import { clinics } from "../lib/siteInfo";
 
 export default async function DoctorsSection() {
   const t = await getTranslations("Doctors");
@@ -39,6 +40,9 @@ export default async function DoctorsSection() {
           </h2>
           <p className="mt-6 text-base leading-8 text-muted dark:text-slate-300">
             A dedicated interventional radiologist delivering precise image-guided care with compassionate support and clear scheduling.
+          </p>
+          <p className="mx-auto mt-4 max-w-2xl rounded-card border border-amber-200 bg-amber-50 px-4 py-3 text-sm leading-6 text-amber-800 dark:border-amber-900/60 dark:bg-amber-950/30 dark:text-amber-300">
+            Lahore and Islamabad visits are occasional. Please confirm availability by phone or WhatsApp before visiting.
           </p>
         </div>
 
@@ -92,6 +96,20 @@ export default async function DoctorsSection() {
                       </div>
                       <p className="mt-3 text-sm leading-7 text-muted dark:text-slate-400">{doctor.address}</p>
                     </div>
+                  </div>
+
+                  <div className="mt-8 grid gap-3 sm:grid-cols-2">
+                    {clinics.map((clinic) => (
+                      <div key={clinic.title} className="rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-800">
+                        <p className="text-sm font-semibold text-navy dark:text-white">{clinic.title}</p>
+                        <p className="mt-1 text-sm leading-6 text-muted dark:text-slate-400">{clinic.detail}</p>
+                        <div className="mt-2 flex items-start gap-2 text-sm text-muted dark:text-slate-400">
+                          <Clock3 size={15} className="mt-0.5 shrink-0 text-primary" />
+                          <span>{clinic.hours}</span>
+                        </div>
+                        {clinic.notes ? <p className="mt-2 text-xs leading-5 text-primary dark:text-sky-300">{clinic.notes}</p> : null}
+                      </div>
+                    ))}
                   </div>
 
                   <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">

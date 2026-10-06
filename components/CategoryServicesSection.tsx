@@ -23,13 +23,16 @@ export default async function CategoryServicesSection() {
   return (
     <Section className="bg-white dark:bg-navy">
       <Container>
-        <div className="mx-auto max-w-2xl text-center">
-          <span className="text-small font-semibold uppercase tracking-[0.32em] text-primary">
-            Explore By Specialty
+        <div className="mx-auto max-w-3xl text-center">
+          <span className="text-small font-semibold uppercase tracking-[0.28em] text-primary">
+            Explore by specialty
           </span>
           <h2 className="mt-4 text-h2 font-bold tracking-tight text-navy dark:text-white">
-            Our Most Requested Treatment Categories
+            Treatment categories at a glance
           </h2>
+          <p className="mt-5 text-body leading-7 text-muted dark:text-slate-300">
+            Quickly scan our most requested areas of care, then open any procedure for complete details.
+          </p>
         </div>
 
         {categories.length === 0 ? (
@@ -38,7 +41,7 @@ export default async function CategoryServicesSection() {
             above, or contact us directly to ask about a specific condition.
           </p>
         ) : (
-          <div className="mt-16 space-y-16">
+          <div className="mt-12 grid gap-5 md:grid-cols-2">
             {categories.map((category, index) => {
               const Icon = resolveIcon(category.procedures[0]?.icon);
               const isReversed = index % 2 === 1;
@@ -48,53 +51,55 @@ export default async function CategoryServicesSection() {
               return (
                 <div
                   key={category.name}
-                  className={`grid items-center gap-10 lg:grid-cols-2 ${
-                    isReversed ? "lg:[&>*:first-child]:order-2" : ""
+                  className={`rounded-card border border-slate-200 bg-white p-5 shadow-rest transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-hover dark:border-slate-700 dark:bg-slate-900 ${
+                    isReversed ? "md:translate-y-2" : ""
                   }`}
                 >
-                  <div className="relative flex h-64 items-center justify-center overflow-hidden rounded-card border border-slate-200 bg-gradient-to-br from-primary/10 via-surface to-cyan/10 shadow-rest dark:border-slate-700 dark:from-primary/10 dark:via-slate-900 dark:to-cyan/10">
-                    <Icon size={72} className="text-primary/50" />
-                    <span className="absolute right-5 top-5 rounded-button bg-white/90 px-3 py-1 text-small font-semibold text-primary shadow-rest dark:bg-slate-900/90">
-                      {category.count} procedure{category.count === 1 ? "" : "s"}
-                    </span>
+                  <div className="flex items-start gap-4">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary dark:bg-primary/15">
+                      <Icon size={24} aria-hidden="true" />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <div className="flex flex-wrap items-start justify-between gap-3">
+                        <h3 className="text-lg font-semibold leading-snug text-navy dark:text-white">
+                          {category.name}
+                        </h3>
+                        <span className="shrink-0 rounded-button bg-primary/10 px-3 py-1 text-[0.72rem] font-semibold text-primary dark:bg-primary/15">
+                          {category.count} procedure{category.count === 1 ? "" : "s"}
+                        </span>
+                      </div>
+                      <p className="mt-2 text-small leading-6 text-muted dark:text-slate-300">
+                        Browse the most common treatments in this specialty.
+                      </p>
+                    </div>
                   </div>
 
-                  <div>
-                    <h3 className="text-h3 font-semibold tracking-tight text-navy dark:text-white">
-                      {category.name}
-                    </h3>
-                    <p className="mt-3 text-body text-muted dark:text-slate-300">
-                      {category.count} specialized procedure{category.count === 1 ? "" : "s"}{" "}
-                      under {category.name}, delivered using image-guided techniques for
-                      precise, minimally invasive treatment.
-                    </p>
+                  <ul className="mt-5 divide-y divide-slate-100 rounded-xl border border-slate-100 dark:divide-slate-800 dark:border-slate-800">
+                    {visibleProcedures.map((service) => (
+                      <li key={service._id}>
+                        <Link
+                          href={`/services/${service.slug.current}`}
+                          className="group flex items-start gap-3 px-3.5 py-3 text-small font-medium leading-5 text-navy transition hover:bg-primary/[0.04] hover:text-primary dark:text-slate-200 dark:hover:bg-white/[0.04]"
+                        >
+                          <ArrowRight
+                            size={15}
+                            className="mt-0.5 shrink-0 text-primary transition group-hover:translate-x-1"
+                            aria-hidden="true"
+                          />
+                          <span>{service.title}</span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
 
-                    <ul className="mt-6 space-y-3">
-                      {visibleProcedures.map((service) => (
-                        <li key={service._id}>
-                          <Link
-                            href={`/services/${service.slug.current}`}
-                            className="group flex items-center gap-2 text-small font-medium text-navy transition hover:text-primary dark:text-slate-200"
-                          >
-                            <ArrowRight
-                              size={14}
-                              className="shrink-0 text-primary transition group-hover:translate-x-1"
-                            />
-                            {service.title}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-
-                    {remaining > 0 && (
-                      <Link
-                        href="/#procedures"
-                        className="mt-5 inline-flex text-small font-semibold text-primary hover:underline"
-                      >
-                        +{remaining} more {category.name} procedure{remaining === 1 ? "" : "s"} →
-                      </Link>
-                    )}
-                  </div>
+                  {remaining > 0 && (
+                    <Link
+                      href="/#procedures"
+                      className="mt-4 inline-flex items-center gap-1 text-small font-semibold text-primary hover:underline"
+                    >
+                      +{remaining} more procedure{remaining === 1 ? "" : "s"} <ArrowRight size={14} />
+                    </Link>
+                  )}
                 </div>
               );
             })}

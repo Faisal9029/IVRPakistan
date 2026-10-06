@@ -62,7 +62,7 @@ export default function Navbar() {
           </div>
           <div className="min-w-0">
             <p className="truncate text-lg font-bold tracking-tight text-navy dark:text-white">
-              IVR Pakistan Karachi
+              IVR PAKISTAN
             </p>
             <p className="hidden truncate text-[11px] uppercase tracking-[0.35em] text-muted dark:text-slate-400 sm:block">
               Interventional Radiology Center
@@ -140,7 +140,7 @@ export default function Navbar() {
                 <Image src="/logo.png" alt="IVR Pakistan logo" fill sizes="40px" className="object-contain" />
               </div>
               <p className="text-base font-bold tracking-tight text-navy dark:text-white">
-                IVR Pakistan Karachi
+                IVR PAKISTAN
               </p>
             </Link>
             <button

@@ -50,12 +50,12 @@ export default function PrivacyPolicyPage() {
 
           <Heading>Information We Collect</Heading>
           <Paragraph>
-            When you submit our appointment or contact form, we collect the
-            details you provide — typically your name, phone number, and any
-            message describing your symptoms or preferred visit time. We only
-            use this information to get in touch with you about your appointment
-            request; we do not ask for or store sensitive medical records
-            through the website itself.
+            When you submit our appointment, contact, or patient review form, we
+            collect the details you provide — typically your name, phone number,
+            review, rating, and any message describing your symptoms or preferred
+            visit time. Patient reviews are stored for moderation and are only
+            displayed publicly after approval and publication consent. We do not
+            ask for or store sensitive medical records through the website itself.
           </Paragraph>
           <Paragraph>
             If you contact us directly via WhatsApp, phone, or email using the
@@ -92,6 +92,14 @@ export default function PrivacyPolicyPage() {
           <Paragraph>
             Your theme preference (light or dark mode) is saved locally in your
             browser only and is never sent to our servers.
+          </Paragraph>
+
+          <Heading>Patient Reviews</Heading>
+          <Paragraph>
+            A patient review is not published automatically. Our team reviews
+            submitted content first, and only approved reviews with publication
+            consent may appear on the website. You may contact us to request a
+            correction or removal of a review you submitted.
           </Paragraph>
 
           <Heading>How We Use Your Information</Heading>

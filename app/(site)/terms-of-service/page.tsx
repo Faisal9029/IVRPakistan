@@ -53,8 +53,8 @@ export default function TermsOfServicePage() {
             Kumar&apos;s interventional radiology services, clinic locations, and
             timings, and to let visitors request an appointment. You agree to
             use the site only for these lawful purposes and not to misuse the
-            appointment form, for example by submitting false, abusive, or
-            automated spam submissions.
+            appointment or patient review forms, for example by submitting false,
+            abusive, misleading, or automated spam submissions.
           </Paragraph>
 
           <Heading>Not a Substitute for Medical Advice</Heading>
@@ -66,6 +66,15 @@ export default function TermsOfServicePage() {
             Kumar or another qualified physician. No doctor-patient
             relationship is created simply by visiting this website or
             submitting the appointment form.
+          </Paragraph>
+
+          <Heading>Patient Reviews</Heading>
+          <Paragraph>
+            Reviews submitted through the website are user-generated content and
+            are subject to moderation. By selecting the publication consent box,
+            you allow IVR Pakistan to display the approved review on this website.
+            We may decline, edit for clarity, or remove content that is abusive,
+            misleading, inappropriate, or unrelated to the patient experience.
           </Paragraph>
 
           <Heading>Appointment Requests</Heading>

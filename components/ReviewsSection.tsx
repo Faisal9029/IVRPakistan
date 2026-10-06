@@ -3,6 +3,7 @@ import { resolveSocialVideoUrls } from "../lib/video";
 import Section from "./ui/Section";
 import Container from "./ui/Container";
 import ReviewsSectionClient from "./ReviewsSectionClient";
+import ReviewSubmissionForm from "./ReviewSubmissionForm";
 import { sanityFetch } from "../lib/sanity";
 import { allReviewsQuery, PatientReview } from "../sanity/lib/queries";
 
@@ -52,7 +53,7 @@ export default async function ReviewsSection() {
             {t("heading")}
           </h2>
           <p className="mt-6 text-body text-muted dark:text-slate-300">
-            Reviews from real patients, supported by Sanity content for text, image, audio, and video stories.
+            Reviews from real patients, published only after moderation and consent.
           </p>
         </div>
 
@@ -63,6 +64,8 @@ export default async function ReviewsSection() {
         ) : (
           <ReviewsSectionClient reviews={reviews} />
         )}
+
+        <ReviewSubmissionForm />
       </Container>
     </Section>
   );

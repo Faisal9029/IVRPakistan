@@ -67,6 +67,7 @@
     "cityRequired": "Please select which city you need the appointment in.",
     "cityKarachi": "Karachi",
     "cityLahore": "Lahore",
+    "cityIslamabad": "Islamabad",
     "cityPeshawar": "Peshawar (Coming Soon)",
     "dateLabel": "Preferred Date *",
     "dateRequired": "Please select your preferred appointment date.",
@@ -111,21 +112,21 @@
   },
   "Hero": {
     "eyebrow": "Trusted Interventional Radiology Center",
-    "headline": "Dr. Vicky Kumar — Advanced Interventional Radiology Care in Karachi",
+    "headline": "Dr. Vicky Kumar — Advanced Interventional Radiology Care in Pakistan",
     "credentials": "MBBS, FCPS, Fellowship in Interventional Radiology",
     "highlight1": "Specialist-led care",
     "highlight2": "Minimally invasive procedures",
-    "highlight3": "Karachi clinic access",
+    "highlight3": "Clinic access across Pakistan",
     "statYears": "Years Experience",
     "statProcedures": "Procedures Completed",
-    "statClinics": "Karachi Clinics",
+    "statClinics": "Clinic Locations",
     "liveConsultations": "Live Consultations",
     "trustedByPatients": "Trusted by Patients",
     "scrollDown": "Scroll down to explore more"
   },
   "About": {
     "eyebrow": "About Dr. Vicky Kumar",
-    "heading": "Interventional Radiology Expertise in Karachi",
+    "heading": "Interventional Radiology Expertise in Pakistan",
     "expertise1Title": "Image-Guided Precision",
     "expertise2Title": "Minimally Invasive Care",
     "expertise3Title": "Specialized Procedures",
@@ -137,7 +138,10 @@
   },
   "Services": {
     "eyebrow": "Tap a category to reveal its procedures",
-    "heading": "Advanced image-guided care organized by specialty"
+    "heading": "Advanced image-guided care organized by specialty",
+    "searchLabel": "Search procedures",
+    "searchPlaceholder": "Search for a procedure, category, or treatment...",
+    "noResults": "No procedures match your search. Try another term."
   },
   "Doctors": {
     "eyebrow": "Our Specialist",
@@ -157,6 +161,21 @@
   "Reviews": {
     "eyebrow": "Patient Testimonials",
     "heading": "What Our Patients Say"
+  },
+  "ReviewForm": {
+    "heading": "Share your experience",
+    "subheading": "Your review will be checked by our team before it appears on the website.",
+    "nameLabel": "Your name",
+    "namePlaceholder": "Enter your name",
+    "ratingLabel": "Your rating",
+    "stars": "stars",
+    "reviewLabel": "Your review",
+    "reviewPlaceholder": "Tell us about your experience...",
+    "consent": "I agree that IVR Pakistan may publish this review on its website.",
+    "submit": "Submit review",
+    "submitting": "Submitting...",
+    "success": "Thank you. Your review has been submitted for approval.",
+    "error": "We could not submit your review. Please try again later."
   },
   "Video": {
     "eyebrow": "Watch Our Channel",

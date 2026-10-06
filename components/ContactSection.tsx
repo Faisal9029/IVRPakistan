@@ -77,8 +77,13 @@ export default function ContactSection() {
                       <Clock3 size={16} className="mt-0.5 text-primary" />
                       <span>{clinic.hours}</span>
                     </div>
+                    {clinic.notes ? (
+                      <p className="mt-3 rounded-xl bg-primary/5 px-3 py-2 text-sm leading-6 text-primary dark:bg-primary/10 dark:text-sky-300">
+                        {clinic.notes}
+                      </p>
+                    ) : null}
                     <a href={clinic.mapLink} target="_blank" rel="noreferrer" className="mt-4 inline-flex text-sm font-semibold text-primary hover:underline">
-                      {tCommon("openGoogleMap")} &rarr;
+                      {clinic.linkLabel ?? tCommon("openGoogleMap")} &rarr;
                     </a>
                   </div>
                 ))}

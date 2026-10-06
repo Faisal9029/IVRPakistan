@@ -13,7 +13,9 @@ export type Clinic = {
   title: string;
   detail: string;
   hours: string;
+  notes?: string;
   mapLink: string;
+  linkLabel?: string;
   accent: string;
 };
 
@@ -27,17 +29,27 @@ export const clinics: Clinic[] = [
   },
   {
     title: "National Medical Centre (NMC), DHA Karachi",
-    detail: "DHA Karachi",
+    detail: "A-5/A, National Highway, Phase 1, DHA, near Kala Pul, Korangi Road, Karachi",
     hours: "Wed & Thu - 5pm-6pm",
     mapLink: "https://share.google/qhLuVj34ZAdKAo37X",
     accent: "from-cyan-500 to-sky-400",
   },
   {
-    title: "Farooq Hospital",
-    detail: "DHA Lahore",
-    hours: "Every Sunday",
+    title: "Farooq Hospital DHA Lahore",
+    detail: "DHA Lahore, near Ghazi Road / Bhatta Chowk",
+    hours: "Sunday - 11am-2pm",
+    notes: "Please confirm availability by phone or WhatsApp before visiting, as the visit schedule may change.",
     mapLink: "https://maps.app.goo.gl/i32TURUc8CVx2hq87?g_st=ac",
     accent: "from-sky-500 to-blue-600",
+  },
+  {
+    title: "Farooq Hospital Bahria Enclave Islamabad",
+    detail: "Sector C, Bahria Enclave, Islamabad",
+    hours: "Monday - 2pm-6pm",
+    notes: "Please confirm availability by phone or WhatsApp before visiting. Walk-in is first come, first served when the clinic is running.",
+    mapLink: "https://www.facebook.com/farooqhospitalbahriaenclaveisb/",
+    linkLabel: "View hospital details",
+    accent: "from-indigo-500 to-violet-500",
   },
 ];
 

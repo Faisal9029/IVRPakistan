@@ -9,6 +9,9 @@ export type PatientReview = {
   displayOrder?: number;
   audioUrl?: string;
   videoUrl?: string;
+  status?: "pending" | "approved" | "rejected";
+  consentGiven?: boolean;
+  submittedAt?: string;
 };
 
 export type SocialVideo = {
@@ -38,7 +41,7 @@ export type Service = {
   featured: boolean;
 };
 
-export const allReviewsQuery = `*[_type == "patientReview"] | order(displayOrder asc, _createdAt desc){
+export const allReviewsQuery = `*[_type == "patientReview" && (!defined(status) || status == "approved") && (!defined(consentGiven) || consentGiven == true)] | order(displayOrder asc, _createdAt desc){
   _id,
   name,
   patientImage,
@@ -48,7 +51,10 @@ export const allReviewsQuery = `*[_type == "patientReview"] | order(displayOrder
   featured,
   displayOrder,
   audioUrl,
-  videoUrl
+  videoUrl,
+  status,
+  consentGiven,
+  submittedAt
 }`;
 
 export const featuredReviewsQuery = `*[_type == "patientReview" && featured == true] | order(displayOrder asc){

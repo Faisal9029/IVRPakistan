@@ -23,7 +23,8 @@ export default function LatestBlogPopup({ post }: { post: Post | null }) {
     try {
       if (sessionStorage.getItem(`${SEEN_KEY_PREFIX}${post._id}`)) return;
     } catch {}
-    setOpen(true);
+    const timer = setTimeout(() => setOpen(true), 0);
+    return () => clearTimeout(timer);
   }, [post]);
 
   useEffect(() => {
