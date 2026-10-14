@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const SITE_NAME = "IVR PAKISTAN";
-export const SITE_URL = "https://ivr-pakistan.vercel.app";
+export const SITE_URL = "https://ivr-pakistan-clone.vercel.app";
 export const DEFAULT_OG_IMAGE = "/doctors.png";
 
 type BuildMetadataOptions = {
@@ -10,6 +10,7 @@ type BuildMetadataOptions = {
   path: string;
   ogImage?: string;
   type?: "website" | "article";
+  keywords?: string[];
 };
 
 export function buildMetadata({
@@ -18,6 +19,7 @@ export function buildMetadata({
   path,
   ogImage,
   type = "website",
+  keywords,
 }: BuildMetadataOptions): Metadata {
   const url = path === "/" ? SITE_URL : `${SITE_URL}${path}`;
   const image = ogImage ?? DEFAULT_OG_IMAGE;
@@ -25,6 +27,7 @@ export function buildMetadata({
   return {
     title,
     description,
+    ...(keywords?.length ? { keywords } : {}),
     alternates: { canonical: path },
     openGraph: {
       title,

@@ -15,10 +15,18 @@ import ContactSection from "@/components/ContactSection";
 import WhatsAppNewsletterSection from "@/components/WhatsAppNewsletterSection";
 
 export const metadata: Metadata = buildMetadata({
-  title: "IVR PAKISTAN | Interventional Radiology",
+  title: "Interventional Radiologist in Karachi, Pakistan | IVR Pakistan",
   description:
-    "Dr. Vicky Kumar delivers advanced image-guided interventional radiology treatments in Karachi with minimally invasive care.",
+    "IVR Pakistan provides image-guided interventional radiology in Karachi, including venous leak, uterine fibroid, prostate artery and varicocele embolization consultations.",
   path: "/",
+  keywords: [
+    "interventional radiologist Karachi",
+    "interventional radiology Pakistan",
+    "venous leak embolization Karachi",
+    "uterine fibroid embolization Karachi",
+    "prostate artery embolization Karachi",
+    "varicocele embolization Pakistan",
+  ],
 });
 
 export default async function Home() {

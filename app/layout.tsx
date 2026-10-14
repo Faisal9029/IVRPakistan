@@ -8,7 +8,7 @@ import WhatsAppFloatingButton from "../components/WhatsAppFloatingButton";
 import ChatbotWidget from "../components/ChatbotWidget";
 import MotionProvider from "../components/MotionProvider";
 import { buildMetadata, SITE_NAME, SITE_URL } from "../lib/seo";
-import { clinics, email, phone } from "../lib/siteInfo";
+import { clinics, email, phone, socialLinks } from "../lib/siteInfo";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,11 +23,22 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   ...buildMetadata({
-    title: "IVR PAKISTAN | Interventional Radiology",
+    title: "Interventional Radiologist in Karachi, Pakistan | IVR Pakistan",
     description:
-      "Dr. Vicky Kumar delivers advanced image-guided interventional radiology treatments in Karachi with minimally invasive care.",
+      "IVR Pakistan provides image-guided interventional radiology in Karachi, including venous leak, uterine fibroid, prostate artery and varicocele embolization consultations.",
     path: "/",
+    keywords: [
+      "interventional radiologist Karachi",
+      "interventional radiology Pakistan",
+      "venous leak treatment Karachi",
+      "uterine artery embolization Karachi",
+      "prostate artery embolization Pakistan",
+      "varicocele embolization Karachi",
+    ],
   }),
+  verification: {
+    google: "qqTUrtB8ME0EIrPFbu_aBxzYmPRZ5li-qRqsPgTuXxE",
+  },
 };
 
 const medicalClinicJsonLd = {
@@ -38,6 +49,8 @@ const medicalClinicJsonLd = {
   telephone: phone.tel,
   email,
   medicalSpecialty: "Interventional Radiology",
+  sameAs: socialLinks.map((social) => social.href),
+  areaServed: ["Karachi", "Pakistan"],
   department: clinics.map((clinic) => ({
     "@type": "MedicalClinic",
     name: clinic.title,

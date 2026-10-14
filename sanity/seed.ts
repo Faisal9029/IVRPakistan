@@ -80,6 +80,7 @@ const procedureItems = [
   { title: "Embolization", category: "Vascular Procedures - Arterial" },
   { title: "Uterine Fibroid Embolization (UFE)", category: "Vascular Procedures - Arterial" },
   { title: "Prostate Artery Embolization (PAE)", category: "Vascular Procedures - Arterial" },
+  { title: "Venous Leak Embolization", category: "Vascular Procedures - Venous" },
   { title: "Bronchial Artery Embolization (BAE)", category: "Vascular Procedures - Arterial" },
   { title: "Gastrointestinal Bleed Embolization", category: "Vascular Procedures - Arterial" },
   { title: "Trauma Embolization", category: "Vascular Procedures - Arterial" },
