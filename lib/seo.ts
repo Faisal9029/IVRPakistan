@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const SITE_NAME = "IVR PAKISTAN";
-export const SITE_URL = "https://ivr-pakistan-clone.vercel.app";
+export const SITE_URL = "https://ivrpakistan.com";
 export const DEFAULT_OG_IMAGE = "/doctors.png";
 
 type BuildMetadataOptions = {
