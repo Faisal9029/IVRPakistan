@@ -43,7 +43,7 @@ export default async function BlogSection() {
                     {post.featuredImage ? (
                       <Image
                         src={urlFor(post.featuredImage).width(640).url()}
-                        alt={post.title}
+                        alt={post.seo?.featuredImageAltText || post.title}
                         fill
                         sizes="(min-width: 1024px) 25vw, (min-width: 640px) 45vw, 90vw"
                         className="object-contain transition-transform duration-500 group-hover:scale-110"

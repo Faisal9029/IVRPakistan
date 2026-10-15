@@ -86,7 +86,7 @@ export default function LatestBlogPopup({ post }: { post: Post | null }) {
               <div className="relative h-44 w-full overflow-hidden bg-slate-50 dark:bg-slate-800">
                 <Image
                   src={urlFor(post.featuredImage).width(640).url()}
-                  alt={post.title}
+                  alt={post.seo?.featuredImageAltText || post.title}
                   fill
                   sizes="(min-width: 768px) 448px, 92vw"
                   className="object-contain"

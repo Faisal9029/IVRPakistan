@@ -150,6 +150,22 @@ export type Post = {
   featuredImage?: { _type: "image"; asset: { _ref: string } };
   publishedDate: string;
   displayDate?: string;
+  seo?: {
+    metaTitle?: string;
+    metaDescription?: string;
+    focusKeyword?: string;
+    secondaryKeywords?: string[];
+    canonicalUrl?: string;
+    featuredImageAltText?: string;
+    openGraphTitle?: string;
+    openGraphDescription?: string;
+    openGraphImage?: { _type: "image"; asset: { _ref: string } };
+    robots?: string;
+    language?: string;
+    contentType?: string;
+    category?: string;
+    tags?: string[];
+  };
 };
 
 export const allPostsQuery = `*[_type == "post"] | order(publishedDate desc){
@@ -160,7 +176,8 @@ export const allPostsQuery = `*[_type == "post"] | order(publishedDate desc){
   body,
   featuredImage,
   publishedDate,
-  displayDate
+  displayDate,
+  seo
 }`;
 
 export const postBySlugQuery = `*[_type == "post" && slug.current == $slug][0]{
@@ -171,7 +188,8 @@ export const postBySlugQuery = `*[_type == "post" && slug.current == $slug][0]{
   body,
   featuredImage,
   publishedDate,
-  displayDate
+  displayDate,
+  seo
 }`;
 
 export const allPostSlugsQuery = `*[_type == "post" && defined(slug.current)]{ 'slug': slug.current }`;

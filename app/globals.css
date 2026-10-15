@@ -3,13 +3,13 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  /* Colour — blue-cyan clinical identity. Every colour in the app must reference one of these. */
-  --color-navy: #0f172a;
-  --color-primary: #1677ff;
-  --color-cyan: #06b6d4;
-  --color-surface: #f5fbff;
-  --color-muted: #475569;
-  --color-success: #22c55e;
+  /* Premium plum/lavender clinical identity inspired by the reference layout. */
+  --color-navy: #27243a;
+  --color-primary: #6b2e83;
+  --color-cyan: #b989d3;
+  --color-surface: #f5f3fa;
+  --color-muted: #625f73;
+  --color-success: #22a968;
 
   /* Type — Geist (already loaded via next/font in app/layout.tsx) for both heading and body roles. */
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
