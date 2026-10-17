@@ -41,19 +41,17 @@ export default async function CategoryServicesSection() {
             above, or contact us directly to ask about a specific condition.
           </p>
         ) : (
-          <div className="mt-12 grid gap-5 md:grid-cols-2">
-            {categories.map((category, index) => {
+          <div className="mt-12 grid items-stretch gap-6 md:grid-cols-2">
+            {categories.map((category) => {
               const Icon = resolveIcon(category.procedures[0]?.icon);
-              const isReversed = index % 2 === 1;
+
               const visibleProcedures = category.procedures.slice(0, BULLETS_PER_CATEGORY);
               const remaining = category.count - visibleProcedures.length;
 
               return (
                 <div
                   key={category.name}
-                  className={`rounded-card border border-slate-200 bg-white p-5 shadow-rest transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-hover dark:border-slate-700 dark:bg-slate-900 ${
-                    isReversed ? "md:translate-y-2" : ""
-                  }`}
+                  className="flex h-full flex-col rounded-card border border-slate-200 bg-white p-6 shadow-rest transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-hover dark:border-slate-700 dark:bg-slate-900"
                 >
                   <div className="flex items-start gap-4">
                     <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary dark:bg-primary/15">
@@ -92,6 +90,7 @@ export default async function CategoryServicesSection() {
                     ))}
                   </ul>
 
+                  <div className="mt-auto pt-4">
                   {remaining > 0 && (
                     <Link
                       href="/#procedures"
@@ -100,6 +99,7 @@ export default async function CategoryServicesSection() {
                       +{remaining} more procedure{remaining === 1 ? "" : "s"} <ArrowRight size={14} />
                     </Link>
                   )}
+                  </div>
                 </div>
               );
             })}

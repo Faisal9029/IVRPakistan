@@ -180,7 +180,7 @@ export default function ServicesSectionClient({ categories }: ServicesSectionCli
                       initial="hidden"
                       animate="visible"
                       variants={stagger}
-                       className="grid gap-4 border-t border-slate-100 bg-slate-50/70 p-4 dark:border-slate-800 dark:bg-slate-950/30 sm:grid-cols-2 lg:grid-cols-3"
+                       className="grid gap-4 border-t border-primary/10 bg-[#fbf9fe] p-4 dark:border-slate-800 dark:bg-slate-950/30 sm:grid-cols-2 lg:grid-cols-3"
                     >
                       {category.procedures.map((service) => (
                         <motion.div key={service._id} variants={fadeInUp}>

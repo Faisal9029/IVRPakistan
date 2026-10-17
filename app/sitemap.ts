@@ -15,8 +15,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     .filter((service) => service.slug?.current)
     .map((service) => ({
       url: `${SITE_URL}/services/${service.slug.current}`,
-      changeFrequency: "monthly",
-      priority: 0.7,
+       changeFrequency: "monthly",
+       priority: 0.9,
     }));
 
   const postRoutes: MetadataRoute.Sitemap = posts
@@ -24,8 +24,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     .map((post) => ({
       url: `${SITE_URL}/blog/${post.slug.current}`,
       lastModified: post.publishedDate,
-      changeFrequency: "monthly",
-      priority: 0.5,
+       changeFrequency: "monthly",
+       priority: 0.4,
     }));
 
   return [...staticRoutes, ...serviceRoutes, ...postRoutes];

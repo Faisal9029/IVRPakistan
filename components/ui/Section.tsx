@@ -14,7 +14,7 @@ export default function Section({ id, children, className, muted }: SectionProps
   return (
     <section
       id={id}
-      className={cn("py-20 lg:py-24", muted && "bg-surface/60 dark:bg-white/[0.02]", className)}
+      className={cn("scroll-mt-24 border-t border-primary/[0.06] py-20 lg:py-28", muted && "bg-surface/60 dark:bg-white/[0.02]", className)}
     >
       {children}
     </section>

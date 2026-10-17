@@ -16,6 +16,7 @@ export type PatientReview = {
 
 export type SocialVideo = {
   _id: string;
+  _createdAt?: string;
   title: string;
   platform: "youtube" | "tiktok" | "facebook";
   videoUrl: string;
@@ -37,6 +38,17 @@ export type Service = {
   category?: string;
   benefits?: string[];
   proceduresIncluded?: string[];
+  seo?: {
+    metaTitle?: string;
+    metaDescription?: string;
+    focusKeyword?: string;
+    secondaryKeywords?: string[];
+    canonicalUrl?: string;
+    featuredImageAltText?: string;
+    openGraphTitle?: string;
+    openGraphDescription?: string;
+    robots?: string;
+  };
   displayOrder?: number;
   featured: boolean;
 };
@@ -70,8 +82,9 @@ export const featuredReviewsQuery = `*[_type == "patientReview" && featured == t
   videoUrl
 }`;
 
-export const allVideosQuery = `*[_type == "socialVideo"] | order(displayOrder asc, publishedDate desc){
+export const allVideosQuery = `*[_type == "socialVideo"] | order(coalesce(publishedDate, _createdAt) desc, _createdAt desc){
   _id,
+  _createdAt,
   title,
   platform,
   videoUrl,
@@ -82,8 +95,9 @@ export const allVideosQuery = `*[_type == "socialVideo"] | order(displayOrder as
   publishedDate
 }`;
 
-export const featuredVideosQuery = `*[_type == "socialVideo" && featured == true] | order(displayOrder asc, publishedDate desc){
+export const featuredVideosQuery = `*[_type == "socialVideo" && featured == true] | order(coalesce(publishedDate, _createdAt) desc, _createdAt desc){
   _id,
+  _createdAt,
   title,
   platform,
   videoUrl,
@@ -105,6 +119,7 @@ export const allServicesQuery = `*[_type == "service"] | order(displayOrder asc)
   category,
   benefits,
   proceduresIncluded,
+  seo,
   displayOrder,
   featured
 }`;
@@ -120,6 +135,7 @@ export const featuredServicesQuery = `*[_type == "service" && featured == true] 
   category,
   benefits,
   proceduresIncluded,
+  seo,
   displayOrder,
   featured
 }`;
@@ -135,6 +151,7 @@ export const serviceBySlugQuery = `*[_type == "service" && slug.current == $slug
   category,
   benefits,
   proceduresIncluded,
+  seo,
   displayOrder,
   featured
 }`;

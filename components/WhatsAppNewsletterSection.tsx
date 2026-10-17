@@ -3,9 +3,9 @@ import { ArrowRight, MessageCircleMore } from "lucide-react";
 
 export default function WhatsAppNewsletterSection() {
   return (
-    <section className="bg-[linear-gradient(135deg,#f8fcff_0%,#eef8ff_100%)] py-20 dark:bg-navy dark:bg-none lg:py-24">
+    <section className="bg-[linear-gradient(135deg,#ffffff_0%,#f1ebf7_100%)] py-20 dark:bg-navy dark:bg-none lg:py-24">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="rounded-[36px] border border-slate-200 bg-white p-8 shadow-[0_35px_90px_-35px_rgba(15,98,255,0.35)] dark:border-slate-700 dark:bg-slate-900 sm:p-10 lg:p-12">
+        <div className="rounded-[36px] border border-slate-200 bg-white p-8 shadow-[0_35px_90px_-35px_rgba(107,46,131,0.3)] dark:border-slate-700 dark:bg-slate-900 sm:p-10 lg:p-12">
           <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.32em] text-primary">

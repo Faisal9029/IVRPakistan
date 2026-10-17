@@ -28,7 +28,7 @@ export default function ProductsSection() {
     <section id="products" className="relative bg-white py-20 lg:py-24">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
-          <span className="text-xs font-semibold uppercase tracking-[0.32em] text-[#1677ff]">
+          <span className="text-xs font-semibold uppercase tracking-[0.32em] text-primary">
             Our Offerings
           </span>
           <h2 className="mt-4 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">
@@ -45,12 +45,12 @@ export default function ProductsSection() {
               key={product.name}
               className="rounded-3xl border border-slate-200 bg-slate-50 p-8 shadow-sm transition hover:shadow-md hover:border-[#1677ff]/20"
             >
-              <div className="inline-flex h-14 w-14 items-center justify-center rounded-3xl bg-[#eff6ff] text-[#1677ff]">
+              <div className="inline-flex h-14 w-14 items-center justify-center rounded-3xl bg-[#eff6ff] text-primary">
                 <Package size={28} />
               </div>
               <h3 className="mt-6 text-lg font-semibold text-slate-950">{product.name}</h3>
               <p className="mt-3 text-sm text-slate-600">{product.desc}</p>
-              <p className="mt-5 font-bold text-[#1677ff]">{product.price}</p>
+              <p className="mt-5 font-bold text-primary">{product.price}</p>
             </div>
           ))}
         </div>

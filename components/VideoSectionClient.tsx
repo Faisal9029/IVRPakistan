@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { SocialVideo } from "../sanity/lib/queries";
 import { socialLinks } from "../lib/siteInfo";
-import { getVideoEmbedUrl } from "../lib/video";
+import { getVideoEmbedUrl, getVideoThumbnailUrl } from "../lib/video";
 import Section from "./ui/Section";
 import Container from "./ui/Container";
 import Card from "./ui/Card";
@@ -55,20 +55,32 @@ export default function VideoSectionClient({ videos }: VideoSectionClientProps) 
               className="flex snap-x snap-mandatory items-start gap-6 overflow-x-auto pb-4"
             >
               {videos.map((video) => {
-                const isTikTok = video.platform === "tiktok";
-                const isFacebook = video.platform === "facebook";
-                const embedUrl = getVideoEmbedUrl(video.videoUrl, video.platform);
+                const isYoutube = video.platform === "youtube";
+                const embedUrl = isYoutube ? null : getVideoEmbedUrl(video.videoUrl, video.platform);
+                const thumbnailUrl = getVideoThumbnailUrl(video.videoUrl, video.platform);
 
                 return (
                   <Card
                     key={video._id}
                     data-video-card
-                    className="w-72 shrink-0 snap-start overflow-hidden rounded-card border border-slate-200 bg-white shadow-rest transition duration-300 hover:-translate-y-1 hover:shadow-hover dark:border-slate-700 dark:bg-slate-900 sm:w-80"
+                    className="flex h-full w-72 shrink-0 snap-start flex-col overflow-hidden rounded-card border border-slate-200 bg-white shadow-rest transition duration-300 hover:-translate-y-1 hover:shadow-hover dark:border-slate-700 dark:bg-slate-900 sm:w-80"
                   >
                     <div
-                      className={`relative overflow-hidden bg-navy ${isTikTok || isFacebook ? "aspect-[9/16]" : "aspect-video"}`}
+                      className="relative h-64 shrink-0 overflow-hidden bg-navy sm:h-72"
                     >
-                      {embedUrl ? (
+                      {isYoutube ? (
+                        <a
+                          href={video.videoUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          aria-label={`Open ${video.title} on YouTube`}
+                          className="group absolute inset-0 flex items-center justify-center overflow-hidden bg-[#27243a]"
+                        >
+                          {thumbnailUrl ? (
+                            <img src={thumbnailUrl} alt="" className="h-full w-full object-cover transition duration-500 group-hover:scale-105 group-hover:opacity-75" loading="lazy" />
+                          ) : null}
+                        </a>
+                      ) : embedUrl ? (
                         <iframe
                           title={video.title}
                           src={embedUrl}
@@ -91,10 +103,10 @@ export default function VideoSectionClient({ videos }: VideoSectionClientProps) 
                         {video.platform}
                       </span>
                     </div>
-                    <div className="p-6">
+                    <div className="flex min-h-[156px] flex-1 flex-col p-6">
                       <h3 className="text-lg font-semibold text-navy dark:text-white">{video.title}</h3>
                       {video.description ? (
-                        <p className="mt-3 text-small leading-6 text-muted dark:text-slate-400">
+                        <p className="mt-3 line-clamp-3 text-small leading-6 text-muted dark:text-slate-400">
                           {video.description}
                         </p>
                       ) : null}

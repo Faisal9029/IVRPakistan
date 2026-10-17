@@ -29,6 +29,25 @@ function isPlatformHost(hostname: string, platform: VideoPlatform) {
   return isHost(hostname, "youtube.com") || hostname === "youtu.be";
 }
 
+export function getVideoThumbnailUrl(videoUrl: string, platform?: VideoPlatform) {
+  if (platform !== "youtube") return null;
+
+  try {
+    const url = new URL(videoUrl);
+    const hostname = url.hostname.toLowerCase();
+    if (!isHost(hostname, "youtube.com") && hostname !== "youtu.be") return null;
+
+    const videoId =
+      (hostname === "youtu.be" ? url.pathname.slice(1).split("/")[0] : null) ??
+      url.searchParams.get("v") ??
+      url.pathname.match(/\/(?:embed|shorts|live)\/([^/]+)/)?.[1];
+
+    return videoId ? `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg` : null;
+  } catch {
+    return null;
+  }
+}
+
 export function getVideoEmbedUrl(videoUrl: string, platform?: VideoPlatform) {
   try {
     const url = new URL(videoUrl);

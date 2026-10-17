@@ -72,9 +72,10 @@ export default async function AboutSection() {
               MBBS, FCPS, Fellowship in Interventional Radiology
             </p>
             <p className="mt-4 text-body text-muted dark:text-slate-300">
-              Dr. Vicky Kumar is a dedicated Interventional Radiologist specializing in
+              Dr. Vicky Kumar is an experienced Interventional Radiologist specializing in
               minimally invasive, image-guided procedures for vascular, pelvic,
-              urological, and oncologic care.
+              urological, and oncologic care. Patients can review his credentials,
+              areas of expertise and available clinic locations before booking a consultation.
             </p>
 
             <div className="mt-8 grid gap-4 sm:grid-cols-3">

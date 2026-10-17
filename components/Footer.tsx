@@ -43,7 +43,7 @@ export default async function Footer() {
                     rel="noopener noreferrer"
                     aria-label={social.label}
                     title={social.label}
-                    className="inline-flex h-10 w-10 items-center justify-center rounded-card border border-slate-800 bg-slate-900 text-slate-300 transition hover:border-cyan hover:text-cyan"
+                    className="inline-flex h-10 w-10 items-center justify-center rounded-card border border-slate-700 bg-white/5 text-slate-300 transition hover:border-cyan hover:text-cyan"
                   >
                     <Icon size={17} />
                   </a>

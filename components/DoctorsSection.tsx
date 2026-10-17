@@ -39,10 +39,10 @@ export default async function DoctorsSection() {
             Dr. Vicky Kumar
           </h2>
           <p className="mt-6 text-base leading-8 text-muted dark:text-slate-300">
-            A dedicated interventional radiologist delivering precise image-guided care with compassionate support and clear scheduling.
+            Dr. Vicky Kumar is an experienced interventional radiologist providing specialist-led, image-guided care and clear treatment planning for patients seeking embolization and minimally invasive procedures.
           </p>
-          <p className="mx-auto mt-4 max-w-2xl rounded-card border border-amber-200 bg-amber-50 px-4 py-3 text-sm leading-6 text-amber-800 dark:border-amber-900/60 dark:bg-amber-950/30 dark:text-amber-300">
-            Lahore and Islamabad visits are occasional. Please confirm availability by phone or WhatsApp before visiting.
+          <p className="mx-auto mt-4 max-w-2xl rounded-card border border-primary/15 bg-primary/5 px-4 py-3 text-sm leading-6 text-primary dark:border-primary/30 dark:bg-primary/10 dark:text-cyan">
+            Please confirm clinic availability, procedure suitability and appointment details by phone or WhatsApp before visiting.
           </p>
         </div>
 
@@ -50,10 +50,10 @@ export default async function DoctorsSection() {
           {doctors.map((doctor) => (
             <div
               key={doctor.name}
-              className="overflow-hidden rounded-[36px] border border-slate-200 bg-slate-50 shadow-[0_30px_80px_-35px_rgba(15,98,255,0.35)] dark:border-slate-700 dark:bg-slate-900"
+              className="overflow-hidden rounded-[36px] border border-primary/10 bg-slate-50 shadow-[0_30px_80px_-35px_rgba(107,46,131,0.28)] dark:border-slate-700 dark:bg-slate-900"
             >
               <div className="grid gap-8 p-8 lg:grid-cols-[0.8fr_1.2fr] lg:p-10">
-                <div className="flex flex-col items-center justify-center rounded-[28px] bg-gradient-to-br from-[#dbeafe] to-[#cffafe] p-6 text-center dark:from-slate-800 dark:to-slate-800">
+                <div className="flex flex-col items-center justify-center rounded-[28px] bg-gradient-to-br from-[#f0e4f6] to-[#fbf9fe] p-6 text-center dark:from-slate-800 dark:to-slate-800">
                   <div className="relative h-40 w-40 overflow-hidden rounded-full border-4 border-white shadow-lg dark:border-slate-700">
                     <Image src={doctor.avatar} alt={doctor.name} fill sizes="160px" className="object-cover" priority />
                   </div>

@@ -1,6 +1,17 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import {
+  ArrowRight,
+  CalendarCheck,
+  CheckCircle2,
+  ClipboardCheck,
+  Clock3,
+  MapPin,
+  Phone,
+  ShieldCheck,
+  Sparkles,
+} from "lucide-react";
 import { getServices } from "@/lib/sanity";
 import { urlFor } from "@/sanity/lib/client";
 import { buildMetadata, SITE_URL } from "@/lib/seo";
@@ -86,16 +97,27 @@ export async function generateMetadata({
     };
   }
 
-  const seo = procedureSeo[service.slug.current];
+  const curatedSeo = procedureSeo[service.slug.current];
+  const cmsSeo = service.seo;
+  const keywords = [
+    ...(cmsSeo?.focusKeyword ? [cmsSeo.focusKeyword] : []),
+    ...(cmsSeo?.secondaryKeywords ?? []),
+    ...(curatedSeo?.keywords ?? []),
+  ];
 
   return buildMetadata({
-    title: seo?.title ?? `${service.title} in Karachi, Pakistan | IVR Pakistan`,
+    title: cmsSeo?.metaTitle ?? curatedSeo?.title ?? `${service.title} | IVR Pakistan`,
     description:
-      seo?.description ??
+      cmsSeo?.metaDescription ??
+      curatedSeo?.description ??
       service.shortDescription ??
-      "Learn more about this interventional radiology service in Karachi, Pakistan.",
+      `Learn more about ${service.title} and discuss suitability with IVR Pakistan.`,
     path: `/services/${service.slug.current}`,
-    keywords: seo?.keywords,
+    canonicalUrl: cmsSeo?.canonicalUrl,
+    keywords: keywords.length ? [...new Set(keywords)] : undefined,
+    ogTitle: cmsSeo?.openGraphTitle,
+    ogDescription: cmsSeo?.openGraphDescription,
+    robots: cmsSeo?.robots,
     ogImage: service.featuredImage
       ? urlFor(service.featuredImage).width(1200).height(630).url()
       : undefined,
@@ -135,12 +157,17 @@ export default async function ServicePage({
   }
 
   const seo = procedureSeo[service.slug.current];
+  const cmsSeo = service.seo;
   const procedureFaqs = seo?.questions ?? [];
+  const procedureDescription = cmsSeo?.metaDescription ?? seo?.overview ?? service.shortDescription ?? service.fullDescription;
+  const relatedServices = (await getServices())
+    .filter((item) => item.slug.current !== service.slug.current && item.category === service.category)
+    .slice(0, 3);
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "MedicalProcedure",
     name: service.title,
-    description: seo?.overview || service.shortDescription || service.fullDescription,
+    description: procedureDescription,
     url: `${SITE_URL}/services/${service.slug.current}`,
     bodyLocation: "Karachi, Pakistan",
     ...(service.category ? { procedureType: service.category } : {}),
@@ -158,7 +185,7 @@ export default async function ServicePage({
     : null;
 
   return (
-    <main className="min-h-screen bg-surface py-20 dark:bg-navy lg:py-24">
+    <main className="min-h-screen bg-[linear-gradient(180deg,#fbf9fe_0%,#f5f3fa_55%,#ffffff_100%)] py-12 dark:bg-navy sm:py-16 lg:py-20">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -173,158 +200,166 @@ export default async function ServicePage({
           }}
         />
       ) : null}
-      <div className="mx-auto max-w-6xl px-6 lg:px-8">
-        <div className="space-y-6 rounded-card border border-slate-200 bg-white p-8 shadow-hover dark:border-slate-700 dark:bg-slate-900">
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
-            <div className="max-w-3xl">
-              <p className="text-sm font-semibold uppercase tracking-[0.32em] text-primary">
-                Service Details
-              </p>
 
-              <h1 className="mt-4 text-4xl font-bold tracking-tight text-navy dark:text-white">
-                {service.title}
-              </h1>
+      <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+        <div className="mb-8 flex flex-wrap items-center gap-2 text-sm text-muted dark:text-slate-400">
+          <Link href="/" className="transition hover:text-primary">Home</Link>
+          <span aria-hidden="true">/</span>
+          <Link href="/#procedures" className="transition hover:text-primary">Procedures</Link>
+          <span aria-hidden="true">/</span>
+          <span className="font-medium text-navy dark:text-slate-200">{service.title}</span>
+        </div>
 
-              {service.category && (
-                <p className="mt-3 text-sm font-medium text-muted dark:text-slate-400">
-                  Category: {service.category}
-                </p>
+        <section className="overflow-hidden rounded-[32px] border border-primary/10 bg-white shadow-hover dark:border-slate-700 dark:bg-slate-900">
+          <div className="grid lg:grid-cols-[1.1fr_0.9fr]">
+            <div className="relative overflow-hidden bg-gradient-to-br from-[#27243a] via-[#432452] to-primary px-7 py-10 text-white sm:px-10 lg:px-12 lg:py-14">
+              <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-cyan/20 blur-3xl" />
+              <div className="relative">
+                <div className="flex flex-wrap items-center gap-3 text-sm font-semibold">
+                  <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1.5 ring-1 ring-white/20">
+                    <Sparkles size={15} aria-hidden="true" />
+                    Interventional Radiology
+                  </span>
+                  {service.category ? <span className="rounded-full bg-white/10 px-3 py-1.5 ring-1 ring-white/20">{service.category}</span> : null}
+                </div>
+                <h1 className="mt-7 max-w-3xl text-4xl font-black tracking-tight sm:text-5xl">{service.title}</h1>
+                <p className="mt-5 max-w-2xl text-base leading-8 text-white/80">{procedureDescription}</p>
+                <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                  <Link href="/appointment" className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-bold text-primary transition hover:bg-cyan hover:text-navy">
+                    <CalendarCheck size={17} aria-hidden="true" />
+                    Book a consultation
+                  </Link>
+                  <a href={`https://wa.me/${phone.whatsapp}`} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 rounded-full border border-white/30 px-5 py-3 text-sm font-bold text-white transition hover:bg-white/10">
+                    WhatsApp the clinic <ArrowRight size={17} aria-hidden="true" />
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div className="relative min-h-[280px] bg-[#f1ebf7] dark:bg-slate-800 lg:min-h-full">
+              {service.featuredImage ? (
+                <Image
+                  src={urlFor(service.featuredImage).width(1200).height(900).url()}
+                  alt={cmsSeo?.featuredImageAltText || service.title}
+                  fill
+                  sizes="(min-width: 1024px) 40vw, 100vw"
+                  className="object-cover"
+                  priority
+                />
+              ) : (
+                <div className="flex h-full min-h-[280px] items-center justify-center p-10 text-center">
+                  <div>
+                    <ShieldCheck size={56} className="mx-auto text-primary/60" aria-hidden="true" />
+                    <p className="mt-4 text-lg font-semibold text-navy dark:text-white">Specialist-led, image-guided care</p>
+                    <p className="mt-2 text-sm leading-6 text-muted dark:text-slate-400">A clinical consultation is required to assess suitability.</p>
+                  </div>
+                </div>
               )}
             </div>
-
-            <Link
-              href="/"
-              className="inline-flex items-center justify-center rounded-full bg-navy px-6 py-3 text-sm font-semibold text-white transition hover:brightness-125 dark:bg-white dark:text-navy dark:hover:brightness-90"
-            >
-              Back to Home
-            </Link>
           </div>
 
-          {service.featuredImage && (
-            <div className="overflow-hidden rounded-card bg-navy">
-              <Image
-                src={urlFor(service.featuredImage)
-                  .width(1400)
-                  .height(700)
-                  .url()}
-                alt={service.title}
-                width={1400}
-                height={700}
-                className="h-auto w-full object-cover"
-              />
+          <div className="grid border-t border-slate-100 bg-white sm:grid-cols-3 dark:border-slate-800 dark:bg-slate-900">
+            <div className="flex items-center gap-3 border-b border-slate-100 px-6 py-5 sm:border-b-0 sm:border-r dark:border-slate-800">
+              <ClipboardCheck className="text-primary" size={22} aria-hidden="true" />
+              <div><p className="text-xs uppercase tracking-[0.18em] text-muted">Assessment</p><p className="mt-1 text-sm font-semibold text-navy dark:text-white">Personalized review</p></div>
             </div>
-          )}
-
-          <div className="grid gap-8 lg:grid-cols-[1.5fr_1fr]">
-            <div className="space-y-6">
-              <div className="rounded-card border border-slate-100 bg-slate-50 p-7 dark:border-slate-700 dark:bg-slate-800">
-                <h2 className="text-2xl font-semibold text-navy dark:text-white">
-                  Overview
-                </h2>
-
-                <p className="mt-4 text-base leading-8 text-muted dark:text-slate-300">
-                  {seo?.overview || service.fullDescription}
-                </p>
-              </div>
-
-              {procedureFaqs.length ? (
-                <div className="rounded-card border border-slate-100 bg-white p-7 dark:border-slate-700 dark:bg-slate-900">
-                  <h2 className="text-2xl font-semibold text-navy dark:text-white">Frequently Asked Questions</h2>
-                  <div className="mt-5 space-y-5">
-                    {procedureFaqs.map((faq) => (
-                      <div key={faq.question}>
-                        <h3 className="text-base font-semibold text-navy dark:text-white">{faq.question}</h3>
-                        <p className="mt-2 text-sm leading-7 text-muted dark:text-slate-300">{faq.answer}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ) : null}
-
-              {service.benefits?.length ? (
-                <div className="rounded-card border border-slate-100 bg-white p-7 dark:border-slate-700 dark:bg-slate-900">
-                  <h2 className="text-2xl font-semibold text-navy dark:text-white">
-                    Benefits
-                  </h2>
-
-                  <ul className="mt-5 space-y-3 text-sm leading-7 text-muted dark:text-slate-300">
-                    {service.benefits.map((benefit, index) => (
-                      <li
-                        key={index}
-                        className="flex items-start gap-3"
-                      >
-                        <span className="mt-1 h-2.5 w-2.5 rounded-full bg-primary" />
-                        <span>{benefit}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ) : null}
+            <div className="flex items-center gap-3 border-b border-slate-100 px-6 py-5 sm:border-b-0 sm:border-r dark:border-slate-800">
+              <Clock3 className="text-primary" size={22} aria-hidden="true" />
+              <div><p className="text-xs uppercase tracking-[0.18em] text-muted">Planning</p><p className="mt-1 text-sm font-semibold text-navy dark:text-white">Clear next steps</p></div>
             </div>
-
-            <div className="space-y-6">
-              {service.proceduresIncluded?.length ? (
-                <div className="rounded-card border border-slate-100 bg-slate-50 p-7 dark:border-slate-700 dark:bg-slate-800">
-                  <h2 className="text-2xl font-semibold text-navy dark:text-white">
-                    Included Procedures
-                  </h2>
-
-                  <ul className="mt-5 space-y-3 text-sm leading-7 text-muted dark:text-slate-300">
-                    {service.proceduresIncluded.map(
-                      (item, index) => (
-                        <li
-                          key={index}
-                          className="flex items-start gap-3"
-                        >
-                          <span className="mt-1 h-2.5 w-2.5 rounded-full bg-primary" />
-                          <span>{item}</span>
-                        </li>
-                      )
-                    )}
-                  </ul>
-                </div>
-              ) : null}
-
-              <div className="rounded-card border border-primary/20 bg-primary/5 p-7 dark:border-primary/30 dark:bg-primary/10">
-                <h2 className="text-2xl font-semibold text-navy dark:text-white">Discuss Your Treatment Options</h2>
-                <p className="mt-3 text-sm leading-7 text-muted dark:text-slate-300">Contact the clinic to discuss your symptoms, reports and whether this procedure may be appropriate for you.</p>
-                <div className="mt-5 flex flex-wrap gap-3">
-                  <Link href="/appointment" className="inline-flex rounded-full bg-primary px-5 py-3 text-sm font-semibold text-white">Book an Appointment</Link>
-                  <a href={`tel:${phone.tel}`} className="inline-flex rounded-full border border-slate-300 px-5 py-3 text-sm font-semibold text-navy dark:border-slate-600 dark:text-white">Call {phone.display}</a>
-                </div>
-              </div>
-
-              <div className="rounded-card border border-slate-100 bg-white p-7 dark:border-slate-700 dark:bg-slate-900">
-                <h2 className="text-2xl font-semibold text-navy dark:text-white">
-                  Service Info
-                </h2>
-
-                <div className="mt-5 space-y-3 text-sm leading-7 text-muted dark:text-slate-300">
-                  <div>
-                    <span className="font-semibold text-navy dark:text-white">
-                      Slug:
-                    </span>{" "}
-                    {service.slug?.current}
-                  </div>
-
-                  <div>
-                    <span className="font-semibold text-navy dark:text-white">
-                      Display Order:
-                    </span>{" "}
-                    {service.displayOrder ?? 0}
-                  </div>
-
-                  <div>
-                    <span className="font-semibold text-navy dark:text-white">
-                      Featured:
-                    </span>{" "}
-                    {service.featured ? "Yes" : "No"}
-                  </div>
-                </div>
-              </div>
+            <div className="flex items-center gap-3 px-6 py-5">
+              <ShieldCheck className="text-primary" size={22} aria-hidden="true" />
+              <div><p className="text-xs uppercase tracking-[0.18em] text-muted">Care</p><p className="mt-1 text-sm font-semibold text-navy dark:text-white">Specialist guidance</p></div>
             </div>
           </div>
+        </section>
+
+        <div className="mt-8 grid gap-8 lg:grid-cols-[1.35fr_0.65fr]">
+          <div className="space-y-8">
+            <section className="rounded-[28px] border border-slate-200 bg-white p-7 shadow-rest sm:p-9 dark:border-slate-700 dark:bg-slate-900">
+              <p className="text-xs font-bold uppercase tracking-[0.28em] text-primary">About this procedure</p>
+              <h2 className="mt-3 text-3xl font-bold tracking-tight text-navy dark:text-white">What you should know</h2>
+              <p className="mt-5 text-base leading-8 text-muted dark:text-slate-300">{procedureDescription}</p>
+              <div className="mt-7 rounded-2xl border border-amber-200 bg-amber-50 p-5 text-sm leading-7 text-amber-900 dark:border-amber-900/60 dark:bg-amber-950/30 dark:text-amber-200">
+                Suitability, expected results, risks and alternatives depend on your individual clinical assessment. The treating specialist will guide you after reviewing your history and reports.
+              </div>
+            </section>
+
+            <section className="rounded-[28px] border border-slate-200 bg-white p-7 shadow-rest sm:p-9 dark:border-slate-700 dark:bg-slate-900">
+              <p className="text-xs font-bold uppercase tracking-[0.28em] text-primary">Your care pathway</p>
+              <h2 className="mt-3 text-3xl font-bold tracking-tight text-navy dark:text-white">From consultation to follow-up</h2>
+              <div className="mt-7 grid gap-4 sm:grid-cols-3">
+                {[
+                  { number: "01", title: "Consultation", text: "Share your symptoms, reports and treatment goals with the specialist." },
+                  { number: "02", title: "Assessment", text: "Your history and imaging are reviewed to discuss suitable options." },
+                  { number: "03", title: "Plan & follow-up", text: "Receive clear preparation, recovery and follow-up guidance." },
+                ].map((step) => (
+                  <div key={step.number} className="rounded-2xl border border-primary/10 bg-[#fbf9fe] p-5 dark:border-slate-700 dark:bg-slate-800">
+                    <span className="text-2xl font-black text-primary/40">{step.number}</span>
+                    <h3 className="mt-4 font-semibold text-navy dark:text-white">{step.title}</h3>
+                    <p className="mt-2 text-sm leading-6 text-muted dark:text-slate-400">{step.text}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {procedureFaqs.length ? (
+              <section className="rounded-[28px] border border-slate-200 bg-white p-7 shadow-rest sm:p-9 dark:border-slate-700 dark:bg-slate-900">
+                <p className="text-xs font-bold uppercase tracking-[0.28em] text-primary">Need to know</p>
+                <h2 className="mt-3 text-3xl font-bold tracking-tight text-navy dark:text-white">Frequently asked questions</h2>
+                <div className="mt-7 divide-y divide-slate-100 dark:divide-slate-800">
+                  {procedureFaqs.map((faq) => (
+                    <div key={faq.question} className="py-5 first:pt-0 last:pb-0">
+                      <h3 className="text-base font-semibold text-navy dark:text-white">{faq.question}</h3>
+                      <p className="mt-2 text-sm leading-7 text-muted dark:text-slate-300">{faq.answer}</p>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            ) : null}
+          </div>
+
+          <aside className="space-y-6 lg:sticky lg:top-28 lg:self-start">
+            {service.benefits?.length ? (
+              <section className="rounded-[28px] border border-primary/15 bg-white p-7 shadow-rest dark:border-slate-700 dark:bg-slate-900">
+                <div className="flex items-center gap-3"><CheckCircle2 className="text-primary" size={22} aria-hidden="true" /><h2 className="text-xl font-bold text-navy dark:text-white">Potential benefits</h2></div>
+                <ul className="mt-5 space-y-3">
+                  {service.benefits.map((benefit) => <li key={benefit} className="flex items-start gap-3 text-sm leading-6 text-muted dark:text-slate-300"><CheckCircle2 size={17} className="mt-0.5 shrink-0 text-primary" aria-hidden="true" /><span>{benefit}</span></li>)}
+                </ul>
+              </section>
+            ) : null}
+
+            {service.proceduresIncluded?.length ? (
+              <section className="rounded-[28px] border border-slate-200 bg-[#fbf9fe] p-7 shadow-rest dark:border-slate-700 dark:bg-slate-800">
+                <h2 className="text-xl font-bold text-navy dark:text-white">What may be included</h2>
+                <ul className="mt-5 space-y-3">
+                  {service.proceduresIncluded.map((item) => <li key={item} className="flex items-start gap-3 text-sm leading-6 text-muted dark:text-slate-300"><span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-primary" /><span>{item}</span></li>)}
+                </ul>
+              </section>
+            ) : null}
+
+            <section className="rounded-[28px] bg-gradient-to-br from-primary to-[#432452] p-7 text-white shadow-hover">
+              <CalendarCheck size={28} aria-hidden="true" />
+              <h2 className="mt-5 text-2xl font-bold">Discuss your options</h2>
+              <p className="mt-3 text-sm leading-7 text-white/80">Book a consultation to discuss your symptoms, reports and whether this procedure may be appropriate for you.</p>
+              <div className="mt-6 space-y-3">
+                <Link href="/appointment" className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-bold text-primary transition hover:bg-cyan hover:text-navy"><CalendarCheck size={17} aria-hidden="true" /> Book appointment</Link>
+                <a href={`tel:${phone.tel}`} className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/30 px-5 py-3 text-sm font-bold text-white transition hover:bg-white/10"><Phone size={17} aria-hidden="true" /> Call {phone.display}</a>
+              </div>
+            </section>
+
+            <div className="rounded-2xl border border-slate-200 bg-white p-5 text-sm text-muted shadow-rest dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300"><div className="flex items-start gap-3"><MapPin size={18} className="mt-0.5 shrink-0 text-primary" aria-hidden="true" /><p>Appointments are arranged through IVR Pakistan clinics. Confirm availability and procedure suitability before visiting.</p></div></div>
+          </aside>
         </div>
+
+        {relatedServices.length ? (
+          <section className="mt-12 border-t border-primary/10 pt-12">
+            <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end"><div><p className="text-xs font-bold uppercase tracking-[0.28em] text-primary">Continue exploring</p><h2 className="mt-3 text-3xl font-bold tracking-tight text-navy dark:text-white">Related procedures</h2></div><Link href="/#procedures" className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline">View all procedures <ArrowRight size={16} aria-hidden="true" /></Link></div>
+            <div className="mt-6 grid gap-4 md:grid-cols-3">
+              {relatedServices.map((related) => <Link key={related._id} href={`/services/${related.slug.current}`} className="group rounded-2xl border border-slate-200 bg-white p-5 shadow-rest transition hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-hover dark:border-slate-700 dark:bg-slate-900"><p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">{related.category}</p><h3 className="mt-3 font-semibold text-navy dark:text-white">{related.title}</h3><p className="mt-2 line-clamp-2 text-sm leading-6 text-muted dark:text-slate-400">{related.shortDescription}</p><span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary">Learn more <ArrowRight size={14} className="transition group-hover:translate-x-1" aria-hidden="true" /></span></Link>)}
+            </div>
+          </section>
+        ) : null}
       </div>
     </main>
   );

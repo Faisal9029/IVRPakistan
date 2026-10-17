@@ -10,7 +10,7 @@ type InputProps =
   | (React.SelectHTMLAttributes<HTMLSelectElement> & { as: "select" })
 
 const baseClass =
-  "w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition focus:border-[#1677ff] focus:ring-2 focus:ring-blue-100"
+  "w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
 
 export default function Input({ as = "input", className, ...rest }: InputProps) {
   const classes = cn(baseClass, className)

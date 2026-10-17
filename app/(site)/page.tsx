@@ -3,6 +3,7 @@ import { buildMetadata } from "@/lib/seo";
 import { getPosts } from "@/lib/sanity";
 import LatestBlogPopup from "@/components/LatestBlogPopup";
 import Hero from "@/components/Hero";
+import FeaturedProcedures from "@/components/FeaturedProcedures";
 import VideoSection from "@/components/VideoSection";
 import AboutSection from "@/components/AboutSection";
 import ServicesSection from "@/components/ServicesSection";
@@ -21,6 +22,10 @@ export const metadata: Metadata = buildMetadata({
   path: "/",
   keywords: [
     "interventional radiologist Karachi",
+    "best interventional radiologist Karachi",
+    "experienced interventional radiologist Karachi",
+    "Dr Vicky Kumar interventional radiologist",
+    "interventional radiology clinic Karachi",
     "interventional radiology Pakistan",
     "venous leak embolization Karachi",
     "uterine fibroid embolization Karachi",
@@ -34,10 +39,10 @@ export default async function Home() {
   const latestPost = posts[0] ?? null;
 
   return (
-    <main className="min-h-screen bg-[linear-gradient(180deg,#f6fbff_0%,#eef8ff_100%)] text-slate-950">
+    <main className="min-h-screen bg-[linear-gradient(180deg,#fbf9fe_0%,#f5f3fa_100%)] text-slate-950">
       <LatestBlogPopup post={latestPost} />
       <Hero />
-      <VideoSection />
+      <FeaturedProcedures />
       <AboutSection />
       <ServicesSection />
       <CategoryServicesSection />
@@ -45,6 +50,7 @@ export default async function Home() {
       <ReviewsSection />
       <FAQSection />
       <BlogSection />
+      <VideoSection />
       <ContactSection />
       <WhatsAppNewsletterSection />
     </main>

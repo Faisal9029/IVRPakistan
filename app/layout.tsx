@@ -29,6 +29,12 @@ export const metadata: Metadata = {
     path: "/",
     keywords: [
       "interventional radiologist Karachi",
+      "best interventional radiologist Karachi",
+      "experienced interventional radiologist Karachi",
+      "interventional radiologist near me Karachi",
+      "interventional radiology doctor Pakistan",
+      "embolization specialist Karachi",
+      "Dr Vicky Kumar interventional radiologist",
       "interventional radiology Pakistan",
       "venous leak treatment Karachi",
       "uterine artery embolization Karachi",
@@ -49,6 +55,13 @@ const medicalClinicJsonLd = {
   telephone: phone.tel,
   email,
   medicalSpecialty: "Interventional Radiology",
+  employee: {
+    "@type": "Physician",
+    name: "Dr. Vicky Kumar",
+    medicalSpecialty: "Interventional Radiology",
+    jobTitle: "Interventional Radiologist",
+    description: "Experienced interventional radiologist providing image-guided, minimally invasive procedures through IVR Pakistan.",
+  },
   sameAs: socialLinks.map((social) => social.href),
   areaServed: ["Karachi", "Pakistan"],
   department: clinics.map((clinic) => ({

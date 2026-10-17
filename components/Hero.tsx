@@ -60,9 +60,9 @@ export default function Hero() {
 
   return (
     <section className="relative overflow-hidden bg-surface px-6 py-16 dark:bg-navy sm:px-8 lg:px-10 lg:py-24">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(14,165,233,0.15),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(14,165,233,0.12),transparent_25%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(185,137,211,0.22),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(107,46,131,0.16),transparent_25%)]" />
 
-      <div className="absolute left-1/2 top-0 h-96 w-96 -translate-x-1/2 rounded-full bg-cyan/20 blur-3xl" />
+      <div className="absolute left-1/2 top-0 h-96 w-96 -translate-x-1/2 rounded-full bg-cyan/25 blur-3xl" />
 
       <div className="relative mx-auto max-w-7xl">
         <div className="grid items-center gap-12 lg:grid-cols-2">
@@ -193,8 +193,8 @@ export default function Hero() {
           >
             <div className="absolute inset-0 rounded-card bg-gradient-to-br from-white via-slate-100 to-cyan/20 blur-3xl dark:from-slate-800 dark:via-slate-900 dark:to-cyan/10" />
 
-            <div className="relative overflow-hidden rounded-card border border-white/80 bg-white/90 p-4 shadow-hover dark:border-slate-700 dark:bg-slate-900/90">
-              <div className="relative h-[560px] w-full overflow-hidden rounded-card bg-gradient-to-b from-cyan/10 to-surface">
+            <div className="relative overflow-hidden rounded-card border border-white/80 bg-white/90 p-4 shadow-hover ring-1 ring-primary/5 dark:border-slate-700 dark:bg-slate-900/90">
+              <div className="relative h-[560px] w-full overflow-hidden rounded-card bg-gradient-to-b from-cyan/20 via-surface to-white">
                 <Image
                   src="/doctors.png"
                   alt="Dr. Vicky Kumar, Interventional Radiologist, performing an image-guided procedure"

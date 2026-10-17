@@ -52,7 +52,7 @@ export default function Navbar() {
   return (
     <header
       className={`sticky top-0 z-40 transition-all duration-300 ${
-        scrolled ? "glass shadow-rest" : "border-b border-transparent bg-transparent"
+        scrolled ? "glass shadow-rest" : "border-b border-slate-200/60 bg-white/80 backdrop-blur-sm"
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-4">

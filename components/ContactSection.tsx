@@ -12,7 +12,7 @@ export default function ContactSection() {
   const tCommon = useTranslations("Common");
 
   return (
-    <section id="contact" className="relative bg-[linear-gradient(135deg,#f8fcff_0%,#eef8ff_100%)] py-20 dark:bg-navy dark:bg-none lg:py-24">
+    <section id="contact" className="relative bg-[linear-gradient(135deg,#fbf9fe_0%,#f1ebf7_100%)] py-20 dark:bg-navy dark:bg-none lg:py-24">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <span className="text-xs font-semibold uppercase tracking-[0.32em] text-primary">{t("eyebrow")}</span>
@@ -23,7 +23,7 @@ export default function ContactSection() {
         </div>
 
         <div className="mx-auto mt-16 grid gap-8 lg:grid-cols-[1.05fr_0.95fr]">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.25 }} className="rounded-[32px] border border-white/70 bg-white p-8 shadow-[0_30px_80px_-34px_rgba(15,98,255,0.35)] dark:border-slate-700 dark:bg-slate-900">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.25 }} className="rounded-[32px] border border-white/70 bg-white p-8 shadow-[0_30px_80px_-34px_rgba(107,46,131,0.3)] dark:border-slate-700 dark:bg-slate-900">
             <div className="flex items-center gap-3">
               <div className="rounded-2xl bg-primary/10 p-3 text-primary">
                 <Phone size={20} />
@@ -57,7 +57,7 @@ export default function ContactSection() {
           </motion.div>
 
           <div className="space-y-6">
-            <div className="rounded-[32px] border border-white/70 bg-white p-8 shadow-[0_30px_80px_-34px_rgba(15,98,255,0.25)] dark:border-slate-700 dark:bg-slate-900">
+            <div className="rounded-[32px] border border-white/70 bg-white p-8 shadow-[0_30px_80px_-34px_rgba(107,46,131,0.22)] dark:border-slate-700 dark:bg-slate-900">
               <div className="flex flex-wrap gap-3">
                 <a href="tel:+923462236220" className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-semibold text-primary">
                   <Phone size={16} /> +92 346 2236220
@@ -90,7 +90,7 @@ export default function ContactSection() {
               </div>
             </div>
 
-            <div className="rounded-[32px] border border-white/70 bg-white p-8 shadow-[0_30px_80px_-34px_rgba(15,98,255,0.25)] dark:border-slate-700 dark:bg-slate-900">
+            <div className="rounded-[32px] border border-white/70 bg-white p-8 shadow-[0_30px_80px_-34px_rgba(107,46,131,0.22)] dark:border-slate-700 dark:bg-slate-900">
               <div className="flex items-center gap-3">
                 <div className="rounded-2xl bg-primary/10 p-3 text-primary">
                   <Building2 size={20} />

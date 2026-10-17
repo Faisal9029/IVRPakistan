@@ -143,6 +143,28 @@
     "searchPlaceholder": "Search for a procedure, category, or treatment...",
     "noResults": "No procedures match your search. Try another term."
   },
+  "FeaturedProcedures": {
+    "eyebrow": "Featured procedures",
+    "heading": "Explore the procedures highlighted for our patients",
+    "description": "Browse our key male and female procedures available through IVR Pakistan. Select a procedure to learn more or book a consultation.",
+    "maleLabel": "Male procedures",
+    "maleDescription": "Specialist-led image-guided care",
+    "femaleLabel": "Female procedures",
+    "femaleDescription": "Personalized minimally invasive treatment",
+    "viewAll": "View all procedures",
+    "bookAppointment": "Book an appointment",
+    "procedures": {
+      "prostate": "Prostate embolization",
+      "venousLeak": "Venous leak embolization",
+      "varicocele": "Varicocele embolization",
+      "varicoseVeins": "Varicose veins ablation",
+      "fibroids": "Uterine fibroids embolization",
+      "uterineAvm": "Uterine AVM embolization",
+      "ovarianCyst": "Chocolate or ovarian cyst sclerotherapy",
+      "fallopianTubes": "Fallopian tubes recanalization",
+      "peripheral": "Peripheral angiography + angioplasty"
+    }
+  },
   "Doctors": {
     "eyebrow": "Our Specialist",
     "specialty": "Interventional Radiologist",
