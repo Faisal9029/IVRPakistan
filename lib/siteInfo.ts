@@ -11,6 +11,7 @@ export const email = "cathlabintervention@gmail.com";
 
 export type Clinic = {
   title: string;
+  city: string;
   detail: string;
   hours: string;
   notes?: string;
@@ -22,13 +23,15 @@ export type Clinic = {
 export const clinics: Clinic[] = [
   {
     title: "IDC Lab Saddar Karachi",
+    city: "Karachi",
     detail: "Lucky Star Saddar Karachi, opposite Shell Petrol Pump",
-    hours: "Mon, Tue, Fri, Sat - 7pm-8pm",
+    hours: "Tue, Fri, Sat - 6pm-8pm",
     mapLink: "https://maps.app.goo.gl/vn1kpJQeugRFbAKr5",
     accent: "from-[#0f62ff] to-[#06b6d4]",
   },
   {
     title: "National Medical Centre (NMC), DHA Karachi",
+    city: "Karachi",
     detail: "A-5/A, National Highway, Phase 1, DHA, near Kala Pul, Korangi Road, Karachi",
     hours: "Wed & Thu - 5pm-6pm",
     mapLink: "https://share.google/qhLuVj34ZAdKAo37X",
@@ -36,6 +39,7 @@ export const clinics: Clinic[] = [
   },
   {
     title: "Farooq Hospital DHA Lahore",
+    city: "Lahore",
     detail: "DHA Lahore, near Ghazi Road / Bhatta Chowk",
     hours: "Sunday - 11am-2pm",
     notes: "Please confirm availability by phone or WhatsApp before visiting, as the visit schedule may change.",
@@ -44,6 +48,7 @@ export const clinics: Clinic[] = [
   },
   {
     title: "Farooq Hospital Bahria Enclave Islamabad",
+    city: "Islamabad",
     detail: "Sector C, Bahria Enclave, Islamabad",
     hours: "Monday - 2pm-6pm",
     notes: "Please confirm availability by phone or WhatsApp before visiting. Walk-in is first come, first served when the clinic is running.",

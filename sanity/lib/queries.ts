@@ -29,6 +29,7 @@ export type SocialVideo = {
 
 export type Service = {
   _id: string;
+  _updatedAt?: string;
   title: string;
   slug: { _type: "slug"; current: string };
   shortDescription?: string;
@@ -110,6 +111,7 @@ export const featuredVideosQuery = `*[_type == "socialVideo" && featured == true
 
 export const allServicesQuery = `*[_type == "service"] | order(displayOrder asc){
   _id,
+  _updatedAt,
   title,
   slug,
   shortDescription,
@@ -126,6 +128,7 @@ export const allServicesQuery = `*[_type == "service"] | order(displayOrder asc)
 
 export const featuredServicesQuery = `*[_type == "service" && featured == true] | order(displayOrder asc){
   _id,
+  _updatedAt,
   title,
   slug,
   shortDescription,

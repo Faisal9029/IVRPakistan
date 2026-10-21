@@ -15,8 +15,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     .filter((service) => service.slug?.current)
     .map((service) => ({
       url: `${SITE_URL}/services/${service.slug.current}`,
-       changeFrequency: "monthly",
-       priority: 0.9,
+      ...(service._updatedAt ? { lastModified: service._updatedAt } : {}),
+      changeFrequency: "monthly" as const,
+      priority: 0.9,
     }));
 
   const postRoutes: MetadataRoute.Sitemap = posts

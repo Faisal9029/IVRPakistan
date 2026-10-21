@@ -169,8 +169,22 @@ export default async function ServicePage({
     name: service.title,
     description: procedureDescription,
     url: `${SITE_URL}/services/${service.slug.current}`,
-    bodyLocation: "Karachi, Pakistan",
-    ...(service.category ? { procedureType: service.category } : {}),
+     areaServed: ["Karachi", "Lahore", "Islamabad", "Pakistan"],
+     provider: {
+       "@type": "MedicalClinic",
+       name: "IVR Pakistan",
+       url: SITE_URL,
+     },
+     ...(service.category ? { procedureType: service.category } : {}),
+  };
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+      { "@type": "ListItem", position: 2, name: "Procedures", item: `${SITE_URL}/#procedures` },
+      { "@type": "ListItem", position: 3, name: service.title, item: `${SITE_URL}/services/${service.slug.current}` },
+    ],
   };
   const faqJsonLd = procedureFaqs.length
     ? {
@@ -190,6 +204,12 @@ export default async function ServicePage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbJsonLd).replace(/</g, "\\u003c"),
         }}
       />
       {faqJsonLd ? (

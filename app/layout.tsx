@@ -23,9 +23,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   ...buildMetadata({
-    title: "Interventional Radiologist in Karachi, Pakistan | IVR Pakistan",
+    title: "Interventional Radiologist in Pakistan | IVR Pakistan",
     description:
-      "IVR Pakistan provides image-guided interventional radiology in Karachi, including venous leak, uterine fibroid, prostate artery and varicocele embolization consultations.",
+      "IVR Pakistan provides image-guided interventional radiology consultations and minimally invasive procedures in Karachi, Lahore, Islamabad and across Pakistan, including venous leak, uterine fibroid, prostate artery and varicocele embolization.",
     path: "/",
     keywords: [
       "interventional radiologist Karachi",
@@ -36,6 +36,8 @@ export const metadata: Metadata = {
       "embolization specialist Karachi",
       "Dr Vicky Kumar interventional radiologist",
       "interventional radiology Pakistan",
+      "interventional radiologist Lahore",
+      "interventional radiologist Islamabad",
       "venous leak treatment Karachi",
       "uterine artery embolization Karachi",
       "prostate artery embolization Pakistan",
@@ -63,14 +65,14 @@ const medicalClinicJsonLd = {
     description: "Experienced interventional radiologist providing image-guided, minimally invasive procedures through IVR Pakistan.",
   },
   sameAs: socialLinks.map((social) => social.href),
-  areaServed: ["Karachi", "Pakistan"],
+  areaServed: ["Karachi", "Lahore", "Islamabad", "Pakistan"],
   department: clinics.map((clinic) => ({
     "@type": "MedicalClinic",
     name: clinic.title,
     address: {
       "@type": "PostalAddress",
       streetAddress: clinic.detail,
-      addressLocality: "Karachi",
+      addressLocality: clinic.city,
       addressCountry: "PK",
     },
   })),
