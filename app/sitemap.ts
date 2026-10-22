@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/seo";
 import { getServices, getPosts } from "@/lib/sanity";
+import { locationPages } from "@/lib/locationPages";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [services, posts] = await Promise.all([getServices(), getPosts()]);
@@ -20,14 +21,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.9,
     }));
 
+  const locationRoutes: MetadataRoute.Sitemap = locationPages.map((location) => ({
+    url: `${SITE_URL}/locations/${location.slug}`,
+    changeFrequency: "monthly" as const,
+    priority: 0.8,
+  }));
+
   const postRoutes: MetadataRoute.Sitemap = posts
     .filter((post) => post.slug?.current)
     .map((post) => ({
       url: `${SITE_URL}/blog/${post.slug.current}`,
       lastModified: post.publishedDate,
-       changeFrequency: "monthly",
-       priority: 0.4,
+      changeFrequency: "monthly" as const,
+      priority: 0.4,
     }));
 
-  return [...staticRoutes, ...serviceRoutes, ...postRoutes];
+  return [...staticRoutes, ...locationRoutes, ...serviceRoutes, ...postRoutes];
 }

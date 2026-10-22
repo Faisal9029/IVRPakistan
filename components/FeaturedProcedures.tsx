@@ -7,15 +7,15 @@ const maleProcedures = [
   { key: "prostate", href: "/services/prostate-artery-embolization" },
   { key: "venousLeak", href: "/services/venous-leak-embolization" },
   { key: "varicocele", href: "/services/varicocele-embolization" },
-  { key: "varicoseVeins", href: "/#procedures" },
+  { key: "varicoseVeins", href: "/services/venous-angioplasty" },
 ] as const;
 
 const femaleProcedures = [
   { key: "fibroids", href: "/services/uterine-fibroid-embolization-ufe" },
   { key: "uterineAvm", href: "/#procedures" },
   { key: "ovarianCyst", href: "/#procedures" },
-  { key: "fallopianTubes", href: "/#procedures" },
-  { key: "peripheral", href: "/#procedures" },
+  { key: "fallopianTubes", href: "/services/fallopian-tube-recanalization" },
+  { key: "peripheral", href: "/services/peripheral-angioplasty-pta" }
 ] as const;
 
 function ProcedureCard({

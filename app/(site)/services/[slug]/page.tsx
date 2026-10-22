@@ -28,6 +28,9 @@ type ProcedureSeo = {
   description: string;
   keywords: string[];
   overview: string;
+  patientFocus: string[];
+  preparation: string[];
+  recovery: string[];
   questions: { question: string; answer: string }[];
 };
 
@@ -37,6 +40,9 @@ const procedureSeo: Record<string, ProcedureSeo> = {
     description: "Learn about venous leak embolization consultation, assessment, risks and treatment planning with an interventional radiologist in Karachi.",
     keywords: ["venous leak treatment Karachi", "venous leak embolization Pakistan", "venogenic erectile dysfunction treatment"],
     overview: "Venous leak embolization is an image-guided procedure considered for selected patients with venogenic erectile dysfunction after appropriate clinical and diagnostic assessment. During consultation, the doctor reviews symptoms, test results, suitability, possible risks and alternatives.",
+    patientFocus: ["Persistent erectile difficulties that need a structured specialist assessment", "Review of previous treatments, investigations and relevant medical history", "A clear discussion of embolization, alternatives and follow-up before any decision"],
+    preparation: ["Bring previous reports, scans, prescriptions and a list of current medicines", "Share relevant cardiovascular, bleeding and allergy history during consultation", "Follow the treating team’s instructions if a procedure is planned"],
+    recovery: ["Ask the team what activity restrictions and follow-up apply to your case", "Keep the planned follow-up appointment and report unexpected symptoms promptly", "Expected recovery varies with the procedure plan and individual health"],
     questions: [
       { question: "How is venous leak assessed?", answer: "Assessment depends on the clinical history and appropriate diagnostic tests. The doctor will explain which evaluation is suitable for you." },
       { question: "Is venous leak embolization suitable for everyone?", answer: "No. Suitability depends on the diagnosis, anatomy, medical history and discussion of alternatives with a qualified specialist." },
@@ -47,6 +53,9 @@ const procedureSeo: Record<string, ProcedureSeo> = {
     description: "Uterine fibroid embolization consultation in Karachi for selected patients with symptomatic fibroids, including discussion of risks and alternatives.",
     keywords: ["uterine artery embolization Karachi", "uterine fibroid embolization Pakistan", "fibroid treatment without surgery Karachi"],
     overview: "Uterine fibroid embolization, also called uterine artery embolization, is a minimally invasive treatment option for selected patients with symptomatic uterine fibroids. Consultation and imaging review are needed before deciding whether this option is appropriate.",
+    patientFocus: ["Heavy bleeding, pelvic pressure, pain or other symptoms that may be related to fibroids", "Review of ultrasound or MRI findings and the effect of symptoms on daily life", "Discussion of fertility plans, alternatives and the individual treatment goal"],
+    preparation: ["Bring pelvic imaging, blood-test reports and details of previous treatments", "Discuss pregnancy or fertility plans before selecting a treatment route", "Ask which medicines, tests and arrival instructions apply to your appointment"],
+    recovery: ["Recovery and symptom improvement vary by the size, number and location of fibroids", "Keep follow-up appointments and follow the team’s pain and activity guidance", "Contact the treating team if symptoms are severe, unexpected or worsening"],
     questions: [
       { question: "What symptoms may lead to a fibroid embolization consultation?", answer: "Symptoms can include heavy menstrual bleeding, pelvic pressure or pain, and other fibroid-related concerns. A doctor must assess the cause and available treatment options." },
       { question: "What should I discuss before UFE?", answer: "Discuss your symptoms, imaging, medical history, fertility plans, risks, expected recovery and alternatives with the treating team." },
@@ -57,6 +66,9 @@ const procedureSeo: Record<string, ProcedureSeo> = {
     description: "Prostate artery embolization consultation for selected patients with benign prostate enlargement symptoms in Karachi, Pakistan.",
     keywords: ["prostate artery embolization Karachi", "PAE Pakistan", "enlarged prostate treatment without surgery Karachi"],
     overview: "Prostate artery embolization is an image-guided treatment option for selected patients with symptoms related to benign prostatic hyperplasia. A consultation is required to confirm the diagnosis and discuss suitability, risks, expected outcomes and alternatives.",
+    patientFocus: ["Urinary symptoms that may be associated with benign prostate enlargement", "Review of prostate assessment, medicines, tests and other causes of symptoms", "A balanced discussion of PAE, urology input, alternatives and follow-up"],
+    preparation: ["Bring PSA, ultrasound, MRI or urology reports when available", "List current medicines and mention blood thinners or allergies", "Ask about fasting, transport and medication instructions if treatment is planned"],
+    recovery: ["Follow the discharge instructions for activity, medicines and hydration", "Keep urology or interventional radiology follow-up as advised", "Seek prompt medical advice for severe pain, fever, heavy bleeding or difficulty passing urine"],
     questions: [
       { question: "Who may need a PAE consultation?", answer: "People with urinary symptoms related to benign prostate enlargement may be assessed for different treatment options, including PAE where clinically appropriate." },
       { question: "Is PAE an alternative to prostate surgery?", answer: "PAE may be an option for selected patients, but the right treatment depends on clinical findings, prostate assessment and discussion with the relevant specialists." },
@@ -67,6 +79,9 @@ const procedureSeo: Record<string, ProcedureSeo> = {
     description: "Varicocele embolization consultation in Karachi for selected patients with varicocele-related pain or fertility concerns.",
     keywords: ["varicocele embolization Karachi", "varicocele treatment Pakistan", "non-surgical varicocele treatment Karachi"],
     overview: "Varicocele embolization is an image-guided, minimally invasive option for selected patients with varicocele-related symptoms. The consultation covers the diagnosis, symptoms, fertility considerations, risks, alternatives and follow-up planning.",
+    patientFocus: ["Scrotal discomfort, swelling or a clinically assessed varicocele", "Fertility concerns that need coordinated assessment and appropriate testing", "Discussion of embolization versus other treatment options for the individual case"],
+    preparation: ["Bring ultrasound, semen analysis or urology reports when available", "Share previous procedures, medicines and relevant medical history", "Confirm the planned arrival, fasting and escort instructions with the clinic"],
+    recovery: ["Follow the team’s wound, activity and follow-up instructions", "Ask when exercise and heavy lifting can be resumed", "Report increasing pain, fever, swelling or other unexpected symptoms promptly"],
     questions: [
       { question: "Why might someone consider varicocele embolization?", answer: "A specialist may discuss it for selected patients with symptoms such as pain or fertility-related concerns after appropriate assessment." },
       { question: "Is embolization the same as surgery?", answer: "No. Embolization is performed through image-guided catheter techniques, while surgery uses an operative approach. The appropriate option depends on the individual case." },
@@ -296,6 +311,18 @@ export default async function ServicePage({
 
         <div className="mt-8 grid gap-8 lg:grid-cols-[1.35fr_0.65fr]">
           <div className="space-y-8">
+            <section className="rounded-[28px] border border-primary/15 bg-primary/5 p-6 shadow-sm dark:border-primary/30 dark:bg-primary/10">
+              <p className="text-xs font-bold uppercase tracking-[0.28em] text-primary">Where to start</p>
+              <h2 className="mt-3 text-xl font-bold text-navy dark:text-white">Consultation locations</h2>
+              <p className="mt-2 text-sm leading-6 text-muted dark:text-slate-300">IVR Pakistan has clinic information for Karachi, Lahore and Islamabad. Confirm the latest availability and whether this procedure is offered at your preferred location before travelling.</p>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {[
+                  ["Karachi", "/locations/karachi"],
+                  ["Lahore", "/locations/lahore"],
+                  ["Islamabad", "/locations/islamabad"],
+                ].map(([city, href]) => <Link key={city} href={href} className="inline-flex items-center rounded-full border border-primary/20 bg-white px-3 py-2 text-xs font-semibold text-primary hover:bg-primary/10 dark:bg-slate-900">{city}</Link>)}
+              </div>
+            </section>
             <section className="rounded-[28px] border border-slate-200 bg-white p-7 shadow-rest sm:p-9 dark:border-slate-700 dark:bg-slate-900">
               <p className="text-xs font-bold uppercase tracking-[0.28em] text-primary">About this procedure</p>
               <h2 className="mt-3 text-3xl font-bold tracking-tight text-navy dark:text-white">What you should know</h2>
@@ -304,6 +331,23 @@ export default async function ServicePage({
                 Suitability, expected results, risks and alternatives depend on your individual clinical assessment. The treating specialist will guide you after reviewing your history and reports.
               </div>
             </section>
+
+            {seo ? (
+              <section className="grid gap-6 md:grid-cols-2">
+                <div className="rounded-[28px] border border-slate-200 bg-white p-7 shadow-rest dark:border-slate-700 dark:bg-slate-900">
+                  <p className="text-xs font-bold uppercase tracking-[0.28em] text-primary">Who may benefit from a consultation</p>
+                  <ul className="mt-5 space-y-3">
+                    {seo.patientFocus.map((item) => <li key={item} className="flex gap-3 text-sm leading-7 text-muted dark:text-slate-300"><CheckCircle2 size={17} className="mt-1 shrink-0 text-primary" aria-hidden="true" /><span>{item}</span></li>)}
+                  </ul>
+                </div>
+                <div className="rounded-[28px] border border-slate-200 bg-white p-7 shadow-rest dark:border-slate-700 dark:bg-slate-900">
+                  <p className="text-xs font-bold uppercase tracking-[0.28em] text-primary">Before your consultation</p>
+                  <ul className="mt-5 space-y-3">
+                    {seo.preparation.map((item) => <li key={item} className="flex gap-3 text-sm leading-7 text-muted dark:text-slate-300"><ClipboardCheck size={17} className="mt-1 shrink-0 text-primary" aria-hidden="true" /><span>{item}</span></li>)}
+                  </ul>
+                </div>
+              </section>
+            ) : null}
 
             <section className="rounded-[28px] border border-slate-200 bg-white p-7 shadow-rest sm:p-9 dark:border-slate-700 dark:bg-slate-900">
               <p className="text-xs font-bold uppercase tracking-[0.28em] text-primary">Your care pathway</p>
@@ -322,6 +366,16 @@ export default async function ServicePage({
                 ))}
               </div>
             </section>
+
+            {seo ? (
+              <section className="rounded-[28px] border border-slate-200 bg-white p-7 shadow-rest sm:p-9 dark:border-slate-700 dark:bg-slate-900">
+                <p className="text-xs font-bold uppercase tracking-[0.28em] text-primary">Aftercare</p>
+                <h2 className="mt-3 text-3xl font-bold tracking-tight text-navy dark:text-white">Recovery and follow-up</h2>
+                <ul className="mt-6 grid gap-3 sm:grid-cols-3">
+                  {seo.recovery.map((item) => <li key={item} className="rounded-2xl border border-primary/10 bg-[#fbf9fe] p-4 text-sm leading-7 text-muted dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">{item}</li>)}
+                </ul>
+              </section>
+            ) : null}
 
             {procedureFaqs.length ? (
               <section className="rounded-[28px] border border-slate-200 bg-white p-7 shadow-rest sm:p-9 dark:border-slate-700 dark:bg-slate-900">

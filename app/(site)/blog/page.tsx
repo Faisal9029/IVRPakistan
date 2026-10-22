@@ -12,7 +12,7 @@ import Card from "@/components/ui/Card";
 
 export const metadata: Metadata = buildMetadata({
   title: "Blog | IVR Pakistan",
-  description: "Patient education and procedure guides from IVR Pakistan Karachi.",
+  description: "Patient education and interventional radiology procedure guides from IVR Pakistan, serving patients in Karachi, Lahore, Islamabad and across Pakistan.",
   path: "/blog",
 });
 
