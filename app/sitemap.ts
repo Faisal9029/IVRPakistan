@@ -39,5 +39,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.4,
     }));
 
-  return [...staticRoutes, ...locationRoutes, ...serviceRoutes, ...postRoutes];
+  const routes = [...staticRoutes, ...locationRoutes, ...serviceRoutes, ...postRoutes];
+  const uniqueRoutes = new Map<string, MetadataRoute.Sitemap[number]>();
+
+  for (const route of routes) {
+    const existing = uniqueRoutes.get(route.url);
+    if (!existing || (route.lastModified && !existing.lastModified)) {
+      uniqueRoutes.set(route.url, route);
+    }
+  }
+
+  return [...uniqueRoutes.values()];
 }
