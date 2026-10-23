@@ -3,6 +3,9 @@ import { SITE_URL } from "@/lib/seo";
 import { getServices, getPosts } from "@/lib/sanity";
 import { locationPages } from "@/lib/locationPages";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [services, posts] = await Promise.all([getServices(), getPosts()]);
 
